@@ -1,0 +1,970 @@
+<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<objectListWrapper>
+    <objects>
+        <objectContainer>
+            <project>
+                <name>Data extraction from PDFs</name>
+                <description></description>
+                <author>workfusion</author>
+                <runs>
+                    <run>
+                        <blockSize>1</blockSize>
+                        <campaign>
+                            <active>true</active>
+                            <businessRules/>
+                            <campaignMaps>
+                                <campaignMap>
+                                    <blockSize>1</blockSize>
+                                    <businessRule>
+                                        <content>#RuleContext.APPROVE_ALL_RULE</content>
+                                        <name>Approve All</name>
+                                        <ruleType>WORKFLOW_RULE</ruleType>
+                                        <ruleTypeUI>Composite</ruleTypeUI>
+                                        <uuid>53c7408f-d5d0-4bd8-8b49-7efaa6dc2929</uuid>
+                                        <workflowRuleMode>SIMPLE</workflowRuleMode>
+                                    </businessRule>
+                                    <campaign>
+                                        <active>false</active>
+                                        <businessRules/>
+                                        <campaignMaps/>
+                                        <campaigns/>
+                                        <executingType>MACHINE</executingType>
+                                        <goldBucketBlockSize>0</goldBucketBlockSize>
+                                        <goldRatio>0</goldRatio>
+                                        <goldSource>Empty</goldSource>
+                                        <goldType>Percentage</goldType>
+                                        <machineConfig>
+                                            <answers/>
+                                            <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config xmlns="http://web-harvest.sourceforge.net/schema/1.0/config" scriptlang="groovy"&gt;
+	&lt;var-def name="csvFile2List"&gt;
+		&lt;http-extended url="${s3_file_url}"/&gt;
+	&lt;/var-def&gt;
+	&lt;var-def name="receiptLinks"&gt;
+		&lt;script return="urlsToExport"&gt;&lt;![CDATA[
+			import org.apache.commons.lang.ArrayUtils			
+			urlsToExport = new ArrayList()		
+			receiptLinks = csvFile2List.toString().split()
+			receiptLinks=org.apache.commons.lang.ArrayUtils.remove(receiptLinks, 0)
+			number=receiptLinks.size()+1
+			for (String receiptLink : receiptLinks){
+				def link = new HashMap()				
+				link.put("urls",receiptLink)
+				urlsToExport.add(link)
+			}			
+		]]&gt;&lt;/script&gt;
+	&lt;/var-def&gt;
+   &lt;export include-original-data="false"&gt;
+        &lt;multi-column list="${urlsToExport}" split-results="true"&gt;
+            &lt;put-to-column-getter name="s3_invoice_link" property="urls" /&gt;
+        &lt;/multi-column&gt;
+        &lt;single-column name="number" value="${number}"/&gt;
+    &lt;/export&gt;
+&lt;/config&gt;</content>
+                                            <description></description>
+                                            <includedConfigs/>
+                                            <inclusionCode>7a4bcc58-484f-48c4-8644-26a0ad4e655b</inclusionCode>
+                                            <jsonParams>{"configXMLModified":"true"}</jsonParams>
+                                            <machineWorkSetting>
+                                                <category>
+                                                    <automation>false</automation>
+                                                    <description></description>
+                                                    <enabled>true</enabled>
+                                                    <executingType>MACHINE</executingType>
+                                                    <name>Other</name>
+                                                    <private>false</private>
+                                                    <publicId>dd92f240-144b-4fef-8476-4ec0acbc1105</publicId>
+                                                </category>
+                                                <contentType>BLANK</contentType>
+                                                <description></description>
+                                                <enabled>true</enabled>
+                                                <name>Miscellaneous Tasks</name>
+                                                <publicId>26e6e095-00bb-43fa-8c34-af0b18e71ac9</publicId>
+                                                <version>
+                                                    <componentUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2018-05-28T11:12:13Z</lastModified>
+                                                    <versionUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</versionUuid>
+                                                </version>
+                                                <answers/>
+                                                <machineWorkSettingType>BASIC</machineWorkSettingType>
+                                                <template>
+                                                    <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                    <name>Blank</name>
+                                                    <origination>CREATED_MANUALLY</origination>
+                                                    <status>ACTIVE</status>
+                                                    <type>BASE_MACHINE</type>
+                                                    <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                    <version>
+                                                        <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                        <incrementalVersion>1.0</incrementalVersion>
+                                                        <lastInChain>true</lastInChain>
+                                                        <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                        <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                    </version>
+                                                </template>
+                                            </machineWorkSetting>
+                                            <machineWorkSettingType>BASIC</machineWorkSettingType>
+                                            <name>S3bot_v_2_1</name>
+                                            <machineConfigOptions/>
+                                            <sourceType>MANUAL</sourceType>
+                                            <template>
+                                                <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                <name>Blank</name>
+                                                <origination>CREATED_MANUALLY</origination>
+                                                <status>ACTIVE</status>
+                                                <type>BASE_MACHINE</type>
+                                                <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                <version>
+                                                    <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                    <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                </version>
+                                            </template>
+                                            <uuid>7a4bcc58-484f-48c4-8644-26a0ad4e655b</uuid>
+                                            <version>
+                                                <componentUuid>c7c7430a-30ac-46f0-9be4-660c446c865a</componentUuid>
+                                                <incrementalVersion>1.3</incrementalVersion>
+                                                <lastInChain>true</lastInChain>
+                                                <lastModified>2018-08-27T11:56:05Z</lastModified>
+                                                <versionUuid>df249d6b-2271-42b1-bab5-b329ea32f5e2</versionUuid>
+                                            </version>
+                                        </machineConfig>
+                                        <moderation>false</moderation>
+                                        <origination>CREATED_AUTOMATICALLY</origination>
+                                        <requiresData>true</requiresData>
+                                        <status>ACTIVE</status>
+                                        <streamComplexRunThreshold>1</streamComplexRunThreshold>
+                                        <streamTimeInterval>Immediately</streamTimeInterval>
+                                        <streamTimeIntervalValue>0</streamTimeIntervalValue>
+                                        <streamValueType>Tasks</streamValueType>
+                                        <title>S3bot_v_2_1</title>
+                                        <type>SINGLE</type>
+                                        <uuid>c2055df0-557e-477a-a744-27803acb50e5</uuid>
+                                        <validWorkflow>false</validWorkflow>
+                                        <version>
+                                            <componentUuid>2c3b10c2-3e0a-402f-9b29-45f72002e51c</componentUuid>
+                                            <incrementalVersion>1.3</incrementalVersion>
+                                            <lastInChain>true</lastInChain>
+                                            <lastModified>2018-08-27T11:56:05Z</lastModified>
+                                            <versionUuid>984e365e-136c-4fe3-b60c-2705e55f8b07</versionUuid>
+                                        </version>
+                                        <workSettingBase>false</workSettingBase>
+                                    </campaign>
+                                    <deleted>false</deleted>
+                                    <stepIndex>1</stepIndex>
+                                    <stepPosition>START</stepPosition>
+                                    <streamed>false</streamed>
+                                    <uuid>b552f4b9-85db-4963-89ba-c5738c51d123</uuid>
+                                </campaignMap>
+                                <campaignMap>
+                                    <blockSize>1</blockSize>
+                                    <businessRule>
+                                        <content>#RuleContext.APPROVE_ALL_RULE</content>
+                                        <name>Approve All</name>
+                                        <ruleType>WORKFLOW_RULE</ruleType>
+                                        <ruleTypeUI>Composite</ruleTypeUI>
+                                        <uuid>32d72ce9-d2ca-4794-af23-d30e12b62781</uuid>
+                                        <workflowRuleMode>SIMPLE</workflowRuleMode>
+                                    </businessRule>
+                                    <campaign>
+                                        <active>false</active>
+                                        <businessRules/>
+                                        <campaignMaps/>
+                                        <campaigns/>
+                                        <executingType>MACHINE</executingType>
+                                        <goldBucketBlockSize>0</goldBucketBlockSize>
+                                        <goldRatio>0</goldRatio>
+                                        <goldSource>Empty</goldSource>
+                                        <goldType>Percentage</goldType>
+                                        <machineConfig>
+                                            <answers/>
+                                            <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config xmlns="http://web-harvest.sourceforge.net/schema/1.0/config" scriptlang="groovy"&gt;
+
+&lt;!--
+	Included functions
+--&gt;
+
+    &lt;!--
+         Input parameters:
+             doc_uuid: Optional (can be empty): Document UUID
+             image_link: URL to document
+             custom_regions: Optional (can be empty): [{"left":0, "top":1000, "right":100000, "bottom": 100000}]
+             format: txt, html
+         Output:
+             ocrMap: {contentUrl, content, htmlContent} - the last one will be empty if format is txt
+    --&gt;
+    &lt;function name="performOcr"&gt;
+  		&lt;var-def name="ocrUrl"&gt;localhost:15580/api/v1/cloud&lt;/var-def&gt;
+  
+		&lt;!-- for an unknown reason without var http-extended does not send the body --&gt;
+		&lt;!--
+		&lt;var-def name="j"&gt;{"username":"workfusion","password":"workfusion"}&lt;/var-def&gt;
+		&lt;var-def name="tokenJson"&gt;
+			&lt;http-extended url="localhost:15280/workfusion/api/login" method="POST" charset="UTF-8" content-type="application/json"&gt;
+				&lt;var name="j"/&gt;
+			&lt;/http-extended&gt;
+	  &lt;/var-def&gt;--&gt;
+		
+&lt;!-- 
+	Please note that obtained token has limited duration (jwt.expiration.minutes). 
+	For simplicity reason and because we use local OCR we do not expect to exceed this duration. 
+	But in real life it may be needed to refresh token value if OCR wait time is too long.  
+--&gt;
+	&lt;!--
+	  &lt;var-def name="token"&gt;
+	      &lt;json expression="$.token"&gt;&lt;var name="tokenJson"/&gt;&lt;/json&gt;
+	  &lt;/var-def&gt;
+	  --&gt;
+      	&lt;var-def name="document_uuid"&gt;
+        	&lt;var name="doc_uuid"/&gt;
+    	&lt;/var-def&gt;
+    	&lt;case&gt;
+        	&lt;if condition="${document_uuid.toString().length() == 0}"&gt;
+            	&lt;var-def name="document_uuid"&gt;
+                	&lt;template&gt;${java.util.UUID.randomUUID().toString()}&lt;/template&gt;
+            	&lt;/var-def&gt;
+        	&lt;/if&gt;
+    	&lt;/case&gt;
+  
+  		&lt;var-def name="document_image_link"&gt;
+  			&lt;var name="image_link"/&gt;
+  		&lt;/var-def&gt;
+  		&lt;var-def name="customRegions"&gt;
+	        &lt;var name="custom_regions"/&gt;
+ 		&lt;/var-def&gt;
+
+    	&lt;case&gt;
+        	&lt;if condition="${customRegions.toString().length() == 0}"&gt;
+            	&lt;var-def name="customRegions"&gt;
+                	[{"left":0, "top":0, "right":4000, "bottom":4000}]
+            	&lt;/var-def&gt;
+        	&lt;/if&gt;
+    	&lt;/case&gt;
+
+ 		&lt;function name="checkForErrors"&gt;
+			&lt;var-def name="status"&gt;
+				&lt;xpath expression="//task/@status"&gt;
+					&lt;var name="response" /&gt;
+				&lt;/xpath&gt;
+			&lt;/var-def&gt;
+			&lt;script&gt;&lt;![CDATA[
+	       		// "OCR Status: " + status                              
+				positiveStatusList = ["Submitted","Queued","InProgress","Completed"]
+				if (!positiveStatusList.any {it.equals(status.toString())}) {
+					throw new RuntimeException("OCR task has error status. Details:\n" + response);
+				}
+			]]&gt;&lt;/script&gt;
+		&lt;/function&gt;
+	
+		&lt;var-def name="processResponse"&gt;	
+		   	&lt;http url="${ocrUrl}/processImage" method="post" multipart="true"&gt;
+				&lt;!--&lt;http-header name="Authorization"&gt;&lt;script return="'Bearer ' + token.get(0).wrappedObject.asText()"/&gt;&lt;/http-header&gt;--&gt;
+				&lt;http-param name="file" isfile="true"&gt;&lt;http url="${document_image_link}"/&gt;&lt;/http-param&gt;
+		       	&lt;http-param name="profile"&gt;documentConversion&lt;/http-param&gt;
+		       	&lt;http-param name="exportFormat"&gt;&lt;var name="format"/&gt;&lt;/http-param&gt;
+		       	&lt;http-param name="language"&gt;English&lt;/http-param&gt;
+		       	&lt;http-param name="engine"&gt;abbyy&lt;/http-param&gt;
+				&lt;http-param name="customRegions"&gt;&lt;template&gt;${customRegions}&lt;/template&gt;&lt;/http-param&gt;
+				&lt;http-param name="useOnlyCustomRegions"&gt;true&lt;/http-param&gt;
+		       	&lt;http-param name="correctSkew"&gt;true&lt;/http-param&gt;
+		       	&lt;http-param name="xml:writeRecognitionVariants"&gt;true&lt;/http-param&gt;
+		       	&lt;http-param name="correctOrientation"&gt;true&lt;/http-param&gt;
+			&lt;/http&gt;
+		&lt;/var-def&gt;
+
+		&lt;call name="checkForErrors"&gt;
+		   &lt;call-param name="response"&gt;
+		      &lt;template&gt;${processResponse}&lt;/template&gt;
+		   &lt;/call-param&gt;
+		&lt;/call&gt;
+		
+		&lt;var-def name="taskId"&gt;
+			&lt;xpath expression="//response/task/@id"&gt;
+				&lt;template&gt;${processResponse}&lt;/template&gt;
+			&lt;/xpath&gt;
+		&lt;/var-def&gt;
+
+		&lt;var-def name="taskStatus"&gt;Unknown&lt;/var-def&gt;
+
+		&lt;while condition="${!taskStatus.toString().equals('Completed')}" maxloops="300"&gt;
+			&lt;script&gt;Thread.sleep(5000)&lt;/script&gt;
+			
+			&lt;var-def name="statusResponse"&gt;
+				&lt;http url="${ocrUrl}/getTaskStatus?taskId=${taskId}" method="get"&gt;
+					&lt;!--&lt;http-header name="Authorization"&gt;&lt;script return="'Bearer ' + token.get(0).wrappedObject.asText()"/&gt;&lt;/http-header&gt;--&gt;
+				&lt;/http&gt;
+		    &lt;/var-def&gt;
+		    
+		    &lt;call name="checkForErrors"&gt;
+				&lt;call-param name="response"&gt;
+					&lt;template&gt;${statusResponse}&lt;/template&gt;
+				&lt;/call-param&gt;
+		    &lt;/call&gt;
+		    
+		    &lt;var-def name="taskStatus"&gt;
+				&lt;xpath expression="string(//response/task/@status)"&gt;
+					&lt;var name="statusResponse"/&gt;
+				&lt;/xpath&gt;
+		    &lt;/var-def&gt;
+		&lt;/while&gt;
+
+		&lt;var-def name="resultUrl"&gt;
+        	&lt;xpath expression="string(//response/task/@resultUrl)"&gt;
+            	&lt;var name="statusResponse" /&gt;
+        	&lt;/xpath&gt;
+		&lt;/var-def&gt;
+
+		&lt;var-def name="resultContent"&gt;
+			&lt;http url="${resultUrl}" method="get"&gt;
+				&lt;!--&lt;http-header name="Authorization"&gt;&lt;script return="'Bearer ' + token.get(0).wrappedObject.asText()"/&gt;&lt;/http-header&gt;--&gt;
+			&lt;/http&gt;
+		&lt;/var-def&gt;
+		
+		&lt;var-def name="resultHtml"&gt;
+		    &lt;case&gt;
+        		&lt;if condition='${"html".equals(format.toString())}'&gt;
+					&lt;html-to-xml&gt;
+		        		&lt;script return="res"&gt;&lt;![CDATA[
+		            		// Removing BOM and DOCTYPE
+		            		res = resultContent.toString().replaceAll("^\uFEFF", "")
+		            		res = res.replaceAll("&lt;!DOCTYPE[^&gt;]*&gt;", "")
+		            		// "OCR results: " + res                              
+		           		]]&gt; &lt;/script&gt;
+					&lt;/html-to-xml&gt;
+        		&lt;/if&gt;
+        		&lt;else&gt;
+        		&lt;/else&gt;
+    		&lt;/case&gt;
+		&lt;/var-def&gt;
+
+        &lt;return&gt;
+            &lt;script return="ocrMap"&gt;&lt;![CDATA[
+               Map resultMap = new HashMap();
+               resultMap.put("contentUrl", resultUrl.toString());
+               resultMap.put("content", resultContent.toString()); // May give wrong results if PDF is requested but this case is not in our scenario
+               resultMap.put("htmlContent", resultHtml.toString());
+               ocrMap = resultMap;
+            ]]&gt;&lt;/script&gt;
+        &lt;/return&gt;
+        
+    &lt;/function&gt;	
+	
+
+&lt;!--
+	Primary code
+--&gt;
+
+	&lt;required name="s3_invoice_link"/&gt;
+
+	&lt;var-def name="ocrResultsPart"&gt;
+        &lt;call name="performOcr"&gt;
+         	&lt;call-param name="image_link"&gt;&lt;var name="s3_invoice_link"/&gt;&lt;/call-param&gt;
+        	&lt;call-param name="doc_uuid"&gt;&lt;/call-param&gt;
+            &lt;call-param name="custom_regions"&gt;&lt;/call-param&gt;
+            &lt;call-param name="format"&gt;html&lt;/call-param&gt;
+        &lt;/call&gt;
+    &lt;/var-def&gt;
+
+	&lt;var-def name="partUrl"&gt;
+		&lt;template&gt;${ocrResultsPart.getWrappedObject().get(0).getWrappedObject().get("contentUrl")}&lt;/template&gt;
+	&lt;/var-def&gt;
+
+	&lt;var-def name="partContent"&gt;
+		&lt;template&gt;${ocrResultsPart.getWrappedObject().get(0).getWrappedObject().get("content")}&lt;/template&gt;
+	&lt;/var-def&gt;
+
+	&lt;var-def name="partContentHtml"&gt;
+		&lt;template&gt;${ocrResultsPart.getWrappedObject().get(0).getWrappedObject().get("htmlContent")}&lt;/template&gt;
+	&lt;/var-def&gt;
+
+&lt;!-- 	"ocrResultsPart contentUrl: " + partUrl.toString() --&gt;
+&lt;!-- 	"ocrResultsPart content: " + partContent.toString() --&gt;
+&lt;!-- 	"ocrResultsPart htmlContent: " + partContentHtml.toString() --&gt;
+	
+    &lt;export include-original-data="true"&gt;
+&lt;!-- Please note that content URL will not be accessible without auth token --&gt;
+    	&lt;single-column name="content_url" value="${partUrl}"/&gt;
+    	&lt;single-column name="content" value="${partContent}"/&gt;
+    	&lt;single-column name="html_content" value="${partContentHtml}"/&gt;
+    &lt;/export&gt;
+
+&lt;/config&gt;
+</content>
+                                            <description>Sends invoices to OCR and gets OCR results</description>
+                                            <includedConfigs/>
+                                            <inclusionCode>136ed237-9409-456a-b141-f97975b02c34</inclusionCode>
+                                            <jsonParams>{"configXMLModified":"true"}</jsonParams>
+                                            <machineWorkSetting>
+                                                <category>
+                                                    <automation>false</automation>
+                                                    <description></description>
+                                                    <enabled>true</enabled>
+                                                    <executingType>MACHINE</executingType>
+                                                    <name>Other</name>
+                                                    <private>false</private>
+                                                    <publicId>dd92f240-144b-4fef-8476-4ec0acbc1105</publicId>
+                                                </category>
+                                                <contentType>BLANK</contentType>
+                                                <description></description>
+                                                <enabled>true</enabled>
+                                                <name>Miscellaneous Tasks</name>
+                                                <publicId>26e6e095-00bb-43fa-8c34-af0b18e71ac9</publicId>
+                                                <version>
+                                                    <componentUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2018-05-28T11:12:13Z</lastModified>
+                                                    <versionUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</versionUuid>
+                                                </version>
+                                                <answers/>
+                                                <machineWorkSettingType>BASIC</machineWorkSettingType>
+                                                <template>
+                                                    <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                    <name>Blank</name>
+                                                    <origination>CREATED_MANUALLY</origination>
+                                                    <status>ACTIVE</status>
+                                                    <type>BASE_MACHINE</type>
+                                                    <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                    <version>
+                                                        <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                        <incrementalVersion>1.0</incrementalVersion>
+                                                        <lastInChain>true</lastInChain>
+                                                        <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                        <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                    </version>
+                                                </template>
+                                            </machineWorkSetting>
+                                            <machineWorkSettingType>BASIC</machineWorkSettingType>
+                                            <name>OCRbot_v_2_1</name>
+                                            <machineConfigOptions/>
+                                            <sourceType>MANUAL</sourceType>
+                                            <template>
+                                                <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                <name>Blank</name>
+                                                <origination>CREATED_MANUALLY</origination>
+                                                <status>ACTIVE</status>
+                                                <type>BASE_MACHINE</type>
+                                                <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                <version>
+                                                    <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                    <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                </version>
+                                            </template>
+                                            <uuid>136ed237-9409-456a-b141-f97975b02c34</uuid>
+                                            <version>
+                                                <componentUuid>0af4b9bf-e962-4deb-aac9-b84b18c6d947</componentUuid>
+                                                <incrementalVersion>1.3</incrementalVersion>
+                                                <lastInChain>true</lastInChain>
+                                                <lastModified>2018-09-04T14:14:01Z</lastModified>
+                                                <versionUuid>af8f8435-7ff5-489b-b8f0-87238eb90054</versionUuid>
+                                            </version>
+                                        </machineConfig>
+                                        <moderation>false</moderation>
+                                        <origination>CREATED_AUTOMATICALLY</origination>
+                                        <requiresData>true</requiresData>
+                                        <status>ACTIVE</status>
+                                        <streamComplexRunThreshold>1</streamComplexRunThreshold>
+                                        <streamTimeInterval>Immediately</streamTimeInterval>
+                                        <streamTimeIntervalValue>0</streamTimeIntervalValue>
+                                        <streamValueType>Tasks</streamValueType>
+                                        <title>OCRbot_v_2_1</title>
+                                        <type>SINGLE</type>
+                                        <uuid>f6d970a5-8481-4556-8977-fa21c1d252de</uuid>
+                                        <validWorkflow>false</validWorkflow>
+                                        <version>
+                                            <componentUuid>8b2b7c4a-d828-4d19-b534-2f9151c06ddc</componentUuid>
+                                            <incrementalVersion>1.3</incrementalVersion>
+                                            <lastInChain>true</lastInChain>
+                                            <lastModified>2018-09-04T14:14:01Z</lastModified>
+                                            <versionUuid>fa9e50c9-d443-471a-81cb-0d4caabe8edd</versionUuid>
+                                        </version>
+                                        <workSettingBase>false</workSettingBase>
+                                    </campaign>
+                                    <deleted>false</deleted>
+                                    <stepIndex>2</stepIndex>
+                                    <stepPosition>INTERMEDIATE</stepPosition>
+                                    <streamed>false</streamed>
+                                    <uuid>52cb30d3-f0ef-4260-a8fb-788ace0ec86e</uuid>
+                                </campaignMap>
+                                <campaignMap>
+                                    <blockSize>1</blockSize>
+                                    <businessRule>
+                                        <content>#RuleContext.APPROVE_ALL_RULE</content>
+                                        <name>Approve All</name>
+                                        <ruleType>WORKFLOW_RULE</ruleType>
+                                        <ruleTypeUI>Composite</ruleTypeUI>
+                                        <uuid>0800740c-2969-453c-a16e-c0e4d84b6498</uuid>
+                                        <workflowRuleMode>SIMPLE</workflowRuleMode>
+                                    </businessRule>
+                                    <campaign>
+                                        <active>false</active>
+                                        <businessRules/>
+                                        <campaignMaps/>
+                                        <campaigns/>
+                                        <executingType>MACHINE</executingType>
+                                        <goldBucketBlockSize>0</goldBucketBlockSize>
+                                        <goldRatio>0</goldRatio>
+                                        <goldSource>Empty</goldSource>
+                                        <goldType>Percentage</goldType>
+                                        <machineConfig>
+                                            <answers/>
+                                            <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config xmlns="http://web-harvest.sourceforge.net/schema/1.0/config" scriptlang="groovy" charset="UTF-8"&gt;
+	
+        &lt;var-def name="buyer"&gt;			
+			 &lt;xpath expression='//span[contains(text(),"BILL TO")]/following::span[@class="font0"][1]/text()'&gt;  
+	   			&lt;template&gt;${html_content.getWrappedObject()}&lt;/template&gt;
+			&lt;/xpath&gt;
+		&lt;/var-def&gt; 
+		&lt;var-def name="date1"&gt;
+			&lt;xpath expression='//span[contains(text(),"Order date")]/text()'&gt;
+	   			&lt;template&gt;${html_content.getWrappedObject()}&lt;/template&gt;
+			&lt;/xpath&gt;
+		&lt;/var-def&gt;
+		&lt;var-def name="total1"&gt;
+	   		&lt;xpath expression='//html/body[@style="background-color:#FFFFFF;"]/table[@border="1"]/tbody/tr/td/p[3]/span[2]/text()'&gt; 	   							
+	   			&lt;template&gt;${html_content.getWrappedObject()}&lt;/template&gt;
+			&lt;/xpath&gt;
+		&lt;/var-def&gt;
+  
+     &lt;script&gt;&lt;![CDATA[
+        date2=date1.toString();
+		try	{date3=date2.substring(date2.lastIndexOf("date") + 5)} catch  (Exception e1) {date3='None'}
+		total2=total1.toString();
+		try	{total3=total2.substring(total2.lastIndexOf("AL ") + 8)} catch  (Exception e2) {total3='None'}	
+        try	{currency3=total2[0..2]} catch  (Exception e3) {currency3='None'}	;    
+	]]&gt;&lt;/script&gt;
+
+    &lt;export include-original-data="false"&gt;
+    	&lt;single-column name="buyer" value="${buyer}"/&gt;
+    	&lt;single-column name="date" value="${date3}"/&gt;
+    	&lt;single-column name="total" value="${total3}"/&gt;
+    	&lt;single-column name="currency" value="${currency3}"/&gt;
+        &lt;single-column name="content" value="${html_content}"/&gt;
+     	&lt;single-column name="number" value="${number}"/&gt;
+    &lt;/export&gt;
+&lt;/config&gt;</content>
+                                            <description></description>
+                                            <includedConfigs/>
+                                            <inclusionCode>53317456-5212-4849-8725-e5cc6f84bf4b</inclusionCode>
+                                            <jsonParams>{"configXMLModified":"true"}</jsonParams>
+                                            <machineWorkSetting>
+                                                <category>
+                                                    <automation>false</automation>
+                                                    <description></description>
+                                                    <enabled>true</enabled>
+                                                    <executingType>MACHINE</executingType>
+                                                    <name>Other</name>
+                                                    <private>false</private>
+                                                    <publicId>dd92f240-144b-4fef-8476-4ec0acbc1105</publicId>
+                                                </category>
+                                                <contentType>BLANK</contentType>
+                                                <description></description>
+                                                <enabled>true</enabled>
+                                                <name>Miscellaneous Tasks</name>
+                                                <publicId>26e6e095-00bb-43fa-8c34-af0b18e71ac9</publicId>
+                                                <version>
+                                                    <componentUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2018-05-28T11:12:13Z</lastModified>
+                                                    <versionUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</versionUuid>
+                                                </version>
+                                                <answers/>
+                                                <machineWorkSettingType>BASIC</machineWorkSettingType>
+                                                <template>
+                                                    <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                    <name>Blank</name>
+                                                    <origination>CREATED_MANUALLY</origination>
+                                                    <status>ACTIVE</status>
+                                                    <type>BASE_MACHINE</type>
+                                                    <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                    <version>
+                                                        <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                        <incrementalVersion>1.0</incrementalVersion>
+                                                        <lastInChain>true</lastInChain>
+                                                        <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                        <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                    </version>
+                                                </template>
+                                            </machineWorkSetting>
+                                            <machineWorkSettingType>BASIC</machineWorkSettingType>
+                                            <name>Parse_bot_v_2_1</name>
+                                            <machineConfigOptions/>
+                                            <sourceType>MANUAL</sourceType>
+                                            <template>
+                                                <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                <name>Blank</name>
+                                                <origination>CREATED_MANUALLY</origination>
+                                                <status>ACTIVE</status>
+                                                <type>BASE_MACHINE</type>
+                                                <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                <version>
+                                                    <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                    <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                </version>
+                                            </template>
+                                            <uuid>53317456-5212-4849-8725-e5cc6f84bf4b</uuid>
+                                            <version>
+                                                <componentUuid>e416eb75-829c-4223-ab19-fc058fac3ef6</componentUuid>
+                                                <incrementalVersion>1.1</incrementalVersion>
+                                                <lastInChain>true</lastInChain>
+                                                <lastModified>2018-08-27T11:56:05Z</lastModified>
+                                                <versionUuid>2a9507a6-59f8-440f-a8d0-35ad9b598278</versionUuid>
+                                            </version>
+                                        </machineConfig>
+                                        <moderation>false</moderation>
+                                        <origination>CREATED_AUTOMATICALLY</origination>
+                                        <requiresData>true</requiresData>
+                                        <status>ACTIVE</status>
+                                        <streamComplexRunThreshold>1</streamComplexRunThreshold>
+                                        <streamTimeInterval>Immediately</streamTimeInterval>
+                                        <streamTimeIntervalValue>0</streamTimeIntervalValue>
+                                        <streamValueType>Tasks</streamValueType>
+                                        <title>Parse_bot_v_2_1</title>
+                                        <type>SINGLE</type>
+                                        <uuid>abc690f7-43fe-4f27-84f0-852144f35043</uuid>
+                                        <validWorkflow>false</validWorkflow>
+                                        <version>
+                                            <componentUuid>c66ef5c1-9dfc-4458-87b3-d25fe6826a90</componentUuid>
+                                            <incrementalVersion>1.1</incrementalVersion>
+                                            <lastInChain>true</lastInChain>
+                                            <lastModified>2018-08-27T11:56:05Z</lastModified>
+                                            <versionUuid>ccbfcef2-bda2-4459-8ebe-201cf34f4ef8</versionUuid>
+                                        </version>
+                                        <workSettingBase>false</workSettingBase>
+                                    </campaign>
+                                    <deleted>false</deleted>
+                                    <stepIndex>3</stepIndex>
+                                    <stepPosition>INTERMEDIATE</stepPosition>
+                                    <streamed>false</streamed>
+                                    <uuid>76659ec4-389d-4bd3-8c13-f2474b730b28</uuid>
+                                </campaignMap>
+                                <campaignMap>
+                                    <businessRule>
+                                        <content>package com.freedomoss.requester;
+
+#list any import classes here.
+import com.freedomoss.objective.model.CompositeRuleContext;
+import com.freedomoss.objective.model.CompositeRuleDataItemContext;
+import com.freedomoss.requester.model.AwsHitQuestionItem;
+import com.freedomoss.requester.model.AwsHitQuestionAnswerItem;
+import org.slf4j.Logger;
+import java.util.Map;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.ArrayList;
+import com.freedomoss.requester.dto.SubmissionResultDTO;
+
+#declare any global variables here
+global CompositeRuleContext source
+global Logger log
+global Map params
+
+
+
+rule "Rule context initialization"
+auto-focus true
+no-loop
+dialect "mvel"
+agenda-group "initialization-group"
+	when
+		$ctx:CompositeRuleContext(initialized == false);
+	then
+		$ctx.updateWorkingMemory();
+		# move to business rules
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("calculation").setFocus();
+end</content>
+                                        <name>Business Process: End Rule</name>
+                                        <ruleType>WORKFLOW_RULE</ruleType>
+                                        <uuid>379ab54e-b579-4b23-b2a2-cd00a0ffaff5</uuid>
+                                        <workflowRuleMode>ADVANCED</workflowRuleMode>
+                                    </businessRule>
+                                    <campaign>
+                                        <active>false</active>
+                                        <businessRules/>
+                                        <campaignMaps/>
+                                        <campaigns/>
+                                        <executingType>MACHINE</executingType>
+                                        <goldBucketBlockSize>0</goldBucketBlockSize>
+                                        <goldRatio>0</goldRatio>
+                                        <goldSource>Empty</goldSource>
+                                        <goldType>Percentage</goldType>
+                                        <machineConfig>
+                                            <answers/>
+                                            <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+
+    &lt;var-def name="exportType"&gt;
+        &lt;case&gt;
+            &lt;if condition='${sys.isVariableDefined("_sys_export_type")}'&gt;
+                &lt;template&gt;${_sys_export_type}&lt;/template&gt;
+            &lt;/if&gt;
+        &lt;/case&gt;
+    &lt;/var-def&gt;
+
+    &lt;var-def name="exportColumns"&gt;
+        &lt;case&gt;
+            &lt;if condition='${sys.isVariableDefined("_sys_export_columns")}'&gt;
+                &lt;template&gt;${_sys_export_columns}&lt;/template&gt;
+            &lt;/if&gt;
+            &lt;else&gt;&lt;/else&gt;
+        &lt;/case&gt;
+    &lt;/var-def&gt;
+
+    &lt;var-def name="columnNameCase"&gt;
+        &lt;case&gt;
+            &lt;if condition='${sys.isVariableDefined("_sys_column_name_case")}'&gt;
+                &lt;template&gt;${_sys_column_name_case}&lt;/template&gt;
+            &lt;/if&gt;
+            &lt;else&gt;keep&lt;/else&gt;
+        &lt;/case&gt;
+    &lt;/var-def&gt;
+
+    &lt;var-def name="dataOnly"&gt;
+        &lt;case&gt;
+            &lt;if condition='${sys.isVariableDefined("_sys_data_only")}'&gt;
+                &lt;template&gt;${_sys_data_only}&lt;/template&gt;
+            &lt;/if&gt;
+            &lt;else&gt;true&lt;/else&gt;
+        &lt;/case&gt;
+    &lt;/var-def&gt;
+
+    &lt;var-def name="datastoreName"&gt;
+        &lt;script return="item.getWrappedObject().getRun().getDatastoreName()" /&gt;
+    &lt;/var-def&gt;
+    &lt;case&gt;
+        &lt;if condition="${!datastoreName.isEmpty()}"&gt;
+            &lt;insert-datastore   datastore-name="${datastoreName}" create="true"&gt;
+                &lt;script return="hit_submission_data_item.getWrappedObject().getItemValueMap()"/&gt;
+            &lt;/insert-datastore&gt;
+        &lt;/if&gt;
+    &lt;/case&gt;
+
+    &lt;export include-original-data="true"
+            export-type="${exportType}"
+            export-columns="${exportColumns}"
+            column-name-case="${columnNameCase}"
+            data-only="${dataOnly}"&gt;
+    &lt;/export&gt;
+&lt;/config&gt;</content>
+                                            <description>Default machine campaign for end step.</description>
+                                            <includedConfigs/>
+                                            <inclusionCode>9e5000e3-c243-42d3-b5ad-c6ac90dec35e</inclusionCode>
+                                            <machineWorkSetting>
+                                                <category>
+                                                    <automation>false</automation>
+                                                    <description></description>
+                                                    <enabled>true</enabled>
+                                                    <executingType>MACHINE</executingType>
+                                                    <name>Other</name>
+                                                    <private>false</private>
+                                                    <publicId>dd92f240-144b-4fef-8476-4ec0acbc1105</publicId>
+                                                </category>
+                                                <contentType>BLANK</contentType>
+                                                <description></description>
+                                                <enabled>true</enabled>
+                                                <name>Miscellaneous Tasks</name>
+                                                <publicId>26e6e095-00bb-43fa-8c34-af0b18e71ac9</publicId>
+                                                <version>
+                                                    <componentUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2018-05-28T11:12:13Z</lastModified>
+                                                    <versionUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</versionUuid>
+                                                </version>
+                                                <answers/>
+                                                <machineWorkSettingType>BASIC</machineWorkSettingType>
+                                                <template>
+                                                    <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                    <name>Blank</name>
+                                                    <origination>CREATED_MANUALLY</origination>
+                                                    <status>ACTIVE</status>
+                                                    <type>BASE_MACHINE</type>
+                                                    <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                    <version>
+                                                        <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                        <incrementalVersion>1.0</incrementalVersion>
+                                                        <lastInChain>true</lastInChain>
+                                                        <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                        <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                    </version>
+                                                </template>
+                                            </machineWorkSetting>
+                                            <name>Final Results</name>
+                                            <machineConfigOptions/>
+                                            <sourceType>MANUAL</sourceType>
+                                            <template>
+                                                <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                <name>Blank</name>
+                                                <origination>CREATED_MANUALLY</origination>
+                                                <status>ACTIVE</status>
+                                                <type>BASE_MACHINE</type>
+                                                <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                <version>
+                                                    <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                    <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                </version>
+                                            </template>
+                                            <uuid>9e5000e3-c243-42d3-b5ad-c6ac90dec35e</uuid>
+                                            <version>
+                                                <componentUuid>9e5000e3-c243-42d3-b5ad-c6ac90dec35e</componentUuid>
+                                                <incrementalVersion>1.0</incrementalVersion>
+                                                <lastInChain>true</lastInChain>
+                                                <lastModified>2018-05-28T11:12:21Z</lastModified>
+                                                <versionUuid>04cccd58-6268-11e8-97c5-0ae8ba3240ae</versionUuid>
+                                            </version>
+                                        </machineConfig>
+                                        <moderation>false</moderation>
+                                        <origination>CREATED_AUTOMATICALLY</origination>
+                                        <requiresData>true</requiresData>
+                                        <status>ACTIVE</status>
+                                        <streamComplexRunThreshold>100</streamComplexRunThreshold>
+                                        <streamTimeInterval>Immediately</streamTimeInterval>
+                                        <streamTimeIntervalValue>0</streamTimeIntervalValue>
+                                        <streamValueType>Percents</streamValueType>
+                                        <title>Final Results</title>
+                                        <type>SINGLE</type>
+                                        <uuid>af4c8905-26dd-4120-b208-39ad3530ffc6</uuid>
+                                        <validWorkflow>false</validWorkflow>
+                                        <version>
+                                            <componentUuid>041df7e3-6268-11e8-97c5-0ae8ba3240ae</componentUuid>
+                                            <incrementalVersion>1.0</incrementalVersion>
+                                            <lastInChain>true</lastInChain>
+                                            <lastModified>2018-05-28T11:12:21Z</lastModified>
+                                            <versionUuid>04ccea14-6268-11e8-97c5-0ae8ba3240ae</versionUuid>
+                                        </version>
+                                        <workSettingBase>false</workSettingBase>
+                                    </campaign>
+                                    <deleted>false</deleted>
+                                    <stepIndex>4</stepIndex>
+                                    <stepPosition>END</stepPosition>
+                                    <streamed>false</streamed>
+                                    <uuid>c15f67a7-d0d6-458f-b4ba-e7c93d4b515c</uuid>
+                                </campaignMap>
+                            </campaignMaps>
+                            <campaigns/>
+                            <compositeCampaignVersion>NEW_WORKFLOW</compositeCampaignVersion>
+                            <compositeStructureXml>&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id="0"/&gt;&lt;mxCell id="1" parent="0"/&gt;&lt;Start id="2" name="Start" type="start"&gt;&lt;mxCell parent="1" style="start" vertex="1"&gt;&lt;mxGeometry as="geometry" height="32.0" width="32.0" x="160.0" y="140.0"/&gt;&lt;/mxCell&gt;&lt;/Start&gt;&lt;End campaignMapUUID="c15f67a7-d0d6-458f-b4ba-e7c93d4b515c" id="3" name="End" type="end"&gt;&lt;mxCell parent="1" style="end" vertex="1"&gt;&lt;mxGeometry as="geometry" height="32.0" width="32.0" x="1010.0" y="124.0"/&gt;&lt;/mxCell&gt;&lt;/End&gt;&lt;MachineTask campaignMapUUID="b552f4b9-85db-4963-89ba-c5738c51d123" id="4" name="S3bot_v_2_1" taskUUID="c2055df0-557e-477a-a744-27803acb50e5" type="machine_task"&gt;&lt;mxCell parent="1" style="machine_task" vertex="1"&gt;&lt;mxGeometry as="geometry" height="60.0" width="160.0" x="300.0" y="110.0"/&gt;&lt;/mxCell&gt;&lt;/MachineTask&gt;&lt;Link id="6" name="" type="link"&gt;&lt;mxCell edge="1" parent="1" source="2" style="link" target="4"&gt;&lt;mxGeometry as="geometry" relative="1" x="0.5" y="10.0"/&gt;&lt;/mxCell&gt;&lt;/Link&gt;&lt;MachineTask campaignMapUUID="52cb30d3-f0ef-4260-a8fb-788ace0ec86e" id="7" name="OCRbot_v_2_1" taskUUID="f6d970a5-8481-4556-8977-fa21c1d252de" type="machine_task"&gt;&lt;mxCell parent="1" style="machine_task" vertex="1"&gt;&lt;mxGeometry as="geometry" height="60.0" width="160.0" x="560.2000122070312" y="109.60000610351562"/&gt;&lt;/mxCell&gt;&lt;/MachineTask&gt;&lt;Link id="8" name="" outcome="ApproveAll" outcomeId="ApproveAll" ruleUUID="53c7408f-d5d0-4bd8-8b49-7efaa6dc2929" type="link"&gt;&lt;mxCell edge="1" parent="1" source="4" style="link" target="7"&gt;&lt;mxGeometry as="geometry" relative="1" x="0.5" y="10.0"/&gt;&lt;/mxCell&gt;&lt;/Link&gt;&lt;MachineTask campaignMapUUID="76659ec4-389d-4bd3-8c13-f2474b730b28" id="10" name="Parse_bot_v_2_1" taskUUID="abc690f7-43fe-4f27-84f0-852144f35043" type="machine_task"&gt;&lt;mxCell parent="1" style="machine_task" vertex="1"&gt;&lt;mxGeometry as="geometry" height="60.0" width="160.0" x="800.0" y="110.0"/&gt;&lt;/mxCell&gt;&lt;/MachineTask&gt;&lt;Link id="11" name="" outcome="ApproveAll" outcomeId="ApproveAll" ruleUUID="32d72ce9-d2ca-4794-af23-d30e12b62781" type="link"&gt;&lt;mxCell edge="1" parent="1" source="7" style="link" target="10"&gt;&lt;mxGeometry as="geometry" relative="1" x="0.5" y="10.0"/&gt;&lt;/mxCell&gt;&lt;/Link&gt;&lt;Link id="39" name="" outcome="ApproveAll" outcomeId="ApproveAll" ruleUUID="0800740c-2969-453c-a16e-c0e4d84b6498" type="link"&gt;&lt;mxCell edge="1" parent="1" source="10" style="link" target="3"&gt;&lt;mxGeometry as="geometry" relative="1" x="0.5" y="10.0"/&gt;&lt;/mxCell&gt;&lt;/Link&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;</compositeStructureXml>
+                            <description>Business Process description</description>
+                            <executingType>COMPOSITE</executingType>
+                            <goldBucketBlockSize>0</goldBucketBlockSize>
+                            <goldRatio>0</goldRatio>
+                            <goldSource>Empty</goldSource>
+                            <goldType>Percentage</goldType>
+                            <moderation>false</moderation>
+                            <origination>CREATED_AUTOMATICALLY</origination>
+                            <requiresData>true</requiresData>
+                            <status>ACTIVE</status>
+                            <streamComplexRunThreshold>1</streamComplexRunThreshold>
+                            <streamTimeInterval>Immediately</streamTimeInterval>
+                            <streamTimeIntervalValue>0</streamTimeIntervalValue>
+                            <streamValueType>Tasks</streamValueType>
+                            <title>Data extraction from PDFs</title>
+                            <type>COMPOSITE</type>
+                            <uuid>896b1364-4069-4808-bb5f-8a669b840b69</uuid>
+                            <validWorkflow>true</validWorkflow>
+                            <version>
+                                <componentUuid>4f64d565-f8b1-43e7-92f1-6b1e43d167fa</componentUuid>
+                                <incrementalVersion>1.2</incrementalVersion>
+                                <lastInChain>true</lastInChain>
+                                <lastModified>2018-09-04T14:14:01Z</lastModified>
+                                <versionUuid>bfefa127-e3aa-419e-8e16-2f20b92c3d77</versionUuid>
+                            </version>
+                            <workSettingBase>false</workSettingBase>
+                        </campaign>
+                        <description>
+                            <automationType>NONE</automationType>
+                            <dynamicTaskRenderingDisabled>false</dynamicTaskRenderingDisabled>
+                            <goldRun>false</goldRun>
+                            <maximumProcessingCount>10</maximumProcessingCount>
+                            <qualificationTraining>false</qualificationTraining>
+                            <stepDescription>{}</stepDescription>
+                            <streamingValue>1</streamingValue>
+                            <streamingValueType>Tasks</streamingValueType>
+                            <taskParams>{"values":{"DESCRIPTION":"","NAME":"S3botTest"}}</taskParams>
+                            <uploadResults>false</uploadResults>
+                            <uploadResultsType>CREATE</uploadResultsType>
+                        </description>
+                        <executingType>COMPOSITE</executingType>
+                        <forceComplete>false</forceComplete>
+                        <forceCompleteIdleTime>0</forceCompleteIdleTime>
+                        <forceCompletePercent>100</forceCompletePercent>
+                        <mixStrategy>
+                            <additionalRows>0</additionalRows>
+                            <blockSize>1</blockSize>
+                            <goldItemSize>0</goldItemSize>
+                            <goldPercentage>0</goldPercentage>
+                            <goldRatio>true</goldRatio>
+                            <mainRows>1</mainRows>
+                            <repeated>false</repeated>
+                        </mixStrategy>
+                        <purged>false</purged>
+                        <recordProcessingStatus>NOT_STARTED</recordProcessingStatus>
+                        <runTags>
+                            <value>Invoices</value>
+                        </runTags>
+                        <runTags>
+                            <value>OCR</value>
+                        </runTags>
+                        <runType>SIMPLE</runType>
+                        <tags>Invoices,OCR</tags>
+                        <title>Data extraction from PDFs</title>
+                        <uuid>20e9e771-0438-425b-a6a7-8ceb29383484</uuid>
+                    </run>
+                </runs>
+                <automationUseCases/>
+                <automationInfo/>
+            </project>
+            <hashCode>392909541</hashCode>
+        </objectContainer>
+    </objects>
+</objectListWrapper>
