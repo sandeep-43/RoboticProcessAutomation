@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="purchase_list" type="LIST" value="[]"/>
+    <variable name="product_name" type="STRING" value=""/>
+    <variable name="seller" type="STRING" value=""/>
+    <variable name="price" type="STRING" value=""/>
+    <variable name="products" type="LIST" value="[]"/>
+    <variable name="products_table" type="TABLE" value="[]"/>
+  </variables>
+  <actions xsi:type="recorder:OpenSpreadsheetAction" active="true" actionDetails="(&quot;C:\Users\sande...ase Items.xlsx&quot;)" delay="0" filePath="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Projects\Purchase Items.xlsx" autoSaveFile="true">
+    <actions xsi:type="recorder:GetColumnAction" varName="purchase_list" active="true" actionDetails="(First)" delay="0" idx="A2"/>
+  </actions>
+  <actions xsi:type="recorder:ForeachAction" active="true" actionDetails="(element) in (purchase_list)" delay="0" varName="purchase_list" pointerName="element" filterExpression="2-*">
+    <actions xsi:type="recorder:OpenURLAction" active="true" actionDetails="(https://www.amazon.com)" delay="0" url="https://www.amazon.com" type="CHROME">
+      <actions xsi:type="recorder:MaximizeCurrentWindowAction" active="true" actionDetails="" delay="0"/>
+      <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(set by //*[@id=&quot;twotabsearchtextbox&quot;] xpath)" delay="0" varName="element" webElementLocator="//*[@id=&quot;twotabsearchtextbox&quot;]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" type="SET_VALUE" useElementAttribute="false"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({ENTER})" delay="0" text="{ENTER}" rawCode="10" keyCode="28" keyChar="13" keyLocation="4"/>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" x="600" y="600" selector="[CLASS:Chrome_RenderWidgetHostHWND; NAME:-451888576]" type="WEB_ELEMENT" webElementLocator="//span[@class=&quot;a-size-base a-color-base&quot;][contains(.,'New')]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="6000" x="600" y="600" type="WEB_ELEMENT" webElementLocator="//span[@class='a-size-medium a-color-base a-text-normal']" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+      <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(get by //*[@id=&quot;productTitle&quot;] xpath)" delay="500" varName="product_name" webElementLocator="//*[@id=&quot;productTitle&quot;]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" useElementAttribute="false"/>
+      <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 'products')" delay="0" varName="products">
+        <bigDecimalExpressionHandler/>
+        <listExpressionHandler operationType="PUSH" targetVarName="product_name"/>
+        <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW"/>
+      </actions>
+      <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(get by //*[@id=&quot;bylineInfo&quot;] xpath)" delay="0" varName="seller" webElementLocator="//*[@id=&quot;bylineInfo&quot;]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" useElementAttribute="false"/>
+      <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 'products')" delay="0" varName="products">
+        <bigDecimalExpressionHandler/>
+        <listExpressionHandler operationType="PUSH" targetVarName="seller"/>
+        <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW"/>
+      </actions>
+      <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(get by //*[@id=&quot;priceblock_ourprice&quot;] xpath)" delay="0" varName="price" webElementLocator="//*[@id=&quot;priceblock_ourprice&quot;]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" useElementAttribute="false"/>
+      <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 'products')" delay="0" varName="products">
+        <bigDecimalExpressionHandler/>
+        <listExpressionHandler operationType="PUSH" targetVarName="price"/>
+        <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW"/>
+      </actions>
+      <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 'products_table')" delay="0" varName="products_table">
+        <bigDecimalExpressionHandler/>
+        <listExpressionHandler operationType="PUSH"/>
+        <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW" targetVarName="products"/>
+      </actions>
+      <actions xsi:type="recorder:ConstantValueAction" active="true" actionDetails="(to 'products' = []) - LIST" delay="0" varName="products" stringValue="" numberValue="0" booleanValue="false" useCurrentDate="false" listValue="[]"/>
+    </actions>
+  </actions>
+  <actions xsi:type="recorder:OpenSpreadsheetAction" active="true" actionDetails="(&quot;C:\Users\sande...ignment10.xlsx&quot;)" delay="0" filePath="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Projects\Assignment10.xlsx" autoSaveFile="true">
+    <actions xsi:type="recorder:ExcelSetRangeAction" active="true" actionDetails="('products_table' to A2:END)" delay="0" sourceVariable="products_table" coordinateFrom="A2"/>
+  </actions>
+</recorder:ActionFlow>

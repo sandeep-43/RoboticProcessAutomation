@@ -1,0 +1,5 @@
+"name","type","value"
+"flag","BOOLEAN","false"
+"column3","LIST","""[Price (Intraday), 10.890, 24.77, 8.9800, 34.190, ]"""
+"finance","TABLE","""[[Price (Intraday)], [10.890], [24.77], [8.9800], [34.190], []]"""
+"stocks","TABLE","""[[Symbol, Name, Price (Intraday), Change, % Change, Volume, Avg Vol (3 month), Market Cap, PE Ratio (TTM), 52 Week Range], [GE, General Electric Company, 10.890, +0.720, +7.08%, 260.890M, 116.596M, 94.94B, N/A, ], [AMD, Advanced Micro Devices, Inc., 24.77, +0.41, +1.68%, 57.066M, 96.396M, 24.91B, 77.43, ], [NIO, NIO Inc., 8.9800, +0.8100, +9.85%, 46.184M, 12.964M, 9.202B, N/A, ], [KHC, The Kraft Heinz Company, 34.190, -0.760, -2.17%, 42.723M, 8.841M, 41.686B, 4.04, ], [, , , , , , , , , ]]"""

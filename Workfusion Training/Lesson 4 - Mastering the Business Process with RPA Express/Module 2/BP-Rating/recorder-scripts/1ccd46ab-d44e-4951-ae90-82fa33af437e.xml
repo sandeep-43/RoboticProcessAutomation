@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.0" ignoreDelays="false">
+  <variables>
+    <variable name="website_url" type="STRING" value="https://www.indeed.com/cmp/Ultimate-Software"/>
+    <variable name="overal_raiting" type="STRING" value=""/>
+    <variable name="worklife_balance" type="STRING" value=""/>
+    <variable name="management" type="STRING" value=""/>
+    <variable name="leadership_approvement" type="STRING" value=""/>
+  </variables>
+  <actions xsi:type="recorder:OpenURLAction" active="true" actionDetails="(${website_url})" delay="0" url="${website_url}" type="CHROME" waitTimeout="20000">
+    <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(get by //*[@id=&quot;cmp-header-rating&quot;]/span xpath)" delay="0" varName="overal_raiting" webElementLocator="//*[@id=&quot;cmp-header-rating&quot;]/span" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" useElementAttribute="false"/>
+    <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(get by //div[1][@class='cmp-ReviewCategory-category']/span[1] xpath)" delay="0" varName="worklife_balance" webElementLocator="//div[1][@class='cmp-ReviewCategory-category']/span[1]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" useElementAttribute="false"/>
+    <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(get by //div[4][@class='cmp-ReviewCategory-category']/span[1] xpath)" delay="0" varName="management" webElementLocator="//div[4][@class='cmp-ReviewCategory-category']/span[1]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" useElementAttribute="false"/>
+    <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(get by //*[@class='cmp-LeadershipStory']//*[@class='cmp-CeoWidgetWithRating-percent'] xpath)" delay="0" varName="leadership_approvement" webElementLocator="//*[@class='cmp-LeadershipStory']//*[@class='cmp-CeoWidgetWithRating-percent']" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" useElementAttribute="false"/>
+  </actions>
+</recorder:ActionFlow>

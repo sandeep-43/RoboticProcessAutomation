@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="table" type="TABLE" value="[('U2FuZGVlcA==', 'U3VtaXQ=');('U2luZ2g=', 'TWl0dGFs');('YWJjQGRlZi5jb20=', 'Z2hpQGRlZi5jb20=');('REVG', 'REVG');('TWdy', 'Uy4gTWdy');('dHJhaW4=', 'VHJ5');('QWN0aXZlbHk=', 'R2VhcmluZyB1cA==');('SVQ=', 'RGVjaXNpb24gTWFrZXI=')]"/>
+    <variable name="url" type="STRING" value="https://docs.google.com/forms/d/e/1FAIpQLSd8y_5zOZi9AWr3jL7nFFjk8NYkQnpoiPkSGxyXX05sKBfI1A/viewform"/>
+  </variables>
+  <actions xsi:type="recorder:ForeachAction" active="true" actionDetails="(element) in (table)" delay="0" varName="table" pointerName="element" iterateOrder="BY_COLUMNS">
+    <actions xsi:type="recorder:OpenURLAction" active="true" actionDetails="(${url})" delay="0" url="${url}" type="CHROME">
+      <actions xsi:type="recorder:MaximizeCurrentWindowAction" active="true" actionDetails="" delay="0"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="1" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="2" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="3" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="4" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="5" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:MouseScrollAction" active="true" actionDetails="(5 lines down)" delay="0" offsetX="-85" offsetY="-20" imageName="1550680365008-anchor-1550680365119.apng" fullImageName="1550680365008.png" type="IMAGE" notches="5"/>
+      <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[6] = &quot;train&quot;)" delay="0" leftOperand="${element[6]}" rightOperand="train" leftOperandType="EXPRESSION" rightOperandType="STRING">
+        <ifBlock active="true">
+          <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="-43" offsetY="3" imageName="1550680475623-anchor-1550680475680.apng" fullImageName="1550680475623.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+        </ifBlock>
+        <elseBlock active="true">
+          <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[6] = &quot;Try&quot;)" delay="0" leftOperand="${element[6]}" rightOperand="Try" leftOperandType="EXPRESSION" rightOperandType="STRING">
+            <ifBlock active="true">
+              <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="-34" offsetY="1" imageName="1550680559232-anchor-1550680559246.apng" fullImageName="1550680559232.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+            </ifBlock>
+            <elseBlock active="true"/>
+          </actions>
+        </elseBlock>
+      </actions>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="253" offsetY="35" imageName="1550680637986-anchor-1550680638029.apng" fullImageName="1550680637986.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+      <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[7] = &quot;Actively&quot;)" delay="0" leftOperand="${element[7]}" rightOperand="Actively" leftOperandType="EXPRESSION" rightOperandType="STRING">
+        <ifBlock active="true">
+          <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="-120" offsetY="1" imageName="1550680676795-anchor-1550680676825.apng" fullImageName="1550680676795.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+        </ifBlock>
+        <elseBlock active="true">
+          <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[7] = &quot;Gearing up&quot;)" delay="0" leftOperand="${element[7]}" rightOperand="Gearing up" leftOperandType="EXPRESSION" rightOperandType="STRING">
+            <ifBlock active="true">
+              <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="-111" offsetY="1" imageName="1550680788726-anchor-1550680788758.apng" fullImageName="1550680788726.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+            </ifBlock>
+            <elseBlock active="true"/>
+          </actions>
+        </elseBlock>
+      </actions>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="-27" offsetY="32" imageName="1550680846378-anchor-1550680846418.apng" fullImageName="1550680846378.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+      <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[8] = &quot;IT&quot;)" delay="0" leftOperand="${element[8]}" rightOperand="IT" leftOperandType="EXPRESSION" rightOperandType="STRING">
+        <ifBlock active="true">
+          <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="-63" offsetY="2" imageName="1550680947420-anchor-1550680947442.apng" fullImageName="1550680947420.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+        </ifBlock>
+        <elseBlock active="true">
+          <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[8] = &quot;Decision Maker&quot;)" delay="0" leftOperand="${element[8]}" rightOperand="Decision Maker" leftOperandType="EXPRESSION" rightOperandType="STRING">
+            <ifBlock active="true">
+              <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" imageName="1550680993535-anchor-1550680993560.apng" fullImageName="1550680993535.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+            </ifBlock>
+            <elseBlock active="true"/>
+          </actions>
+        </elseBlock>
+      </actions>
+      <actions xsi:type="recorder:MouseScrollAction" active="true" actionDetails="(2 lines down)" delay="0" imageName="1550681314721-anchor-1550681314757.apng" fullImageName="1550681314721.png" type="IMAGE" notches="2"/>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" imageName="1550681037031-anchor-1550681037064.apng" fullImageName="1550681037031.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+    </actions>
+  </actions>
+</recorder:ActionFlow>

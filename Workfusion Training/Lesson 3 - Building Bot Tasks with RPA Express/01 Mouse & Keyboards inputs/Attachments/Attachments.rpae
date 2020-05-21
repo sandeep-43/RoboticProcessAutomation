@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Win)" delay="0" modifiers="4" text="" keyLocation="1" type="HOT_KEY_PRESS"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" modifiers="4" text="outlook" keyLocation="1" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({ENTER})" delay="0" text="{ENTER}" rawCode="10" keyCode="28" keyChar="13" keyLocation="4"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Ctrl+n)" delay="10000" modifiers="2" text="n" rawCode="78" keyCode="49" keyChar="110" keyLocation="1" type="HOT_KEY_PRESS"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" text="sandeep.singh012@cantire.com" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="2" offsetY="-7" selector="[CLASS:NetUIAnchor; NAME:Attach File...]" imageName="1550587206481-anchor-1550587206566.apng" fullImageName="1550587206481.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="-2" offsetY="1" imageName="1550587260433-anchor-1550587260476.apng" fullImageName="1550587260433.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetY="-10" imageName="1550587753912-anchor-1550587753924.apng" fullImageName="1550587753912.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Alt+{F4})" delay="100" modifiers="8" text="{F4}" rawCode="115" keyCode="62" keyLocation="1"/>
+</recorder:ActionFlow>

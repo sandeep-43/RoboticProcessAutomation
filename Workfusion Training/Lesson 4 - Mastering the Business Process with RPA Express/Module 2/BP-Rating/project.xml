@@ -1,0 +1,2837 @@
+<?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
+<objectListWrapper>
+    <objects>
+        <objectContainer>
+            <project>
+                <name>BP-Raiting 27-5-2018</name>
+                <description></description>
+                <author>workfusion</author>
+                <runs>
+                    <run>
+                        <blockSize>1</blockSize>
+                        <campaign>
+                            <active>true</active>
+                            <businessRules/>
+                            <campaignMaps>
+                                <campaignMap>
+                                    <blockSize>1</blockSize>
+                                    <businessRule>
+                                        <content># Rule.Definition={"moderationRule":false,"approveAllRule":false,"splitData":false,"splitRule":false,"splitRuleSuffix":"","joinRule":false,"joinRuleSuffix":"","streamingRule":false,"streamingRuleSuffix":"","namedRule":false,"namedRuleName":""}
+package com.freedomoss.requester;
+
+# list any import classes here.
+import java.util.Map;
+import java.util.ArrayList;
+import com.freedomoss.objective.model.CompositeRuleContext;
+import com.freedomoss.objective.model.CompositeRuleDataItemContext;
+import org.slf4j.Logger;
+
+
+# declare any global variables here
+global CompositeRuleContext source
+global Logger log
+global Map params
+
+
+rule "Rule context initialization"
+auto-focus true
+no-loop
+agenda-group "initialization-group"
+    when
+        $ctx:CompositeRuleContext(initialized == false);
+    then
+        # insert processed facts into memory
+        $ctx.updateWorkingMemory();
+        # move to business rules
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("calculation").setFocus();
+end
+
+# RuleOutcome.Definition={"outcomeId":"Valid","conditional":true,"reworkBySameWorker":false,"assignToSameWorker":false,"anableLogging":false,"sendRejectNotification":false,"assignToAnyWorker":false,"approveRelatedAssignments":false,"rejectRelatedAssignments":false,"renameAutomationAnswerItem":false,"conditions":[{"fieldName":"is_valid","value":"VALID","operator":"EQ"}],"customConditions":[]}
+rule "1. Send records to 'Valid' when is_valid EQ 'VALID'"
+agenda-group "calculation"
+dialect "mvel"
+salience 100
+    when
+        $ctx:CompositeRuleContext(initialized == true);
+        $item:CompositeRuleDataItemContext();
+        eval($item.checkValue("is_valid", "EQ", "VALID"));
+
+    then
+        $ctx.sendResultTo("Valid", $item);
+end
+
+# RuleOutcome.Definition={"outcomeId":"Wrong Domain","conditional":true,"reworkBySameWorker":false,"assignToSameWorker":false,"anableLogging":false,"sendRejectNotification":false,"assignToAnyWorker":false,"approveRelatedAssignments":false,"rejectRelatedAssignments":false,"renameAutomationAnswerItem":false,"conditions":[{"fieldName":"is_valid","value":"WRONG_DOMAIN","operator":"EQ"}],"customConditions":[]}
+rule "2. Send records to 'Wrong Domain' when is_valid EQ 'WRONG_DOMAIN'"
+agenda-group "calculation"
+dialect "mvel"
+salience 100
+    when
+        $ctx:CompositeRuleContext(initialized == true);
+        $item:CompositeRuleDataItemContext();
+        eval($item.checkValue("is_valid", "EQ", "WRONG_DOMAIN"));
+
+    then
+        $ctx.sendResultTo("Wrong Domain", $item);
+end
+
+# RuleOutcome.Definition={"outcomeId":"Not found","conditional":true,"reworkBySameWorker":false,"assignToSameWorker":false,"anableLogging":false,"sendRejectNotification":false,"assignToAnyWorker":false,"approveRelatedAssignments":false,"rejectRelatedAssignments":false,"renameAutomationAnswerItem":false,"conditions":[{"fieldName":"is_valid","value":"NOT_FOUND","operator":"EQ"}],"customConditions":[]}
+rule "3. Send records to 'Not found' when is_valid EQ 'NOT_FOUND'"
+agenda-group "calculation"
+dialect "mvel"
+salience 100
+    when
+        $ctx:CompositeRuleContext(initialized == true);
+        $item:CompositeRuleDataItemContext();
+        eval($item.checkValue("is_valid", "EQ", "NOT_FOUND"));
+
+    then
+        $ctx.sendResultTo("Not found", $item);
+end
+
+
+
+rule "Send unprocessed result to unconditional outcome(s)"
+agenda-group "calculation"
+dialect "mvel"
+salience 80
+    when
+        $ctx:CompositeRuleContext(initialized == true);
+        $item:CompositeRuleDataItemContext();
+    then
+        $ctx.sendResultToUnconditionalOutcomes($item, true);
+end</content>
+                                        <name>Decision Rule</name>
+                                        <ruleType>WORKFLOW_RULE</ruleType>
+                                        <ruleTypeUI>Composite</ruleTypeUI>
+                                        <uuid>1cca168e-bb55-4bc0-9fb0-61cfcbb4c260</uuid>
+                                        <workflowRuleMode>SIMPLE</workflowRuleMode>
+                                    </businessRule>
+                                    <campaign>
+                                        <active>false</active>
+                                        <businessRules/>
+                                        <campaignMaps/>
+                                        <campaigns/>
+                                        <executingType>MACHINE</executingType>
+                                        <goldBucketBlockSize>0</goldBucketBlockSize>
+                                        <goldRatio>0</goldRatio>
+                                        <goldSource>Empty</goldSource>
+                                        <goldType>Percentage</goldType>
+                                        <machineConfig>
+                                            <answers/>
+                                            <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config xmlns="http://web-harvest.sourceforge.net/schema/1.0/config" scriptlang="groovy"&gt;
+
+    &lt;robotics-flow&gt;
+        &lt;recorder close-on-completion="true" close-all-windows="false" start-in-private="false" recorder-script-uuid="3d4aba29-b9ae-46da-b9a8-2e4ebe176d32"/&gt;
+    &lt;/robotics-flow&gt;
+
+    &lt;export include-original-data="true"&gt;
+        &lt;single-column name="output" value="${output}"&gt;&lt;/single-column&gt;
+        &lt;single-column name="text_404" value="${text_404}"&gt;&lt;/single-column&gt;
+        &lt;single-column name="website_url" value="${website_url}"&gt;&lt;/single-column&gt;
+        &lt;single-column name="is_valid" value="${is_valid}"&gt;&lt;/single-column&gt;
+    &lt;/export&gt;
+
+&lt;/config&gt;</content>
+                                            <includedConfigs/>
+                                            <inclusionCode>9360ade5-ea9a-4af3-90e8-d36f2653199c</inclusionCode>
+                                            <machineWorkSetting>
+                                                <category>
+                                                    <automation>false</automation>
+                                                    <description></description>
+                                                    <enabled>true</enabled>
+                                                    <executingType>MACHINE</executingType>
+                                                    <name>Other</name>
+                                                    <private>false</private>
+                                                    <publicId>dd92f240-144b-4fef-8476-4ec0acbc1105</publicId>
+                                                </category>
+                                                <contentType>BLANK</contentType>
+                                                <description></description>
+                                                <enabled>true</enabled>
+                                                <name>Miscellaneous Tasks</name>
+                                                <publicId>26e6e095-00bb-43fa-8c34-af0b18e71ac9</publicId>
+                                                <version>
+                                                    <componentUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2018-05-15T14:48:27Z</lastModified>
+                                                    <versionUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</versionUuid>
+                                                </version>
+                                                <answers/>
+                                                <machineWorkSettingType>BASIC</machineWorkSettingType>
+                                                <template>
+                                                    <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                    <name>Blank</name>
+                                                    <origination>CREATED_MANUALLY</origination>
+                                                    <status>ACTIVE</status>
+                                                    <type>BASE_MACHINE</type>
+                                                    <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                    <version>
+                                                        <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                        <incrementalVersion>1.0</incrementalVersion>
+                                                        <lastInChain>true</lastInChain>
+                                                        <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                        <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                    </version>
+                                                </template>
+                                            </machineWorkSetting>
+                                            <machineWorkSettingType>RECORDER</machineWorkSettingType>
+                                            <name>raiting_website_validation</name>
+                                            <machineConfigOptions/>
+                                            <sourceType>MANUAL</sourceType>
+                                            <template>
+                                                <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                <name>Blank</name>
+                                                <origination>CREATED_MANUALLY</origination>
+                                                <status>ACTIVE</status>
+                                                <type>BASE_MACHINE</type>
+                                                <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                <version>
+                                                    <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                    <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                </version>
+                                            </template>
+                                            <uuid>a44e1381-6b4f-4a03-b520-ab736812045e</uuid>
+                                            <version>
+                                                <componentUuid>a30dc536-64b7-4d1f-bdba-f5c8007ead5a</componentUuid>
+                                                <incrementalVersion>1.0</incrementalVersion>
+                                                <lastInChain>true</lastInChain>
+                                                <lastModified>2018-05-27T15:16:06Z</lastModified>
+                                                <versionUuid>b4365e27-eaf9-46c4-9abf-5949420e425c</versionUuid>
+                                            </version>
+                                        </machineConfig>
+                                        <moderation>false</moderation>
+                                        <origination>CREATED_AUTOMATICALLY</origination>
+                                        <requiresData>true</requiresData>
+                                        <status>ACTIVE</status>
+                                        <streamComplexRunThreshold>1</streamComplexRunThreshold>
+                                        <streamTimeInterval>Immediately</streamTimeInterval>
+                                        <streamTimeIntervalValue>0</streamTimeIntervalValue>
+                                        <streamValueType>Tasks</streamValueType>
+                                        <title>raiting_website_validation</title>
+                                        <type>SINGLE</type>
+                                        <uuid>1b62e75d-f3ff-461e-b72c-275eb2016484</uuid>
+                                        <validWorkflow>false</validWorkflow>
+                                        <version>
+                                            <componentUuid>523b5320-1be3-4258-a68e-93573a352682</componentUuid>
+                                            <incrementalVersion>1.0</incrementalVersion>
+                                            <lastInChain>true</lastInChain>
+                                            <lastModified>2018-05-27T15:16:06Z</lastModified>
+                                            <versionUuid>94c1e1b6-f91e-4ed9-bcce-c498db48a0d0</versionUuid>
+                                        </version>
+                                        <workSettingBase>false</workSettingBase>
+                                    </campaign>
+                                    <deleted>false</deleted>
+                                    <stepIndex>1</stepIndex>
+                                    <stepPosition>START</stepPosition>
+                                    <streamed>false</streamed>
+                                    <uuid>877fdc20-86e4-4c9d-d40c-d2d56f6f39b5</uuid>
+                                </campaignMap>
+                                <campaignMap>
+                                    <blockSize>1</blockSize>
+                                    <businessRule>
+                                        <content>#RuleContext.APPROVE_ALL_RULE</content>
+                                        <name>Approve All</name>
+                                        <ruleType>WORKFLOW_RULE</ruleType>
+                                        <ruleTypeUI>Composite</ruleTypeUI>
+                                        <uuid>fe13571f-0db3-40a3-9a39-bcdebc445fcf</uuid>
+                                        <workflowRuleMode>SIMPLE</workflowRuleMode>
+                                    </businessRule>
+                                    <campaign>
+                                        <active>false</active>
+                                        <businessRules/>
+                                        <campaignMaps/>
+                                        <campaigns/>
+                                        <executingType>HUMAN</executingType>
+                                        <goldBucketBlockSize>0</goldBucketBlockSize>
+                                        <goldRatio>0</goldRatio>
+                                        <goldSource>Empty</goldSource>
+                                        <goldType>Percentage</goldType>
+                                        <moderation>false</moderation>
+                                        <origination>CREATED_AUTOMATICALLY</origination>
+                                        <question>
+                                            <answers>
+                                                <answer>
+                                                    <allowNA>false</allowNA>
+                                                    <answer>New URL:</answer>
+                                                    <answerCode>website_url</answerCode>
+                                                    <answerHtml></answerHtml>
+                                                    <answerTypeObject>
+                                                        <answerTypeGroup>UNCONSTRAINED_TEXT</answerTypeGroup>
+                                                        <code>FREE_TEXT</code>
+                                                        <description></description>
+                                                        <optionsAvailable>false</optionsAvailable>
+                                                        <showDefaultValue>true</showDefaultValue>
+                                                        <showForFieldScheme>true</showForFieldScheme>
+                                                        <showForHumanTask>true</showForHumanTask>
+                                                        <showForMachineConfig>true</showForMachineConfig>
+                                                        <title>Free Text</title>
+                                                        <valueType>SINGLEVALUE</valueType>
+                                                    </answerTypeObject>
+                                                    <appendDataStoreOptions>false</appendDataStoreOptions>
+                                                    <autocompleteField>false</autocompleteField>
+                                                    <constantable>false</constantable>
+                                                    <doNotNormalizeTaggedText>false</doNotNormalizeTaggedText>
+                                                    <doNotUseInAdjudication>false</doNotUseInAdjudication>
+                                                    <findMajorityForAllAtomicValues>false</findMajorityForAllAtomicValues>
+                                                    <lastModified>2018-05-27T15:32:03Z</lastModified>
+                                                    <letCustomValues>false</letCustomValues>
+                                                    <manualField>false</manualField>
+                                                    <multiValue>false</multiValue>
+                                                    <percentRequired>false</percentRequired>
+                                                    <range>false</range>
+                                                    <required>true</required>
+                                                    <sequenceNumber>1</sequenceNumber>
+                                                    <useBlocks>false</useBlocks>
+                                                    <useEmptyCell>false</useEmptyCell>
+                                                </answer>
+                                            </answers>
+                                            <assignmentDuration>1800000</assignmentDuration>
+                                            <assignmentLimit>1</assignmentLimit>
+                                            <attrs>{"lnaa":"Run","lnam":"Tasks","lna":"0"}</attrs>
+                                            <autoApprovalDelay>432000000</autoApprovalDelay>
+                                            <automaticallyProcessed>0</automaticallyProcessed>
+                                            <blockSize>1</blockSize>
+                                            <constQualifiedWorkers>false</constQualifiedWorkers>
+                                            <currency>USD</currency>
+                                            <description>Miscellaneous Tasks</description>
+                                            <dynamicTaskRenderingDisabled>true</dynamicTaskRenderingDisabled>
+                                            <expiredTime>2592000000</expiredTime>
+                                            <faqItems/>
+                                            <frameHeight>2500</frameHeight>
+                                            <geolocationEnabled>false</geolocationEnabled>
+                                            <instructionItems/>
+                                            <keywords>Miscellaneous Tasks</keywords>
+                                            <maxAssignments>1</maxAssignments>
+                                            <moderation>false</moderation>
+                                            <moderationFlag>false</moderationFlag>
+                                            <origination>CREATED_MANUALLY</origination>
+                                            <pendingAssignmentsLimit>10</pendingAssignmentsLimit>
+                                            <qualificationInstruction></qualificationInstruction>
+                                            <qualificationRequirements/>
+                                            <qualificationRequirementsRequiredForPreview>false</qualificationRequirementsRequiredForPreview>
+                                            <qualificationTasks>20</qualificationTasks>
+                                            <qualificationTraining>false</qualificationTraining>
+                                            <questionRuleMaps>
+                                                <questionRuleMap>
+                                                    <businessRule>
+                                                        <content>
+
+package com.freedomoss.requester;
+
+#list any import classes here.
+import com.freedomoss.objective.model.RuleContext;
+import com.freedomoss.objective.model.RuleContext.MajorityType;
+import com.freedomoss.objective.model.RuleAssigmentContext;
+import com.freedomoss.objective.model.RuleQuestionContext;
+import com.freedomoss.requester.model.AwsHitQuestion;
+import com.freedomoss.requester.model.AwsHitQuestionItem;
+import com.freedomoss.requester.model.AwsHitQuestionAnswerItem;
+
+import org.slf4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import java.util.Iterator;
+
+#declare any global variables here
+global RuleContext source
+global Logger log
+global Map params
+
+
+rule "Rule context initialization"
+auto-focus true
+no-loop
+dialect "mvel"
+agenda-group "initialization-group"
+	when
+		$ctx:RuleContext(initialized == false);
+	then
+	    # set parameters
+
+        $ctx.properties[RuleContext.MAJORITY_TYPE] =  RuleContext.MajorityType.COUNT;
+        $ctx.properties[RuleContext.MAJORITY_VALUE] = new Integer(1);
+
+        #$ctx.properties[RuleContext.MAX_ASSIGNMENT_LIMIT] = new Integer(1);
+        $ctx.properties[RuleContext.MAJORITY_HIT_THRESHOLD] = new Double(100/100);
+        $ctx.properties[RuleContext.ASSIGNMENT_APPROVE_THRESHOLD] = new Double(0.5);
+
+        # insert processed facts into memory
+        $ctx.updateWorkingMemory();
+        # move to business rules
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("calculation").setFocus();
+        $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Worst accuracy rule-Evaluate every 5 gold question and set Accuracy based qualification score to 70 if gold accuracy goes up &lt; 75 percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  5) == 0 &amp;&amp; $campaignStatistic.goldAccuracy &lt; (75/100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, 70);
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Normal accuracy rule-Evaluate every 5 gold question and set Accuracy based qualification score to 80 if gold accuracy goes up &gt;= 75 percents and &lt; 90"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  5) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= (75/ 100) &amp;&amp; $campaignStatistic.goldAccuracy &lt; (90 / 100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, 80);
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Super accuracy rule-Evaluate every 5 gold question and set Accuracy based qualification score to 95 if gold accuracy goes up &gt;= 90 percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  5) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= (90 / 100) )
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, 95);
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "0. Check, if exist majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 100
+no-loop
+	when
+	    $ctx:RuleContext (initialized == true, $gold:gold, $threshold:properties.MAJORITY_HIT_THRESHOLD)
+        eval($ctx.majorityWithoutGold().size() &gt;= ($ctx.questions.size() - $gold.size()) *  $threshold)
+	then
+		insert(new String("MAJORITY_FOUND"));
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "1. Approve question by majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 90
+no-loop
+	when
+		((String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true))
+		or
+		(not String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true, assignments.size == properties.MAX_ASSIGNMENT_LIMIT)))
+		$rqc:RuleQuestionContext()
+	then
+		$rqc.approveQuestion($ctx.majority());
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rqc);
+end
+
+rule "3. Approve assignment (always)"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		$ctx:RuleContext(initialized == true, $threshold:properties.ASSIGNMENT_APPROVE_THRESHOLD)
+		$rac:RuleAssigmentContext()
+	then
+	    insert(new String("ASSIGNMENT_PROCESSED"));
+		$ctx.addApproved($rac);
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rac);
+end
+
+rule "5. Extend HIT"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		not String(toString == "MAJORITY_FOUND")
+		$ctx:RuleContext(initialized == true, assignments.size &lt; properties.MAX_ASSIGNMENT_LIMIT);
+	then
+		$ctx.setExtendHit(true);
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+</content>
+                                                        <name>Start with one assignment 1+0 pay all</name>
+                                                        <paramValues>{"NORMAL_ACCURACY_LEVEL_SCORE":"80","NORMAL_ACCURACY_LEVEL_UPPER_LIMIT":"90","WORST_ACCURACY_LEVEL_SCORE":"70","MAJORITY_HIT_THRESHOLD":"100","SUPER_ACCURACY_LEVEL_LOWER_LIMIT":"90","WORST_ACCURACY_LEVEL_UPPER_LIMIT":"75","SUPER_ACCURACY_LEVEL_SCORE":"95","NORMAL_ACCURACY_LEVEL_LOWER_LIMIT":"75","MAJORITY_VALUE":"1","CHECK_EVERY":"5","MAX_ASSIGNMENT_LIMIT":"1"}</paramValues>
+                                                        <ruleType>DROOLS</ruleType>
+                                                        <ruleTypeUI>Adjudication</ruleTypeUI>
+                                                        <template>
+                                                            <content>
+
+package com.freedomoss.requester;
+
+#list any import classes here.
+import com.freedomoss.objective.model.RuleContext;
+import com.freedomoss.objective.model.RuleContext.MajorityType;
+import com.freedomoss.objective.model.RuleAssigmentContext;
+import com.freedomoss.objective.model.RuleQuestionContext;
+import com.freedomoss.requester.model.AwsHitQuestion;
+import com.freedomoss.requester.model.AwsHitQuestionItem;
+import com.freedomoss.requester.model.AwsHitQuestionAnswerItem;
+
+import org.slf4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import java.util.Iterator;
+
+#declare any global variables here
+global RuleContext source
+global Logger log
+global Map params
+
+
+rule "Rule context initialization"
+auto-focus true
+no-loop
+dialect "mvel"
+agenda-group "initialization-group"
+	when
+		$ctx:RuleContext(initialized == false);
+	then
+	    # set parameters
+
+        $ctx.properties[RuleContext.MAJORITY_TYPE] =  RuleContext.MajorityType.COUNT;
+        $ctx.properties[RuleContext.MAJORITY_VALUE] = new Integer({{MAJORITY_VALUE}});
+
+        #$ctx.properties[RuleContext.MAX_ASSIGNMENT_LIMIT] = new Integer({{MAX_ASSIGNMENT_LIMIT}});
+        $ctx.properties[RuleContext.MAJORITY_HIT_THRESHOLD] = new Double({{MAJORITY_HIT_THRESHOLD}}/100);
+        $ctx.properties[RuleContext.ASSIGNMENT_APPROVE_THRESHOLD] = new Double(0.5);
+
+        # insert processed facts into memory
+        $ctx.updateWorkingMemory();
+        # move to business rules
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("calculation").setFocus();
+        $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Worst accuracy rule-Evaluate every {{CHECK_EVERY}} gold question and set Accuracy based qualification score to {{WORST_ACCURACY_LEVEL_SCORE}} if gold accuracy goes up &lt; {{WORST_ACCURACY_LEVEL_UPPER_LIMIT}} percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  {{CHECK_EVERY}}) == 0 &amp;&amp; $campaignStatistic.goldAccuracy &lt; ({{WORST_ACCURACY_LEVEL_UPPER_LIMIT}}/100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, {{WORST_ACCURACY_LEVEL_SCORE}});
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Normal accuracy rule-Evaluate every {{CHECK_EVERY}} gold question and set Accuracy based qualification score to {{NORMAL_ACCURACY_LEVEL_SCORE}} if gold accuracy goes up &gt;= {{NORMAL_ACCURACY_LEVEL_LOWER_LIMIT}} percents and &lt; {{NORMAL_ACCURACY_LEVEL_UPPER_LIMIT}}"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  {{CHECK_EVERY}}) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= ({{NORMAL_ACCURACY_LEVEL_LOWER_LIMIT}}/ 100) &amp;&amp; $campaignStatistic.goldAccuracy &lt; ({{NORMAL_ACCURACY_LEVEL_UPPER_LIMIT}} / 100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, {{NORMAL_ACCURACY_LEVEL_SCORE}});
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Super accuracy rule-Evaluate every {{CHECK_EVERY}} gold question and set Accuracy based qualification score to {{SUPER_ACCURACY_LEVEL_SCORE}} if gold accuracy goes up &gt;= {{SUPER_ACCURACY_LEVEL_LOWER_LIMIT}} percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  {{CHECK_EVERY}}) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= ({{SUPER_ACCURACY_LEVEL_LOWER_LIMIT}} / 100) )
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, {{SUPER_ACCURACY_LEVEL_SCORE}});
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "0. Check, if exist majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 100
+no-loop
+	when
+	    $ctx:RuleContext (initialized == true, $gold:gold, $threshold:properties.MAJORITY_HIT_THRESHOLD)
+        eval($ctx.majorityWithoutGold().size() &gt;= ($ctx.questions.size() - $gold.size()) *  $threshold)
+	then
+		insert(new String("MAJORITY_FOUND"));
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "1. Approve question by majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 90
+no-loop
+	when
+		((String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true))
+		or
+		(not String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true, assignments.size == properties.MAX_ASSIGNMENT_LIMIT)))
+		$rqc:RuleQuestionContext()
+	then
+		$rqc.approveQuestion($ctx.majority());
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rqc);
+end
+
+rule "3. Approve assignment (always)"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		$ctx:RuleContext(initialized == true, $threshold:properties.ASSIGNMENT_APPROVE_THRESHOLD)
+		$rac:RuleAssigmentContext()
+	then
+	    insert(new String("ASSIGNMENT_PROCESSED"));
+		$ctx.addApproved($rac);
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rac);
+end
+
+rule "5. Extend HIT"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		not String(toString == "MAJORITY_FOUND")
+		$ctx:RuleContext(initialized == true, assignments.size &lt; properties.MAX_ASSIGNMENT_LIMIT);
+	then
+		$ctx.setExtendHit(true);
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+</content>
+                                                            <description>Get qualified workers: pay if ${MAJORITY_VALUE} correct answers, start with 1 assignment, extend to maximum of ${MAX_ASSIGNMENT_LIMIT} assignments. Set qualification scores depending on gold accuracy.</description>
+                                                            <name>Start with 1 assignment X+0 rule (pay all)</name>
+                                                            <params>
+                                                                <param>
+                                                                    <code>MAJORITY_HIT_THRESHOLD</code>
+                                                                    <defaultValue>100</defaultValue>
+                                                                    <description>Percent (from 0 to 100) of correct answers when  majority is found</description>
+                                                                    <name>Percent of correct answers</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>SUPER_ACCURACY_LEVEL_LOWER_LIMIT</code>
+                                                                    <defaultValue>90</defaultValue>
+                                                                    <description>Super accuracy level lower limit in percents inclusive, upper limit is considered as 100</description>
+                                                                    <name>Super accuracy level lower limit</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>MAJORITY_VALUE</code>
+                                                                    <defaultValue>1</defaultValue>
+                                                                    <description>Number of correct answers</description>
+                                                                    <name>Majority value</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>WORST_ACCURACY_LEVEL_SCORE</code>
+                                                                    <defaultValue>70</defaultValue>
+                                                                    <description>Qualification score will be given to a worker who has demonstrated a low accuracy</description>
+                                                                    <name>Worst accuracy level score</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>NORMAL_ACCURACY_LEVEL_SCORE</code>
+                                                                    <defaultValue>80</defaultValue>
+                                                                    <description>Qualification score will be given to a worker who has demonstrated a normal accuracy</description>
+                                                                    <name>Normal accuracy level score</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>MAX_ASSIGNMENT_LIMIT</code>
+                                                                    <defaultValue>1</defaultValue>
+                                                                    <description>Maximum number of assignments</description>
+                                                                    <name>Max assignments limit</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>WORST_ACCURACY_LEVEL_UPPER_LIMIT</code>
+                                                                    <defaultValue>75</defaultValue>
+                                                                    <description>Worst accuracy level upper limit in percents exclusive, lower limit is considered as 0</description>
+                                                                    <name>Worst accuracy level upper limit</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>SUPER_ACCURACY_LEVEL_SCORE</code>
+                                                                    <defaultValue>95</defaultValue>
+                                                                    <description>Qualification score will be given to a worker who has demonstrated a super accuracy</description>
+                                                                    <name>Super accuracy level score</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>NORMAL_ACCURACY_LEVEL_UPPER_LIMIT</code>
+                                                                    <defaultValue>90</defaultValue>
+                                                                    <description>Normal accuracy level upper limit in percents exclusive</description>
+                                                                    <name>Normal accuracy level upper limit</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>CHECK_EVERY</code>
+                                                                    <defaultValue>5</defaultValue>
+                                                                    <description>Check every i-th gold question when evaluating qualification score</description>
+                                                                    <name>Check every i-th gold question</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>NORMAL_ACCURACY_LEVEL_LOWER_LIMIT</code>
+                                                                    <defaultValue>75</defaultValue>
+                                                                    <description>Normal accuracy level lower limit in percents inclusive</description>
+                                                                    <name>Normal accuracy level lower limit</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                            </params>
+                                                        </template>
+                                                        <uuid>05f3812c-584f-11e8-b314-0ae8ba3240ae</uuid>
+                                                        <workflowRuleMode>ADVANCED</workflowRuleMode>
+                                                    </businessRule>
+                                                </questionRuleMap>
+                                            </questionRuleMaps>
+                                            <radiusSelector>ExactLocation</radiusSelector>
+                                            <randomizeAnswers>false</randomizeAnswers>
+                                            <recursiveThreshold>1</recursiveThreshold>
+                                            <restrictedCountries/>
+                                            <taskNotificationSchedule>IMMEDIATE</taskNotificationSchedule>
+                                            <templates>
+                                                <template>
+                                                    <code></code>
+                                                    <content>&lt;#include "extras.ftl" parse=true/&gt;
+&lt;#include "html.ftl" parse=true/&gt;
+&lt;#include "answers.ftl" parse=true/&gt;
+&lt;#assign FEEDBACK_ENABLED = true&gt;
+
+&lt;@hit contentCss="${applicationResourceUrl}/workfusion-resources/saas/ms/ms.bootstrap.min.css"&gt;
+&lt;@script src="${applicationResourceUrl}/workfusion-resources/bootstrap/js/bootstrap-tab.js"/&gt;  
+  
+
+  
+&lt;@instructions title="&lt;h2&gt;Find website url&lt;/h2&gt;"&gt;
+  &lt;!--- editable content --&gt;
+  &lt;@editable id="__INSTRUCTIONS__"&gt;&lt;br&gt;&lt;br&gt;&lt;/@editable&gt;
+&lt;/@instructions&gt;
+&lt;@form&gt;
+&lt;#if questions??&gt;
+    &lt;div class="thumbnail"&gt;
+    &lt;#list questions as question&gt;
+      &lt;@report question=question includeAll=true/&gt;
+      &lt;div style="position:relative;margin:2px 0px" class="block question"&gt;
+           &lt;div style="position:absolute;top:0px;right:0px;background-color:#e0e0e0;padding:1px 4px;border: 1px solid #C0C0C0;border-radius: 0px" class="number"&gt;
+                &lt;b&gt;${question_index + 1}&lt;/b&gt;
+           &lt;/div&gt;
+           &lt;div&gt;
+               &lt;div class="place bg-dark"&gt;
+                 &lt;@editable id="__DATA__"&gt;Old URL for checking:&lt;br&gt;&lt;a href="${question.data['website_url']}" data-mce-href="${question.data['website_url']}"&gt;${question.data['website_url']}&lt;/a&gt;&lt;br&gt;Company ID:&amp;nbsp;${question.data['company_id']}&lt;/@editable&gt;
+               &lt;/div&gt;
+               &lt;div class="place"&gt;
+                 &lt;@answers question=question/&gt;
+               &lt;/div&gt;
+            &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/#list&gt;
+    &lt;/div&gt;
+&lt;/#if&gt;
+&lt;@submit text="Submit" /&gt;
+&lt;/@form&gt;
+&lt;/@hit&gt;</content>
+                                                    <creationType>CUSTOM</creationType>
+                                                    <name>Miscellaneous Tasks (Blank)</name>
+                                                    <origination>CREATED_AUTOMATICALLY</origination>
+                                                    <status>ACTIVE</status>
+                                                    <type>TASK</type>
+                                                    <uuid>a311035d-05af-413a-823c-89f16033223d</uuid>
+                                                    <version>
+                                                        <componentUuid>50195f2b-6ff0-45b9-a060-185e7c2bd0ef</componentUuid>
+                                                        <incrementalVersion>1.0</incrementalVersion>
+                                                        <lastInChain>true</lastInChain>
+                                                        <lastModified>2018-05-27T15:29:38Z</lastModified>
+                                                        <versionUuid>e3af60b5-566d-45de-be9b-fdc6e846897b</versionUuid>
+                                                    </version>
+                                                </template>
+                                            </templates>
+                                            <title>Find website url</title>
+                                            <useCommonHitCoordinates>false</useCommonHitCoordinates>
+                                            <uuid>23939fec-b77f-4af2-b305-63f539c3271d</uuid>
+                                            <version>
+                                                <componentUuid>fb20a9c5-3e95-4cf7-8b2a-cd8356610b73</componentUuid>
+                                                <incrementalVersion>1.4</incrementalVersion>
+                                                <lastInChain>true</lastInChain>
+                                                <lastModified>2018-05-27T15:33:55Z</lastModified>
+                                                <versionUuid>1b4ea0aa-89b0-4a92-8234-fc36b6bb1dd8</versionUuid>
+                                            </version>
+                                            <workSetting>
+                                                <category>
+                                                    <automation>false</automation>
+                                                    <description></description>
+                                                    <enabled>true</enabled>
+                                                    <executingType>HUMAN</executingType>
+                                                    <name>Other</name>
+                                                    <private>false</private>
+                                                    <publicId>dd92f240-144b-4fef-8476-4ec0acbc1104</publicId>
+                                                </category>
+                                                <contentType>BLANK</contentType>
+                                                <description></description>
+                                                <enabled>true</enabled>
+                                                <name>Miscellaneous Tasks</name>
+                                                <publicId>26e6e095-00bb-43fa-8c34-af0b18e71ac8</publicId>
+                                                <version>
+                                                    <componentUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac8</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2018-05-15T14:48:20Z</lastModified>
+                                                    <versionUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac8</versionUuid>
+                                                </version>
+                                                <answers/>
+                                                <businessRules>
+                                                    <businessRule>
+                                                        <content>
+
+package com.freedomoss.requester;
+
+#list any import classes here.
+import com.freedomoss.objective.model.RuleContext;
+import com.freedomoss.objective.model.RuleContext.MajorityType;
+import com.freedomoss.objective.model.RuleAssigmentContext;
+import com.freedomoss.objective.model.RuleQuestionContext;
+import com.freedomoss.requester.model.AwsHitQuestion;
+import com.freedomoss.requester.model.AwsHitQuestionItem;
+import com.freedomoss.requester.model.AwsHitQuestionAnswerItem;
+
+import org.slf4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import java.util.Iterator;
+
+#declare any global variables here
+global RuleContext source
+global Logger log
+global Map params
+
+
+rule "Rule context initialization"
+auto-focus true
+no-loop
+dialect "mvel"
+agenda-group "initialization-group"
+	when
+		$ctx:RuleContext(initialized == false);
+	then
+	    # set parameters
+
+        $ctx.properties[RuleContext.MAJORITY_TYPE] =  RuleContext.MajorityType.COUNT;
+        $ctx.properties[RuleContext.MAJORITY_VALUE] = new Integer(1);
+
+        #$ctx.properties[RuleContext.MAX_ASSIGNMENT_LIMIT] = new Integer(1);
+        $ctx.properties[RuleContext.MAJORITY_HIT_THRESHOLD] = new Double(100/100);
+        $ctx.properties[RuleContext.ASSIGNMENT_APPROVE_THRESHOLD] = new Double(0.5);
+
+        # insert processed facts into memory
+        $ctx.updateWorkingMemory();
+        # move to business rules
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("calculation").setFocus();
+        $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Worst accuracy rule-Evaluate every 5 gold question and set Accuracy based qualification score to 70 if gold accuracy goes up &lt; 75 percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  5) == 0 &amp;&amp; $campaignStatistic.goldAccuracy &lt; (75/100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, 70);
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Normal accuracy rule-Evaluate every 5 gold question and set Accuracy based qualification score to 80 if gold accuracy goes up &gt;= 75 percents and &lt; 90"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  5) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= (75/ 100) &amp;&amp; $campaignStatistic.goldAccuracy &lt; (90 / 100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, 80);
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Super accuracy rule-Evaluate every 5 gold question and set Accuracy based qualification score to 95 if gold accuracy goes up &gt;= 90 percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  5) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= (90 / 100) )
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, 95);
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "0. Check, if exist majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 100
+no-loop
+	when
+	    $ctx:RuleContext (initialized == true, $gold:gold, $threshold:properties.MAJORITY_HIT_THRESHOLD)
+        eval($ctx.majorityWithoutGold().size() &gt;= ($ctx.questions.size() - $gold.size()) *  $threshold)
+	then
+		insert(new String("MAJORITY_FOUND"));
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "1. Approve question by majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 90
+no-loop
+	when
+		((String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true))
+		or
+		(not String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true, assignments.size == properties.MAX_ASSIGNMENT_LIMIT)))
+		$rqc:RuleQuestionContext()
+	then
+		$rqc.approveQuestion($ctx.majority());
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rqc);
+end
+
+rule "3. Approve assignment (always)"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		$ctx:RuleContext(initialized == true, $threshold:properties.ASSIGNMENT_APPROVE_THRESHOLD)
+		$rac:RuleAssigmentContext()
+	then
+	    insert(new String("ASSIGNMENT_PROCESSED"));
+		$ctx.addApproved($rac);
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rac);
+end
+
+rule "5. Extend HIT"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		not String(toString == "MAJORITY_FOUND")
+		$ctx:RuleContext(initialized == true, assignments.size &lt; properties.MAX_ASSIGNMENT_LIMIT);
+	then
+		$ctx.setExtendHit(true);
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+</content>
+                                                        <name>Start with one assignment 1+0 pay all</name>
+                                                        <paramValues>{"NORMAL_ACCURACY_LEVEL_SCORE":"80","NORMAL_ACCURACY_LEVEL_UPPER_LIMIT":"90","WORST_ACCURACY_LEVEL_SCORE":"70","MAJORITY_HIT_THRESHOLD":"100","SUPER_ACCURACY_LEVEL_LOWER_LIMIT":"90","WORST_ACCURACY_LEVEL_UPPER_LIMIT":"75","SUPER_ACCURACY_LEVEL_SCORE":"95","NORMAL_ACCURACY_LEVEL_LOWER_LIMIT":"75","MAJORITY_VALUE":"1","CHECK_EVERY":"5","MAX_ASSIGNMENT_LIMIT":"1"}</paramValues>
+                                                        <ruleType>DROOLS</ruleType>
+                                                        <ruleTypeUI>Adjudication</ruleTypeUI>
+                                                        <template>
+                                                            <content>
+
+package com.freedomoss.requester;
+
+#list any import classes here.
+import com.freedomoss.objective.model.RuleContext;
+import com.freedomoss.objective.model.RuleContext.MajorityType;
+import com.freedomoss.objective.model.RuleAssigmentContext;
+import com.freedomoss.objective.model.RuleQuestionContext;
+import com.freedomoss.requester.model.AwsHitQuestion;
+import com.freedomoss.requester.model.AwsHitQuestionItem;
+import com.freedomoss.requester.model.AwsHitQuestionAnswerItem;
+
+import org.slf4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import java.util.Iterator;
+
+#declare any global variables here
+global RuleContext source
+global Logger log
+global Map params
+
+
+rule "Rule context initialization"
+auto-focus true
+no-loop
+dialect "mvel"
+agenda-group "initialization-group"
+	when
+		$ctx:RuleContext(initialized == false);
+	then
+	    # set parameters
+
+        $ctx.properties[RuleContext.MAJORITY_TYPE] =  RuleContext.MajorityType.COUNT;
+        $ctx.properties[RuleContext.MAJORITY_VALUE] = new Integer({{MAJORITY_VALUE}});
+
+        #$ctx.properties[RuleContext.MAX_ASSIGNMENT_LIMIT] = new Integer({{MAX_ASSIGNMENT_LIMIT}});
+        $ctx.properties[RuleContext.MAJORITY_HIT_THRESHOLD] = new Double({{MAJORITY_HIT_THRESHOLD}}/100);
+        $ctx.properties[RuleContext.ASSIGNMENT_APPROVE_THRESHOLD] = new Double(0.5);
+
+        # insert processed facts into memory
+        $ctx.updateWorkingMemory();
+        # move to business rules
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("calculation").setFocus();
+        $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Worst accuracy rule-Evaluate every {{CHECK_EVERY}} gold question and set Accuracy based qualification score to {{WORST_ACCURACY_LEVEL_SCORE}} if gold accuracy goes up &lt; {{WORST_ACCURACY_LEVEL_UPPER_LIMIT}} percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  {{CHECK_EVERY}}) == 0 &amp;&amp; $campaignStatistic.goldAccuracy &lt; ({{WORST_ACCURACY_LEVEL_UPPER_LIMIT}}/100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, {{WORST_ACCURACY_LEVEL_SCORE}});
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Normal accuracy rule-Evaluate every {{CHECK_EVERY}} gold question and set Accuracy based qualification score to {{NORMAL_ACCURACY_LEVEL_SCORE}} if gold accuracy goes up &gt;= {{NORMAL_ACCURACY_LEVEL_LOWER_LIMIT}} percents and &lt; {{NORMAL_ACCURACY_LEVEL_UPPER_LIMIT}}"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  {{CHECK_EVERY}}) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= ({{NORMAL_ACCURACY_LEVEL_LOWER_LIMIT}}/ 100) &amp;&amp; $campaignStatistic.goldAccuracy &lt; ({{NORMAL_ACCURACY_LEVEL_UPPER_LIMIT}} / 100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, {{NORMAL_ACCURACY_LEVEL_SCORE}});
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Super accuracy rule-Evaluate every {{CHECK_EVERY}} gold question and set Accuracy based qualification score to {{SUPER_ACCURACY_LEVEL_SCORE}} if gold accuracy goes up &gt;= {{SUPER_ACCURACY_LEVEL_LOWER_LIMIT}} percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  {{CHECK_EVERY}}) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= ({{SUPER_ACCURACY_LEVEL_LOWER_LIMIT}} / 100) )
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, {{SUPER_ACCURACY_LEVEL_SCORE}});
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "0. Check, if exist majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 100
+no-loop
+	when
+	    $ctx:RuleContext (initialized == true, $gold:gold, $threshold:properties.MAJORITY_HIT_THRESHOLD)
+        eval($ctx.majorityWithoutGold().size() &gt;= ($ctx.questions.size() - $gold.size()) *  $threshold)
+	then
+		insert(new String("MAJORITY_FOUND"));
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "1. Approve question by majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 90
+no-loop
+	when
+		((String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true))
+		or
+		(not String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true, assignments.size == properties.MAX_ASSIGNMENT_LIMIT)))
+		$rqc:RuleQuestionContext()
+	then
+		$rqc.approveQuestion($ctx.majority());
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rqc);
+end
+
+rule "3. Approve assignment (always)"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		$ctx:RuleContext(initialized == true, $threshold:properties.ASSIGNMENT_APPROVE_THRESHOLD)
+		$rac:RuleAssigmentContext()
+	then
+	    insert(new String("ASSIGNMENT_PROCESSED"));
+		$ctx.addApproved($rac);
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rac);
+end
+
+rule "5. Extend HIT"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		not String(toString == "MAJORITY_FOUND")
+		$ctx:RuleContext(initialized == true, assignments.size &lt; properties.MAX_ASSIGNMENT_LIMIT);
+	then
+		$ctx.setExtendHit(true);
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+</content>
+                                                            <description>Get qualified workers: pay if ${MAJORITY_VALUE} correct answers, start with 1 assignment, extend to maximum of ${MAX_ASSIGNMENT_LIMIT} assignments. Set qualification scores depending on gold accuracy.</description>
+                                                            <name>Start with 1 assignment X+0 rule (pay all)</name>
+                                                            <params>
+                                                                <param>
+                                                                    <code>MAJORITY_HIT_THRESHOLD</code>
+                                                                    <defaultValue>100</defaultValue>
+                                                                    <description>Percent (from 0 to 100) of correct answers when  majority is found</description>
+                                                                    <name>Percent of correct answers</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>SUPER_ACCURACY_LEVEL_LOWER_LIMIT</code>
+                                                                    <defaultValue>90</defaultValue>
+                                                                    <description>Super accuracy level lower limit in percents inclusive, upper limit is considered as 100</description>
+                                                                    <name>Super accuracy level lower limit</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>MAJORITY_VALUE</code>
+                                                                    <defaultValue>1</defaultValue>
+                                                                    <description>Number of correct answers</description>
+                                                                    <name>Majority value</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>WORST_ACCURACY_LEVEL_SCORE</code>
+                                                                    <defaultValue>70</defaultValue>
+                                                                    <description>Qualification score will be given to a worker who has demonstrated a low accuracy</description>
+                                                                    <name>Worst accuracy level score</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>NORMAL_ACCURACY_LEVEL_SCORE</code>
+                                                                    <defaultValue>80</defaultValue>
+                                                                    <description>Qualification score will be given to a worker who has demonstrated a normal accuracy</description>
+                                                                    <name>Normal accuracy level score</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>MAX_ASSIGNMENT_LIMIT</code>
+                                                                    <defaultValue>1</defaultValue>
+                                                                    <description>Maximum number of assignments</description>
+                                                                    <name>Max assignments limit</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>WORST_ACCURACY_LEVEL_UPPER_LIMIT</code>
+                                                                    <defaultValue>75</defaultValue>
+                                                                    <description>Worst accuracy level upper limit in percents exclusive, lower limit is considered as 0</description>
+                                                                    <name>Worst accuracy level upper limit</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>SUPER_ACCURACY_LEVEL_SCORE</code>
+                                                                    <defaultValue>95</defaultValue>
+                                                                    <description>Qualification score will be given to a worker who has demonstrated a super accuracy</description>
+                                                                    <name>Super accuracy level score</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>NORMAL_ACCURACY_LEVEL_UPPER_LIMIT</code>
+                                                                    <defaultValue>90</defaultValue>
+                                                                    <description>Normal accuracy level upper limit in percents exclusive</description>
+                                                                    <name>Normal accuracy level upper limit</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>CHECK_EVERY</code>
+                                                                    <defaultValue>5</defaultValue>
+                                                                    <description>Check every i-th gold question when evaluating qualification score</description>
+                                                                    <name>Check every i-th gold question</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                                <param>
+                                                                    <code>NORMAL_ACCURACY_LEVEL_LOWER_LIMIT</code>
+                                                                    <defaultValue>75</defaultValue>
+                                                                    <description>Normal accuracy level lower limit in percents inclusive</description>
+                                                                    <name>Normal accuracy level lower limit</name>
+                                                                    <type>INPUT_NUMBER</type>
+                                                                </param>
+                                                            </params>
+                                                        </template>
+                                                        <uuid>05f3812c-584f-11e8-b314-0ae8ba3240ae</uuid>
+                                                        <workflowRuleMode>ADVANCED</workflowRuleMode>
+                                                    </businessRule>
+                                                </businessRules>
+                                                <isPrivate>false</isPrivate>
+                                                <items>
+                                                    <item>
+                                                        <type>TITLE</type>
+                                                        <value>Miscellaneous Tasks</value>
+                                                    </item>
+                                                    <item>
+                                                        <type>HIT_EXPIRES_IN</type>
+                                                        <value>2592000000</value>
+                                                    </item>
+                                                    <item>
+                                                        <type>AUTOMATICALLY_APPROVED</type>
+                                                        <value>432000000</value>
+                                                    </item>
+                                                    <item>
+                                                        <type>TIME_PER_ASSIGNMENT</type>
+                                                        <value>1800000</value>
+                                                    </item>
+                                                    <item>
+                                                        <type>RECOMMENDATION_TAGS</type>
+                                                        <value>["information_extraction"]</value>
+                                                    </item>
+                                                </items>
+                                                <template>
+                                                    <code></code>
+                                                    <content>&lt;#include "extras.ftl" parse=true/&gt;
+&lt;#include "html.ftl" parse=true/&gt;
+&lt;#include "answers.ftl" parse=true/&gt;
+&lt;#assign FEEDBACK_ENABLED = true&gt;
+
+&lt;@hit contentCss="${applicationResourceUrl}/workfusion-resources/saas/ms/ms.bootstrap.min.css"&gt;
+&lt;@script src="${applicationResourceUrl}/workfusion-resources/bootstrap/js/bootstrap-tab.js"/&gt;  
+  
+
+  
+&lt;@instructions title="&lt;h2&gt;BLANK&lt;/h2&gt;"&gt;
+  &lt;!--- editable content --&gt;
+  &lt;@editable id="__INSTRUCTIONS__"&gt;&lt;br&gt;&lt;br&gt;&lt;/@editable&gt;
+&lt;/@instructions&gt;
+&lt;@form&gt;
+&lt;#if questions??&gt;
+    &lt;div class="thumbnail"&gt;
+    &lt;#list questions as question&gt;
+      &lt;@report question=question includeAll=true/&gt;
+      &lt;div style="position:relative;margin:2px 0px" class="block question"&gt;
+           &lt;div style="position:absolute;top:0px;right:0px;background-color:#e0e0e0;padding:1px 4px;border: 1px solid #C0C0C0;border-radius: 0px" class="number"&gt;
+                &lt;b&gt;${question_index + 1}&lt;/b&gt;
+           &lt;/div&gt;
+           &lt;div&gt;
+               &lt;div class="place bg-dark"&gt;
+                 &lt;@editable id="__DATA__"&gt;${question.data.blank} &lt;br&gt;&lt;br&gt;&lt;/@editable&gt;
+               &lt;/div&gt;
+               &lt;div class="place"&gt;
+                 &lt;@answers question=question/&gt;
+               &lt;/div&gt;
+            &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/#list&gt;
+    &lt;/div&gt;
+&lt;/#if&gt;
+&lt;@submit text="Submit" /&gt;
+&lt;/@form&gt;
+&lt;/@hit&gt;</content>
+                                                    <name>Blank</name>
+                                                    <origination>CREATED_MANUALLY</origination>
+                                                    <status>ACTIVE</status>
+                                                    <type>BASE</type>
+                                                    <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc3</uuid>
+                                                    <version>
+                                                        <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc3</componentUuid>
+                                                        <incrementalVersion>1.0</incrementalVersion>
+                                                        <lastInChain>true</lastInChain>
+                                                        <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                        <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc3</versionUuid>
+                                                    </version>
+                                                </template>
+                                            </workSetting>
+                                        </question>
+                                        <requiresData>true</requiresData>
+                                        <status>ACTIVE</status>
+                                        <streamComplexRunThreshold>1</streamComplexRunThreshold>
+                                        <streamTimeInterval>Immediately</streamTimeInterval>
+                                        <streamTimeIntervalValue>0</streamTimeIntervalValue>
+                                        <streamValueType>Tasks</streamValueType>
+                                        <title>Find website url</title>
+                                        <type>SINGLE</type>
+                                        <uuid>27df867c-1546-4a47-cca4-f98a98bf1311</uuid>
+                                        <validWorkflow>false</validWorkflow>
+                                        <version>
+                                            <componentUuid>5fd0981f-c57e-486c-82be-8d6027a300be</componentUuid>
+                                            <incrementalVersion>1.2</incrementalVersion>
+                                            <lastInChain>true</lastInChain>
+                                            <lastModified>2018-05-27T15:33:55Z</lastModified>
+                                            <versionUuid>8c98c3e8-0b66-4af2-bc08-71b58bc096c3</versionUuid>
+                                        </version>
+                                        <workSettingBase>false</workSettingBase>
+                                    </campaign>
+                                    <deleted>false</deleted>
+                                    <stepIndex>2</stepIndex>
+                                    <stepPosition>INTERMEDIATE</stepPosition>
+                                    <streamed>false</streamed>
+                                    <uuid>cc897284-427a-4212-f851-6c1e8093ec81</uuid>
+                                </campaignMap>
+                                <campaignMap>
+                                    <blockSize>1</blockSize>
+                                    <businessRule>
+                                        <content>#RuleContext.APPROVE_ALL_RULE</content>
+                                        <name>Approve All</name>
+                                        <ruleType>WORKFLOW_RULE</ruleType>
+                                        <ruleTypeUI>Composite</ruleTypeUI>
+                                        <uuid>4d65a96a-4bc1-47ab-bab3-968688559557</uuid>
+                                        <workflowRuleMode>SIMPLE</workflowRuleMode>
+                                    </businessRule>
+                                    <campaign>
+                                        <active>false</active>
+                                        <businessRules/>
+                                        <campaignMaps/>
+                                        <campaigns/>
+                                        <executingType>MACHINE</executingType>
+                                        <goldBucketBlockSize>0</goldBucketBlockSize>
+                                        <goldRatio>0</goldRatio>
+                                        <goldSource>Empty</goldSource>
+                                        <goldType>Percentage</goldType>
+                                        <machineConfig>
+                                            <answers/>
+                                            <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config xmlns="http://web-harvest.sourceforge.net/schema/1.0/config" scriptlang="groovy"&gt;
+
+    &lt;robotics-flow&gt;
+        &lt;recorder close-on-completion="true" close-all-windows="false" start-in-private="false" recorder-script-uuid="1ccd46ab-d44e-4951-ae90-82fa33af437e"/&gt;
+    &lt;/robotics-flow&gt;
+
+    &lt;export include-original-data="true"&gt;
+        &lt;single-column name="management" value="${management}"&gt;&lt;/single-column&gt;
+        &lt;single-column name="website_url" value="${website_url}"&gt;&lt;/single-column&gt;
+        &lt;single-column name="leadership_approvement" value="${leadership_approvement}"&gt;&lt;/single-column&gt;
+        &lt;single-column name="worklife_balance" value="${worklife_balance}"&gt;&lt;/single-column&gt;
+        &lt;single-column name="overal_raiting" value="${overal_raiting}"&gt;&lt;/single-column&gt;
+    &lt;/export&gt;
+
+&lt;/config&gt;</content>
+                                            <includedConfigs/>
+                                            <inclusionCode>8aaf1294-6fa4-4919-86ac-a1391b42c0a6</inclusionCode>
+                                            <machineWorkSetting>
+                                                <category>
+                                                    <automation>false</automation>
+                                                    <description></description>
+                                                    <enabled>true</enabled>
+                                                    <executingType>MACHINE</executingType>
+                                                    <name>Other</name>
+                                                    <private>false</private>
+                                                    <publicId>dd92f240-144b-4fef-8476-4ec0acbc1105</publicId>
+                                                </category>
+                                                <contentType>BLANK</contentType>
+                                                <description></description>
+                                                <enabled>true</enabled>
+                                                <name>Miscellaneous Tasks</name>
+                                                <publicId>26e6e095-00bb-43fa-8c34-af0b18e71ac9</publicId>
+                                                <version>
+                                                    <componentUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2018-05-15T14:48:27Z</lastModified>
+                                                    <versionUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</versionUuid>
+                                                </version>
+                                                <answers/>
+                                                <machineWorkSettingType>BASIC</machineWorkSettingType>
+                                                <template>
+                                                    <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                    <name>Blank</name>
+                                                    <origination>CREATED_MANUALLY</origination>
+                                                    <status>ACTIVE</status>
+                                                    <type>BASE_MACHINE</type>
+                                                    <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                    <version>
+                                                        <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                        <incrementalVersion>1.0</incrementalVersion>
+                                                        <lastInChain>true</lastInChain>
+                                                        <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                        <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                    </version>
+                                                </template>
+                                            </machineWorkSetting>
+                                            <machineWorkSettingType>RECORDER</machineWorkSettingType>
+                                            <name>raiting_website_scraping</name>
+                                            <machineConfigOptions/>
+                                            <sourceType>MANUAL</sourceType>
+                                            <template>
+                                                <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                <name>Blank</name>
+                                                <origination>CREATED_MANUALLY</origination>
+                                                <status>ACTIVE</status>
+                                                <type>BASE_MACHINE</type>
+                                                <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                <version>
+                                                    <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                    <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                </version>
+                                            </template>
+                                            <uuid>5e4ed681-ed4f-423e-821d-5387302c5c95</uuid>
+                                            <version>
+                                                <componentUuid>a8bbf9dd-9120-4da5-9579-c4c6542104c3</componentUuid>
+                                                <incrementalVersion>1.0</incrementalVersion>
+                                                <lastInChain>true</lastInChain>
+                                                <lastModified>2018-05-27T15:16:30Z</lastModified>
+                                                <versionUuid>a705f5d4-c40e-4f42-9470-6e1f305af6d3</versionUuid>
+                                            </version>
+                                        </machineConfig>
+                                        <moderation>false</moderation>
+                                        <origination>CREATED_AUTOMATICALLY</origination>
+                                        <requiresData>true</requiresData>
+                                        <status>ACTIVE</status>
+                                        <streamComplexRunThreshold>1</streamComplexRunThreshold>
+                                        <streamTimeInterval>Immediately</streamTimeInterval>
+                                        <streamTimeIntervalValue>0</streamTimeIntervalValue>
+                                        <streamValueType>Tasks</streamValueType>
+                                        <title>raiting_website_scraping</title>
+                                        <type>SINGLE</type>
+                                        <uuid>2a863f2c-5de2-46ea-9a1f-d9ac14707794</uuid>
+                                        <validWorkflow>false</validWorkflow>
+                                        <version>
+                                            <componentUuid>5c10c34b-0033-45bf-9ecd-1b6199197d07</componentUuid>
+                                            <incrementalVersion>1.0</incrementalVersion>
+                                            <lastInChain>true</lastInChain>
+                                            <lastModified>2018-05-27T15:16:30Z</lastModified>
+                                            <versionUuid>b1073ae0-6766-493b-b31d-b03723909f66</versionUuid>
+                                        </version>
+                                        <workSettingBase>false</workSettingBase>
+                                    </campaign>
+                                    <deleted>false</deleted>
+                                    <stepIndex>3</stepIndex>
+                                    <stepPosition>INTERMEDIATE</stepPosition>
+                                    <streamed>false</streamed>
+                                    <uuid>fcd824c0-8e2f-4d4e-b58a-c6743eb7a377</uuid>
+                                </campaignMap>
+                                <campaignMap>
+                                    <businessRule>
+                                        <content>package com.freedomoss.requester;
+
+#list any import classes here.
+import com.freedomoss.objective.model.CompositeRuleContext;
+import com.freedomoss.objective.model.CompositeRuleDataItemContext;
+import com.freedomoss.requester.model.AwsHitQuestionItem;
+import com.freedomoss.requester.model.AwsHitQuestionAnswerItem;
+import org.slf4j.Logger;
+import java.util.Map;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.ArrayList;
+import com.freedomoss.requester.dto.SubmissionResultDTO;
+
+#declare any global variables here
+global CompositeRuleContext source
+global Logger log
+global Map params
+
+
+
+rule "Rule context initialization"
+auto-focus true
+no-loop
+dialect "mvel"
+agenda-group "initialization-group"
+	when
+		$ctx:CompositeRuleContext(initialized == false);
+	then
+		$ctx.updateWorkingMemory();
+		# move to business rules
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("calculation").setFocus();
+end</content>
+                                        <name>Business Process: End Rule</name>
+                                        <ruleType>WORKFLOW_RULE</ruleType>
+                                        <uuid>20b6191c-1d50-489c-b053-1b3895fbeb5g</uuid>
+                                        <workflowRuleMode>ADVANCED</workflowRuleMode>
+                                    </businessRule>
+                                    <campaign>
+                                        <active>false</active>
+                                        <businessRules/>
+                                        <campaignMaps/>
+                                        <campaigns/>
+                                        <executingType>MACHINE</executingType>
+                                        <goldBucketBlockSize>0</goldBucketBlockSize>
+                                        <goldRatio>0</goldRatio>
+                                        <goldSource>Empty</goldSource>
+                                        <goldType>Percentage</goldType>
+                                        <machineConfig>
+                                            <answers/>
+                                            <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+
+    &lt;var-def name="exportType"&gt;
+        &lt;case&gt;
+            &lt;if condition='${sys.isVariableDefined("_sys_export_type")}'&gt;
+                &lt;template&gt;${_sys_export_type}&lt;/template&gt;
+            &lt;/if&gt;
+        &lt;/case&gt;
+    &lt;/var-def&gt;
+
+    &lt;var-def name="exportColumns"&gt;
+        &lt;case&gt;
+            &lt;if condition='${sys.isVariableDefined("_sys_export_columns")}'&gt;
+                &lt;template&gt;${_sys_export_columns}&lt;/template&gt;
+            &lt;/if&gt;
+            &lt;else&gt;&lt;/else&gt;
+        &lt;/case&gt;
+    &lt;/var-def&gt;
+
+    &lt;var-def name="columnNameCase"&gt;
+        &lt;case&gt;
+            &lt;if condition='${sys.isVariableDefined("_sys_column_name_case")}'&gt;
+                &lt;template&gt;${_sys_column_name_case}&lt;/template&gt;
+            &lt;/if&gt;
+            &lt;else&gt;keep&lt;/else&gt;
+        &lt;/case&gt;
+    &lt;/var-def&gt;
+
+    &lt;var-def name="dataOnly"&gt;
+        &lt;case&gt;
+            &lt;if condition='${sys.isVariableDefined("_sys_data_only")}'&gt;
+                &lt;template&gt;${_sys_data_only}&lt;/template&gt;
+            &lt;/if&gt;
+            &lt;else&gt;true&lt;/else&gt;
+        &lt;/case&gt;
+    &lt;/var-def&gt;
+
+    &lt;var-def name="datastoreName"&gt;
+        &lt;script return="item.getWrappedObject().getRun().getDatastoreName()" /&gt;
+    &lt;/var-def&gt;
+    &lt;case&gt;
+        &lt;if condition="${!datastoreName.isEmpty()}"&gt;
+            &lt;insert-datastore   datastore-name="${datastoreName}" create="true"&gt;
+                &lt;script return="hit_submission_data_item.getWrappedObject().getItemValueMap()"/&gt;
+            &lt;/insert-datastore&gt;
+        &lt;/if&gt;
+    &lt;/case&gt;
+
+    &lt;export include-original-data="true"
+            export-type="${exportType}"
+            export-columns="${exportColumns}"
+            column-name-case="${columnNameCase}"
+            data-only="${dataOnly}"&gt;
+    &lt;/export&gt;
+&lt;/config&gt;</content>
+                                            <description>Default machine campaign for end step.</description>
+                                            <includedConfigs/>
+                                            <inclusionCode>9e5000e3-c243-42d3-b5ad-c6ac90dec35e</inclusionCode>
+                                            <machineWorkSetting>
+                                                <category>
+                                                    <automation>false</automation>
+                                                    <description></description>
+                                                    <enabled>true</enabled>
+                                                    <executingType>MACHINE</executingType>
+                                                    <name>Other</name>
+                                                    <private>false</private>
+                                                    <publicId>dd92f240-144b-4fef-8476-4ec0acbc1105</publicId>
+                                                </category>
+                                                <contentType>BLANK</contentType>
+                                                <description></description>
+                                                <enabled>true</enabled>
+                                                <name>Miscellaneous Tasks</name>
+                                                <publicId>26e6e095-00bb-43fa-8c34-af0b18e71ac9</publicId>
+                                                <version>
+                                                    <componentUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2018-05-15T14:48:27Z</lastModified>
+                                                    <versionUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac9</versionUuid>
+                                                </version>
+                                                <answers/>
+                                                <machineWorkSettingType>BASIC</machineWorkSettingType>
+                                                <template>
+                                                    <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                    <name>Blank</name>
+                                                    <origination>CREATED_MANUALLY</origination>
+                                                    <status>ACTIVE</status>
+                                                    <type>BASE_MACHINE</type>
+                                                    <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                    <version>
+                                                        <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                        <incrementalVersion>1.0</incrementalVersion>
+                                                        <lastInChain>true</lastInChain>
+                                                        <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                        <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                    </version>
+                                                </template>
+                                            </machineWorkSetting>
+                                            <name>Final Results</name>
+                                            <machineConfigOptions/>
+                                            <sourceType>MANUAL</sourceType>
+                                            <template>
+                                                <content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config charset="UTF-8"&gt;
+	&lt;export include-original-data="true"&gt;
+	&lt;/export&gt;
+&lt;/config&gt;</content>
+                                                <name>Blank</name>
+                                                <origination>CREATED_MANUALLY</origination>
+                                                <status>ACTIVE</status>
+                                                <type>BASE_MACHINE</type>
+                                                <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</uuid>
+                                                <version>
+                                                    <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</componentUuid>
+                                                    <incrementalVersion>1.0</incrementalVersion>
+                                                    <lastInChain>true</lastInChain>
+                                                    <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                                    <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc4</versionUuid>
+                                                </version>
+                                            </template>
+                                            <uuid>9e5000e3-c243-42d3-b5ad-c6ac90dec35e</uuid>
+                                            <version>
+                                                <componentUuid>9e5000e3-c243-42d3-b5ad-c6ac90dec35e</componentUuid>
+                                                <incrementalVersion>1.0</incrementalVersion>
+                                                <lastInChain>true</lastInChain>
+                                                <lastModified>2018-05-15T14:48:36Z</lastModified>
+                                                <versionUuid>132b4cb1-584f-11e8-b314-0ae8ba3240ae</versionUuid>
+                                            </version>
+                                        </machineConfig>
+                                        <moderation>false</moderation>
+                                        <origination>CREATED_AUTOMATICALLY</origination>
+                                        <requiresData>true</requiresData>
+                                        <status>ACTIVE</status>
+                                        <streamComplexRunThreshold>100</streamComplexRunThreshold>
+                                        <streamTimeInterval>Immediately</streamTimeInterval>
+                                        <streamTimeIntervalValue>0</streamTimeIntervalValue>
+                                        <streamValueType>Percents</streamValueType>
+                                        <title>Final Results</title>
+                                        <type>SINGLE</type>
+                                        <uuid>af4c8905-26dd-4120-b208-39ad3530ffc6</uuid>
+                                        <validWorkflow>false</validWorkflow>
+                                        <version>
+                                            <componentUuid>12a5ce44-584f-11e8-b314-0ae8ba3240ae</componentUuid>
+                                            <incrementalVersion>1.0</incrementalVersion>
+                                            <lastInChain>true</lastInChain>
+                                            <lastModified>2018-05-15T14:48:36Z</lastModified>
+                                            <versionUuid>132b697a-584f-11e8-b314-0ae8ba3240ae</versionUuid>
+                                        </version>
+                                        <workSettingBase>false</workSettingBase>
+                                    </campaign>
+                                    <deleted>false</deleted>
+                                    <stepIndex>4</stepIndex>
+                                    <stepPosition>END</stepPosition>
+                                    <streamed>false</streamed>
+                                    <uuid>854ccf8e-a332-4b11-a657-d7c1fc68e40e</uuid>
+                                </campaignMap>
+                            </campaignMaps>
+                            <campaigns/>
+                            <compositeCampaignVersion>NEW_WORKFLOW</compositeCampaignVersion>
+                            <compositeStructureXml>&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id="0"/&gt;&lt;mxCell id="1" parent="0"/&gt;&lt;Start id="2" name="Start" type="start"&gt;&lt;mxCell parent="1" style="start" vertex="1"&gt;&lt;mxGeometry as="geometry" height="32.0" width="32.0" x="40.0" y="70.0"/&gt;&lt;/mxCell&gt;&lt;/Start&gt;&lt;MachineTask campaignMapUUID="877fdc20-86e4-4c9d-d40c-d2d56f6f39b5" id="3" name="raiting_website_validation" taskUUID="1b62e75d-f3ff-461e-b72c-275eb2016484" type="machine_task"&gt;&lt;mxCell parent="1" style="machine_task" vertex="1"&gt;&lt;mxGeometry as="geometry" height="60.0" width="160.0" x="121.0" y="56.0"/&gt;&lt;/mxCell&gt;&lt;/MachineTask&gt;&lt;Link id="4" name="" type="link"&gt;&lt;mxCell edge="1" parent="1" source="2" style="link" target="3"&gt;&lt;mxGeometry as="geometry" relative="1" x="0.5" y="10.0"/&gt;&lt;/mxCell&gt;&lt;/Link&gt;&lt;Rule id="5" name="Decision Rule" ruleUUID="1cca168e-bb55-4bc0-9fb0-61cfcbb4c260" type="rule"&gt;&lt;mxCell parent="1" style="rule" vertex="1"&gt;&lt;mxGeometry as="geometry" height="32.0" width="32.0" x="330.0" y="70.0"/&gt;&lt;/mxCell&gt;&lt;/Rule&gt;&lt;Link id="6" name="" type="link"&gt;&lt;mxCell edge="1" parent="1" source="3" style="link" target="5"&gt;&lt;mxGeometry as="geometry" relative="1" x="0.5" y="10.0"/&gt;&lt;/mxCell&gt;&lt;/Link&gt;&lt;Link conditional="true" id="10" label="Valid" name="" outcomeId="Valid" ruleUUID="1cca168e-bb55-4bc0-9fb0-61cfcbb4c260" type="link"&gt;&lt;mxCell edge="1" parent="1" source="5" style="link" target="11"&gt;&lt;mxGeometry as="geometry"&gt;&lt;mxPoint as="targetPoint" x="450.0" y="86.0"/&gt;&lt;Array as="points"/&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/Link&gt;&lt;MachineTask campaignMapUUID="fcd824c0-8e2f-4d4e-b58a-c6743eb7a377" id="11" name="raiting_website_scraping" taskUUID="2a863f2c-5de2-46ea-9a1f-d9ac14707794" type="machine_task"&gt;&lt;mxCell parent="1" style="machine_task" vertex="1"&gt;&lt;mxGeometry as="geometry" height="60.0" width="160.0" x="430.0" y="54.0"/&gt;&lt;/mxCell&gt;&lt;/MachineTask&gt;&lt;End campaignMapUUID="854ccf8e-a332-4b11-a657-d7c1fc68e40e" id="12" name="End" type="end"&gt;&lt;mxCell parent="1" style="end" vertex="1"&gt;&lt;mxGeometry as="geometry" height="32.0" width="32.0" x="664.0" y="68.0"/&gt;&lt;/mxCell&gt;&lt;/End&gt;&lt;Link id="13" name="" outcome="ApproveAll" outcomeId="ApproveAll" ruleUUID="4d65a96a-4bc1-47ab-bab3-968688559557" type="link"&gt;&lt;mxCell edge="1" parent="1" source="11" style="link" target="12"&gt;&lt;mxGeometry as="geometry" relative="1" x="0.5" y="10.0"/&gt;&lt;/mxCell&gt;&lt;/Link&gt;&lt;Link conditional="true" id="14" label="Wrong Domain" name="" outcomeId="Wrong Domain" ruleUUID="1cca168e-bb55-4bc0-9fb0-61cfcbb4c260" type="link"&gt;&lt;mxCell edge="1" parent="1" source="5" style="link" target="12"&gt;&lt;mxGeometry as="geometry"&gt;&lt;mxPoint as="targetPoint" x="450.0" y="116.0"/&gt;&lt;Array as="points"&gt;&lt;mxPoint x="346.0" y="370.0"/&gt;&lt;mxPoint x="680.0" y="370.0"/&gt;&lt;/Array&gt;&lt;mxPoint as="offset" x="-113.0" y="269.0"/&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/Link&gt;&lt;Link conditional="true" id="15" label="Not found" name="" outcomeId="Not found" ruleUUID="1cca168e-bb55-4bc0-9fb0-61cfcbb4c260" type="link"&gt;&lt;mxCell edge="1" parent="1" source="5" style="link" target="16"&gt;&lt;mxGeometry as="geometry"&gt;&lt;mxPoint as="targetPoint" x="450.0" y="161.0"/&gt;&lt;Array as="points"&gt;&lt;mxPoint x="350.0" y="240.0"/&gt;&lt;/Array&gt;&lt;mxPoint as="offset" y="71.0"/&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/Link&gt;&lt;HumanTask campaignMapUUID="cc897284-427a-4212-f851-6c1e8093ec81" id="16" name="Find website url" taskUUID="27df867c-1546-4a47-cca4-f98a98bf1311" type="human_task"&gt;&lt;mxCell parent="1" style="human_task" vertex="1"&gt;&lt;mxGeometry as="geometry" height="60.0" width="160.0" x="430.0" y="210.0"/&gt;&lt;/mxCell&gt;&lt;/HumanTask&gt;&lt;Link id="17" name="" outcome="ApproveAll" outcomeId="ApproveAll" ruleUUID="fe13571f-0db3-40a3-9a39-bcdebc445fcf" type="link"&gt;&lt;mxCell edge="1" parent="1" source="16" style="link" target="11"&gt;&lt;mxGeometry as="geometry" relative="1" x="0.5" y="10.0"/&gt;&lt;/mxCell&gt;&lt;/Link&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;</compositeStructureXml>
+                            <compositeWorkSetting>
+                                <category>
+                                    <automation>false</automation>
+                                    <description></description>
+                                    <enabled>true</enabled>
+                                    <executingType>HUMAN</executingType>
+                                    <name>Other</name>
+                                    <private>false</private>
+                                    <publicId>dd92f240-144b-4fef-8476-4ec0acbc1104</publicId>
+                                </category>
+                                <contentType>BLANK</contentType>
+                                <description></description>
+                                <enabled>true</enabled>
+                                <name>Miscellaneous Tasks</name>
+                                <publicId>26e6e095-00bb-43fa-8c34-af0b18e71a66</publicId>
+                                <version>
+                                    <componentUuid>26e6e095-00bb-43fa-8c34-af0b18e71a66</componentUuid>
+                                    <incrementalVersion>1.0</incrementalVersion>
+                                    <lastInChain>true</lastInChain>
+                                    <lastModified>2018-05-15T14:48:28Z</lastModified>
+                                    <versionUuid>26e6e095-00bb-43fa-8c34-af0b18e71a66</versionUuid>
+                                </version>
+                                <automationQualityThreshold>80</automationQualityThreshold>
+                            </compositeWorkSetting>
+                            <description>Business Process description</description>
+                            <executingType>COMPOSITE</executingType>
+                            <goldBucketBlockSize>0</goldBucketBlockSize>
+                            <goldRatio>0</goldRatio>
+                            <goldSource>Empty</goldSource>
+                            <goldType>Percentage</goldType>
+                            <moderation>false</moderation>
+                            <origination>CREATED_AUTOMATICALLY</origination>
+                            <question>
+                                <answers>
+                                    <answer>
+                                        <allowNA>false</allowNA>
+                                        <answer>New URL:</answer>
+                                        <answerCode>website_url</answerCode>
+                                        <answerHtml></answerHtml>
+                                        <answerTypeObject>
+                                            <answerTypeGroup>UNCONSTRAINED_TEXT</answerTypeGroup>
+                                            <code>FREE_TEXT</code>
+                                            <description></description>
+                                            <optionsAvailable>false</optionsAvailable>
+                                            <showDefaultValue>true</showDefaultValue>
+                                            <showForFieldScheme>true</showForFieldScheme>
+                                            <showForHumanTask>true</showForHumanTask>
+                                            <showForMachineConfig>true</showForMachineConfig>
+                                            <title>Free Text</title>
+                                            <valueType>SINGLEVALUE</valueType>
+                                        </answerTypeObject>
+                                        <appendDataStoreOptions>false</appendDataStoreOptions>
+                                        <autocompleteField>false</autocompleteField>
+                                        <constantable>false</constantable>
+                                        <doNotNormalizeTaggedText>false</doNotNormalizeTaggedText>
+                                        <doNotUseInAdjudication>false</doNotUseInAdjudication>
+                                        <findMajorityForAllAtomicValues>false</findMajorityForAllAtomicValues>
+                                        <lastModified>2018-05-27T15:32:03Z</lastModified>
+                                        <letCustomValues>false</letCustomValues>
+                                        <manualField>false</manualField>
+                                        <multiValue>false</multiValue>
+                                        <percentRequired>false</percentRequired>
+                                        <range>false</range>
+                                        <required>true</required>
+                                        <sequenceNumber>1</sequenceNumber>
+                                        <useBlocks>false</useBlocks>
+                                        <useEmptyCell>false</useEmptyCell>
+                                    </answer>
+                                </answers>
+                                <assignmentDuration>1800000</assignmentDuration>
+                                <assignmentLimit>1</assignmentLimit>
+                                <attrs>{"lnaa":"Run","lnam":"Tasks","lna":"0"}</attrs>
+                                <autoApprovalDelay>432000000</autoApprovalDelay>
+                                <automaticallyProcessed>0</automaticallyProcessed>
+                                <blockSize>1</blockSize>
+                                <constQualifiedWorkers>false</constQualifiedWorkers>
+                                <currency>USD</currency>
+                                <description>Miscellaneous Tasks</description>
+                                <dynamicTaskRenderingDisabled>true</dynamicTaskRenderingDisabled>
+                                <expiredTime>2592000000</expiredTime>
+                                <faqItems/>
+                                <frameHeight>2500</frameHeight>
+                                <geolocationEnabled>false</geolocationEnabled>
+                                <instructionItems/>
+                                <keywords>Miscellaneous Tasks</keywords>
+                                <maxAssignments>1</maxAssignments>
+                                <moderation>false</moderation>
+                                <moderationFlag>false</moderationFlag>
+                                <origination>CREATED_MANUALLY</origination>
+                                <pendingAssignmentsLimit>10</pendingAssignmentsLimit>
+                                <qualificationInstruction></qualificationInstruction>
+                                <qualificationRequirements/>
+                                <qualificationRequirementsRequiredForPreview>false</qualificationRequirementsRequiredForPreview>
+                                <qualificationTasks>20</qualificationTasks>
+                                <qualificationTraining>false</qualificationTraining>
+                                <questionRuleMaps>
+                                    <questionRuleMap>
+                                        <businessRule>
+                                            <content>
+
+package com.freedomoss.requester;
+
+#list any import classes here.
+import com.freedomoss.objective.model.RuleContext;
+import com.freedomoss.objective.model.RuleContext.MajorityType;
+import com.freedomoss.objective.model.RuleAssigmentContext;
+import com.freedomoss.objective.model.RuleQuestionContext;
+import com.freedomoss.requester.model.AwsHitQuestion;
+import com.freedomoss.requester.model.AwsHitQuestionItem;
+import com.freedomoss.requester.model.AwsHitQuestionAnswerItem;
+
+import org.slf4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import java.util.Iterator;
+
+#declare any global variables here
+global RuleContext source
+global Logger log
+global Map params
+
+
+rule "Rule context initialization"
+auto-focus true
+no-loop
+dialect "mvel"
+agenda-group "initialization-group"
+	when
+		$ctx:RuleContext(initialized == false);
+	then
+	    # set parameters
+
+        $ctx.properties[RuleContext.MAJORITY_TYPE] =  RuleContext.MajorityType.COUNT;
+        $ctx.properties[RuleContext.MAJORITY_VALUE] = new Integer(1);
+
+        #$ctx.properties[RuleContext.MAX_ASSIGNMENT_LIMIT] = new Integer(1);
+        $ctx.properties[RuleContext.MAJORITY_HIT_THRESHOLD] = new Double(100/100);
+        $ctx.properties[RuleContext.ASSIGNMENT_APPROVE_THRESHOLD] = new Double(0.5);
+
+        # insert processed facts into memory
+        $ctx.updateWorkingMemory();
+        # move to business rules
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("calculation").setFocus();
+        $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Worst accuracy rule-Evaluate every 5 gold question and set Accuracy based qualification score to 70 if gold accuracy goes up &lt; 75 percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  5) == 0 &amp;&amp; $campaignStatistic.goldAccuracy &lt; (75/100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, 70);
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Normal accuracy rule-Evaluate every 5 gold question and set Accuracy based qualification score to 80 if gold accuracy goes up &gt;= 75 percents and &lt; 90"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  5) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= (75/ 100) &amp;&amp; $campaignStatistic.goldAccuracy &lt; (90 / 100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, 80);
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Super accuracy rule-Evaluate every 5 gold question and set Accuracy based qualification score to 95 if gold accuracy goes up &gt;= 90 percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  5) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= (90 / 100) )
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, 95);
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "0. Check, if exist majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 100
+no-loop
+	when
+	    $ctx:RuleContext (initialized == true, $gold:gold, $threshold:properties.MAJORITY_HIT_THRESHOLD)
+        eval($ctx.majorityWithoutGold().size() &gt;= ($ctx.questions.size() - $gold.size()) *  $threshold)
+	then
+		insert(new String("MAJORITY_FOUND"));
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "1. Approve question by majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 90
+no-loop
+	when
+		((String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true))
+		or
+		(not String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true, assignments.size == properties.MAX_ASSIGNMENT_LIMIT)))
+		$rqc:RuleQuestionContext()
+	then
+		$rqc.approveQuestion($ctx.majority());
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rqc);
+end
+
+rule "3. Approve assignment (always)"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		$ctx:RuleContext(initialized == true, $threshold:properties.ASSIGNMENT_APPROVE_THRESHOLD)
+		$rac:RuleAssigmentContext()
+	then
+	    insert(new String("ASSIGNMENT_PROCESSED"));
+		$ctx.addApproved($rac);
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rac);
+end
+
+rule "5. Extend HIT"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		not String(toString == "MAJORITY_FOUND")
+		$ctx:RuleContext(initialized == true, assignments.size &lt; properties.MAX_ASSIGNMENT_LIMIT);
+	then
+		$ctx.setExtendHit(true);
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+</content>
+                                            <name>Start with one assignment 1+0 pay all</name>
+                                            <paramValues>{"NORMAL_ACCURACY_LEVEL_SCORE":"80","NORMAL_ACCURACY_LEVEL_UPPER_LIMIT":"90","WORST_ACCURACY_LEVEL_SCORE":"70","MAJORITY_HIT_THRESHOLD":"100","SUPER_ACCURACY_LEVEL_LOWER_LIMIT":"90","WORST_ACCURACY_LEVEL_UPPER_LIMIT":"75","SUPER_ACCURACY_LEVEL_SCORE":"95","NORMAL_ACCURACY_LEVEL_LOWER_LIMIT":"75","MAJORITY_VALUE":"1","CHECK_EVERY":"5","MAX_ASSIGNMENT_LIMIT":"1"}</paramValues>
+                                            <ruleType>DROOLS</ruleType>
+                                            <ruleTypeUI>Adjudication</ruleTypeUI>
+                                            <template>
+                                                <content>
+
+package com.freedomoss.requester;
+
+#list any import classes here.
+import com.freedomoss.objective.model.RuleContext;
+import com.freedomoss.objective.model.RuleContext.MajorityType;
+import com.freedomoss.objective.model.RuleAssigmentContext;
+import com.freedomoss.objective.model.RuleQuestionContext;
+import com.freedomoss.requester.model.AwsHitQuestion;
+import com.freedomoss.requester.model.AwsHitQuestionItem;
+import com.freedomoss.requester.model.AwsHitQuestionAnswerItem;
+
+import org.slf4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import java.util.Iterator;
+
+#declare any global variables here
+global RuleContext source
+global Logger log
+global Map params
+
+
+rule "Rule context initialization"
+auto-focus true
+no-loop
+dialect "mvel"
+agenda-group "initialization-group"
+	when
+		$ctx:RuleContext(initialized == false);
+	then
+	    # set parameters
+
+        $ctx.properties[RuleContext.MAJORITY_TYPE] =  RuleContext.MajorityType.COUNT;
+        $ctx.properties[RuleContext.MAJORITY_VALUE] = new Integer({{MAJORITY_VALUE}});
+
+        #$ctx.properties[RuleContext.MAX_ASSIGNMENT_LIMIT] = new Integer({{MAX_ASSIGNMENT_LIMIT}});
+        $ctx.properties[RuleContext.MAJORITY_HIT_THRESHOLD] = new Double({{MAJORITY_HIT_THRESHOLD}}/100);
+        $ctx.properties[RuleContext.ASSIGNMENT_APPROVE_THRESHOLD] = new Double(0.5);
+
+        # insert processed facts into memory
+        $ctx.updateWorkingMemory();
+        # move to business rules
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("calculation").setFocus();
+        $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Worst accuracy rule-Evaluate every {{CHECK_EVERY}} gold question and set Accuracy based qualification score to {{WORST_ACCURACY_LEVEL_SCORE}} if gold accuracy goes up &lt; {{WORST_ACCURACY_LEVEL_UPPER_LIMIT}} percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  {{CHECK_EVERY}}) == 0 &amp;&amp; $campaignStatistic.goldAccuracy &lt; ({{WORST_ACCURACY_LEVEL_UPPER_LIMIT}}/100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, {{WORST_ACCURACY_LEVEL_SCORE}});
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Normal accuracy rule-Evaluate every {{CHECK_EVERY}} gold question and set Accuracy based qualification score to {{NORMAL_ACCURACY_LEVEL_SCORE}} if gold accuracy goes up &gt;= {{NORMAL_ACCURACY_LEVEL_LOWER_LIMIT}} percents and &lt; {{NORMAL_ACCURACY_LEVEL_UPPER_LIMIT}}"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  {{CHECK_EVERY}}) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= ({{NORMAL_ACCURACY_LEVEL_LOWER_LIMIT}}/ 100) &amp;&amp; $campaignStatistic.goldAccuracy &lt; ({{NORMAL_ACCURACY_LEVEL_UPPER_LIMIT}} / 100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, {{NORMAL_ACCURACY_LEVEL_SCORE}});
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Super accuracy rule-Evaluate every {{CHECK_EVERY}} gold question and set Accuracy based qualification score to {{SUPER_ACCURACY_LEVEL_SCORE}} if gold accuracy goes up &gt;= {{SUPER_ACCURACY_LEVEL_LOWER_LIMIT}} percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  {{CHECK_EVERY}}) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= ({{SUPER_ACCURACY_LEVEL_LOWER_LIMIT}} / 100) )
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, {{SUPER_ACCURACY_LEVEL_SCORE}});
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "0. Check, if exist majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 100
+no-loop
+	when
+	    $ctx:RuleContext (initialized == true, $gold:gold, $threshold:properties.MAJORITY_HIT_THRESHOLD)
+        eval($ctx.majorityWithoutGold().size() &gt;= ($ctx.questions.size() - $gold.size()) *  $threshold)
+	then
+		insert(new String("MAJORITY_FOUND"));
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "1. Approve question by majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 90
+no-loop
+	when
+		((String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true))
+		or
+		(not String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true, assignments.size == properties.MAX_ASSIGNMENT_LIMIT)))
+		$rqc:RuleQuestionContext()
+	then
+		$rqc.approveQuestion($ctx.majority());
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rqc);
+end
+
+rule "3. Approve assignment (always)"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		$ctx:RuleContext(initialized == true, $threshold:properties.ASSIGNMENT_APPROVE_THRESHOLD)
+		$rac:RuleAssigmentContext()
+	then
+	    insert(new String("ASSIGNMENT_PROCESSED"));
+		$ctx.addApproved($rac);
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rac);
+end
+
+rule "5. Extend HIT"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		not String(toString == "MAJORITY_FOUND")
+		$ctx:RuleContext(initialized == true, assignments.size &lt; properties.MAX_ASSIGNMENT_LIMIT);
+	then
+		$ctx.setExtendHit(true);
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+</content>
+                                                <description>Get qualified workers: pay if ${MAJORITY_VALUE} correct answers, start with 1 assignment, extend to maximum of ${MAX_ASSIGNMENT_LIMIT} assignments. Set qualification scores depending on gold accuracy.</description>
+                                                <name>Start with 1 assignment X+0 rule (pay all)</name>
+                                                <params>
+                                                    <param>
+                                                        <code>MAJORITY_HIT_THRESHOLD</code>
+                                                        <defaultValue>100</defaultValue>
+                                                        <description>Percent (from 0 to 100) of correct answers when  majority is found</description>
+                                                        <name>Percent of correct answers</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>SUPER_ACCURACY_LEVEL_LOWER_LIMIT</code>
+                                                        <defaultValue>90</defaultValue>
+                                                        <description>Super accuracy level lower limit in percents inclusive, upper limit is considered as 100</description>
+                                                        <name>Super accuracy level lower limit</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>MAJORITY_VALUE</code>
+                                                        <defaultValue>1</defaultValue>
+                                                        <description>Number of correct answers</description>
+                                                        <name>Majority value</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>WORST_ACCURACY_LEVEL_SCORE</code>
+                                                        <defaultValue>70</defaultValue>
+                                                        <description>Qualification score will be given to a worker who has demonstrated a low accuracy</description>
+                                                        <name>Worst accuracy level score</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>NORMAL_ACCURACY_LEVEL_SCORE</code>
+                                                        <defaultValue>80</defaultValue>
+                                                        <description>Qualification score will be given to a worker who has demonstrated a normal accuracy</description>
+                                                        <name>Normal accuracy level score</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>MAX_ASSIGNMENT_LIMIT</code>
+                                                        <defaultValue>1</defaultValue>
+                                                        <description>Maximum number of assignments</description>
+                                                        <name>Max assignments limit</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>WORST_ACCURACY_LEVEL_UPPER_LIMIT</code>
+                                                        <defaultValue>75</defaultValue>
+                                                        <description>Worst accuracy level upper limit in percents exclusive, lower limit is considered as 0</description>
+                                                        <name>Worst accuracy level upper limit</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>SUPER_ACCURACY_LEVEL_SCORE</code>
+                                                        <defaultValue>95</defaultValue>
+                                                        <description>Qualification score will be given to a worker who has demonstrated a super accuracy</description>
+                                                        <name>Super accuracy level score</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>NORMAL_ACCURACY_LEVEL_UPPER_LIMIT</code>
+                                                        <defaultValue>90</defaultValue>
+                                                        <description>Normal accuracy level upper limit in percents exclusive</description>
+                                                        <name>Normal accuracy level upper limit</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>CHECK_EVERY</code>
+                                                        <defaultValue>5</defaultValue>
+                                                        <description>Check every i-th gold question when evaluating qualification score</description>
+                                                        <name>Check every i-th gold question</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>NORMAL_ACCURACY_LEVEL_LOWER_LIMIT</code>
+                                                        <defaultValue>75</defaultValue>
+                                                        <description>Normal accuracy level lower limit in percents inclusive</description>
+                                                        <name>Normal accuracy level lower limit</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                </params>
+                                            </template>
+                                            <uuid>05f3812c-584f-11e8-b314-0ae8ba3240ae</uuid>
+                                            <workflowRuleMode>ADVANCED</workflowRuleMode>
+                                        </businessRule>
+                                    </questionRuleMap>
+                                </questionRuleMaps>
+                                <radiusSelector>ExactLocation</radiusSelector>
+                                <randomizeAnswers>false</randomizeAnswers>
+                                <recursiveThreshold>1</recursiveThreshold>
+                                <restrictedCountries/>
+                                <taskNotificationSchedule>IMMEDIATE</taskNotificationSchedule>
+                                <templates>
+                                    <template>
+                                        <code></code>
+                                        <content>&lt;#include "extras.ftl" parse=true/&gt;
+&lt;#include "html.ftl" parse=true/&gt;
+&lt;#include "answers.ftl" parse=true/&gt;
+&lt;#assign FEEDBACK_ENABLED = true&gt;
+
+&lt;@hit contentCss="${applicationResourceUrl}/workfusion-resources/saas/ms/ms.bootstrap.min.css"&gt;
+&lt;@script src="${applicationResourceUrl}/workfusion-resources/bootstrap/js/bootstrap-tab.js"/&gt;  
+  
+
+  
+&lt;@instructions title="&lt;h2&gt;Find website url&lt;/h2&gt;"&gt;
+  &lt;!--- editable content --&gt;
+  &lt;@editable id="__INSTRUCTIONS__"&gt;&lt;br&gt;&lt;br&gt;&lt;/@editable&gt;
+&lt;/@instructions&gt;
+&lt;@form&gt;
+&lt;#if questions??&gt;
+    &lt;div class="thumbnail"&gt;
+    &lt;#list questions as question&gt;
+      &lt;@report question=question includeAll=true/&gt;
+      &lt;div style="position:relative;margin:2px 0px" class="block question"&gt;
+           &lt;div style="position:absolute;top:0px;right:0px;background-color:#e0e0e0;padding:1px 4px;border: 1px solid #C0C0C0;border-radius: 0px" class="number"&gt;
+                &lt;b&gt;${question_index + 1}&lt;/b&gt;
+           &lt;/div&gt;
+           &lt;div&gt;
+               &lt;div class="place bg-dark"&gt;
+                 &lt;@editable id="__DATA__"&gt;Old URL for checking:&lt;br&gt;&lt;a href="${question.data['website_url']}" data-mce-href="${question.data['website_url']}"&gt;${question.data['website_url']}&lt;/a&gt;&lt;br&gt;Company ID:&amp;nbsp;${question.data['company_id']}&lt;/@editable&gt;
+               &lt;/div&gt;
+               &lt;div class="place"&gt;
+                 &lt;@answers question=question/&gt;
+               &lt;/div&gt;
+            &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/#list&gt;
+    &lt;/div&gt;
+&lt;/#if&gt;
+&lt;@submit text="Submit" /&gt;
+&lt;/@form&gt;
+&lt;/@hit&gt;</content>
+                                        <creationType>CUSTOM</creationType>
+                                        <name>Miscellaneous Tasks (Blank)</name>
+                                        <origination>CREATED_AUTOMATICALLY</origination>
+                                        <status>ACTIVE</status>
+                                        <type>TASK</type>
+                                        <uuid>a311035d-05af-413a-823c-89f16033223d</uuid>
+                                        <version>
+                                            <componentUuid>50195f2b-6ff0-45b9-a060-185e7c2bd0ef</componentUuid>
+                                            <incrementalVersion>1.0</incrementalVersion>
+                                            <lastInChain>true</lastInChain>
+                                            <lastModified>2018-05-27T15:29:38Z</lastModified>
+                                            <versionUuid>e3af60b5-566d-45de-be9b-fdc6e846897b</versionUuid>
+                                        </version>
+                                    </template>
+                                </templates>
+                                <title>Find website url</title>
+                                <useCommonHitCoordinates>false</useCommonHitCoordinates>
+                                <uuid>23939fec-b77f-4af2-b305-63f539c3271d</uuid>
+                                <version>
+                                    <componentUuid>fb20a9c5-3e95-4cf7-8b2a-cd8356610b73</componentUuid>
+                                    <incrementalVersion>1.4</incrementalVersion>
+                                    <lastInChain>true</lastInChain>
+                                    <lastModified>2018-05-27T15:33:55Z</lastModified>
+                                    <versionUuid>1b4ea0aa-89b0-4a92-8234-fc36b6bb1dd8</versionUuid>
+                                </version>
+                                <workSetting>
+                                    <category>
+                                        <automation>false</automation>
+                                        <description></description>
+                                        <enabled>true</enabled>
+                                        <executingType>HUMAN</executingType>
+                                        <name>Other</name>
+                                        <private>false</private>
+                                        <publicId>dd92f240-144b-4fef-8476-4ec0acbc1104</publicId>
+                                    </category>
+                                    <contentType>BLANK</contentType>
+                                    <description></description>
+                                    <enabled>true</enabled>
+                                    <name>Miscellaneous Tasks</name>
+                                    <publicId>26e6e095-00bb-43fa-8c34-af0b18e71ac8</publicId>
+                                    <version>
+                                        <componentUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac8</componentUuid>
+                                        <incrementalVersion>1.0</incrementalVersion>
+                                        <lastInChain>true</lastInChain>
+                                        <lastModified>2018-05-15T14:48:20Z</lastModified>
+                                        <versionUuid>26e6e095-00bb-43fa-8c34-af0b18e71ac8</versionUuid>
+                                    </version>
+                                    <answers/>
+                                    <businessRules>
+                                        <businessRule>
+                                            <content>
+
+package com.freedomoss.requester;
+
+#list any import classes here.
+import com.freedomoss.objective.model.RuleContext;
+import com.freedomoss.objective.model.RuleContext.MajorityType;
+import com.freedomoss.objective.model.RuleAssigmentContext;
+import com.freedomoss.objective.model.RuleQuestionContext;
+import com.freedomoss.requester.model.AwsHitQuestion;
+import com.freedomoss.requester.model.AwsHitQuestionItem;
+import com.freedomoss.requester.model.AwsHitQuestionAnswerItem;
+
+import org.slf4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import java.util.Iterator;
+
+#declare any global variables here
+global RuleContext source
+global Logger log
+global Map params
+
+
+rule "Rule context initialization"
+auto-focus true
+no-loop
+dialect "mvel"
+agenda-group "initialization-group"
+	when
+		$ctx:RuleContext(initialized == false);
+	then
+	    # set parameters
+
+        $ctx.properties[RuleContext.MAJORITY_TYPE] =  RuleContext.MajorityType.COUNT;
+        $ctx.properties[RuleContext.MAJORITY_VALUE] = new Integer(1);
+
+        #$ctx.properties[RuleContext.MAX_ASSIGNMENT_LIMIT] = new Integer(1);
+        $ctx.properties[RuleContext.MAJORITY_HIT_THRESHOLD] = new Double(100/100);
+        $ctx.properties[RuleContext.ASSIGNMENT_APPROVE_THRESHOLD] = new Double(0.5);
+
+        # insert processed facts into memory
+        $ctx.updateWorkingMemory();
+        # move to business rules
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("calculation").setFocus();
+        $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Worst accuracy rule-Evaluate every 5 gold question and set Accuracy based qualification score to 70 if gold accuracy goes up &lt; 75 percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  5) == 0 &amp;&amp; $campaignStatistic.goldAccuracy &lt; (75/100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, 70);
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Normal accuracy rule-Evaluate every 5 gold question and set Accuracy based qualification score to 80 if gold accuracy goes up &gt;= 75 percents and &lt; 90"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  5) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= (75/ 100) &amp;&amp; $campaignStatistic.goldAccuracy &lt; (90 / 100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, 80);
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Super accuracy rule-Evaluate every 5 gold question and set Accuracy based qualification score to 95 if gold accuracy goes up &gt;= 90 percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  5) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= (90 / 100) )
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, 95);
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "0. Check, if exist majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 100
+no-loop
+	when
+	    $ctx:RuleContext (initialized == true, $gold:gold, $threshold:properties.MAJORITY_HIT_THRESHOLD)
+        eval($ctx.majorityWithoutGold().size() &gt;= ($ctx.questions.size() - $gold.size()) *  $threshold)
+	then
+		insert(new String("MAJORITY_FOUND"));
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "1. Approve question by majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 90
+no-loop
+	when
+		((String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true))
+		or
+		(not String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true, assignments.size == properties.MAX_ASSIGNMENT_LIMIT)))
+		$rqc:RuleQuestionContext()
+	then
+		$rqc.approveQuestion($ctx.majority());
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rqc);
+end
+
+rule "3. Approve assignment (always)"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		$ctx:RuleContext(initialized == true, $threshold:properties.ASSIGNMENT_APPROVE_THRESHOLD)
+		$rac:RuleAssigmentContext()
+	then
+	    insert(new String("ASSIGNMENT_PROCESSED"));
+		$ctx.addApproved($rac);
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rac);
+end
+
+rule "5. Extend HIT"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		not String(toString == "MAJORITY_FOUND")
+		$ctx:RuleContext(initialized == true, assignments.size &lt; properties.MAX_ASSIGNMENT_LIMIT);
+	then
+		$ctx.setExtendHit(true);
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+</content>
+                                            <name>Start with one assignment 1+0 pay all</name>
+                                            <paramValues>{"NORMAL_ACCURACY_LEVEL_SCORE":"80","NORMAL_ACCURACY_LEVEL_UPPER_LIMIT":"90","WORST_ACCURACY_LEVEL_SCORE":"70","MAJORITY_HIT_THRESHOLD":"100","SUPER_ACCURACY_LEVEL_LOWER_LIMIT":"90","WORST_ACCURACY_LEVEL_UPPER_LIMIT":"75","SUPER_ACCURACY_LEVEL_SCORE":"95","NORMAL_ACCURACY_LEVEL_LOWER_LIMIT":"75","MAJORITY_VALUE":"1","CHECK_EVERY":"5","MAX_ASSIGNMENT_LIMIT":"1"}</paramValues>
+                                            <ruleType>DROOLS</ruleType>
+                                            <ruleTypeUI>Adjudication</ruleTypeUI>
+                                            <template>
+                                                <content>
+
+package com.freedomoss.requester;
+
+#list any import classes here.
+import com.freedomoss.objective.model.RuleContext;
+import com.freedomoss.objective.model.RuleContext.MajorityType;
+import com.freedomoss.objective.model.RuleAssigmentContext;
+import com.freedomoss.objective.model.RuleQuestionContext;
+import com.freedomoss.requester.model.AwsHitQuestion;
+import com.freedomoss.requester.model.AwsHitQuestionItem;
+import com.freedomoss.requester.model.AwsHitQuestionAnswerItem;
+
+import org.slf4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import java.util.Iterator;
+
+#declare any global variables here
+global RuleContext source
+global Logger log
+global Map params
+
+
+rule "Rule context initialization"
+auto-focus true
+no-loop
+dialect "mvel"
+agenda-group "initialization-group"
+	when
+		$ctx:RuleContext(initialized == false);
+	then
+	    # set parameters
+
+        $ctx.properties[RuleContext.MAJORITY_TYPE] =  RuleContext.MajorityType.COUNT;
+        $ctx.properties[RuleContext.MAJORITY_VALUE] = new Integer({{MAJORITY_VALUE}});
+
+        #$ctx.properties[RuleContext.MAX_ASSIGNMENT_LIMIT] = new Integer({{MAX_ASSIGNMENT_LIMIT}});
+        $ctx.properties[RuleContext.MAJORITY_HIT_THRESHOLD] = new Double({{MAJORITY_HIT_THRESHOLD}}/100);
+        $ctx.properties[RuleContext.ASSIGNMENT_APPROVE_THRESHOLD] = new Double(0.5);
+
+        # insert processed facts into memory
+        $ctx.updateWorkingMemory();
+        # move to business rules
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("calculation").setFocus();
+        $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Worst accuracy rule-Evaluate every {{CHECK_EVERY}} gold question and set Accuracy based qualification score to {{WORST_ACCURACY_LEVEL_SCORE}} if gold accuracy goes up &lt; {{WORST_ACCURACY_LEVEL_UPPER_LIMIT}} percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  {{CHECK_EVERY}}) == 0 &amp;&amp; $campaignStatistic.goldAccuracy &lt; ({{WORST_ACCURACY_LEVEL_UPPER_LIMIT}}/100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, {{WORST_ACCURACY_LEVEL_SCORE}});
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Normal accuracy rule-Evaluate every {{CHECK_EVERY}} gold question and set Accuracy based qualification score to {{NORMAL_ACCURACY_LEVEL_SCORE}} if gold accuracy goes up &gt;= {{NORMAL_ACCURACY_LEVEL_LOWER_LIMIT}} percents and &lt; {{NORMAL_ACCURACY_LEVEL_UPPER_LIMIT}}"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  {{CHECK_EVERY}}) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= ({{NORMAL_ACCURACY_LEVEL_LOWER_LIMIT}}/ 100) &amp;&amp; $campaignStatistic.goldAccuracy &lt; ({{NORMAL_ACCURACY_LEVEL_UPPER_LIMIT}} / 100))
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, {{NORMAL_ACCURACY_LEVEL_SCORE}});
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "Super accuracy rule-Evaluate every {{CHECK_EVERY}} gold question and set Accuracy based qualification score to {{SUPER_ACCURACY_LEVEL_SCORE}} if gold accuracy goes up &gt;= {{SUPER_ACCURACY_LEVEL_LOWER_LIMIT}} percents"
+agenda-group "calculation"
+dialect "mvel"
+salience 250
+no-loop
+ when
+     $ctx:RuleContext(initialized == true)
+     $rac:RuleAssigmentContext($campaignStatistic:campaignStatistic, runStatistic.totalGoldQuestions &gt; 0)
+     #evaluate run average response time
+     eval($campaignStatistic.totalGoldQuestions  &gt;  0 &amp;&amp;
+         ($campaignStatistic.totalGoldQuestions  %  {{CHECK_EVERY}}) == 0 &amp;&amp;
+          $campaignStatistic.goldAccuracy &gt;= ({{SUPER_ACCURACY_LEVEL_LOWER_LIMIT}} / 100) )
+ then
+     $rac.grandQualification(RuleContext.ACCURACY_BASED_QUALIFICATION, {{SUPER_ACCURACY_LEVEL_SCORE}});
+     $ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "0. Check, if exist majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 100
+no-loop
+	when
+	    $ctx:RuleContext (initialized == true, $gold:gold, $threshold:properties.MAJORITY_HIT_THRESHOLD)
+        eval($ctx.majorityWithoutGold().size() &gt;= ($ctx.questions.size() - $gold.size()) *  $threshold)
+	then
+		insert(new String("MAJORITY_FOUND"));
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+rule "1. Approve question by majority"
+agenda-group "calculation"
+dialect "mvel"
+salience 90
+no-loop
+	when
+		((String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true))
+		or
+		(not String(toString == "MAJORITY_FOUND") and  $ctx:RuleContext (initialized == true, assignments.size == properties.MAX_ASSIGNMENT_LIMIT)))
+		$rqc:RuleQuestionContext()
+	then
+		$rqc.approveQuestion($ctx.majority());
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rqc);
+end
+
+rule "3. Approve assignment (always)"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		$ctx:RuleContext(initialized == true, $threshold:properties.ASSIGNMENT_APPROVE_THRESHOLD)
+		$rac:RuleAssigmentContext()
+	then
+	    insert(new String("ASSIGNMENT_PROCESSED"));
+		$ctx.addApproved($rac);
+		$ctx.logExecutedRule(kcontext.getRule().getName(), $rac);
+end
+
+rule "5. Extend HIT"
+agenda-group "calculation"
+dialect "mvel"
+salience 50
+no-loop
+	when
+		not String(toString == "MAJORITY_FOUND")
+		$ctx:RuleContext(initialized == true, assignments.size &lt; properties.MAX_ASSIGNMENT_LIMIT);
+	then
+		$ctx.setExtendHit(true);
+		$ctx.logExecutedRule(kcontext.getRule().getName());
+end
+
+</content>
+                                                <description>Get qualified workers: pay if ${MAJORITY_VALUE} correct answers, start with 1 assignment, extend to maximum of ${MAX_ASSIGNMENT_LIMIT} assignments. Set qualification scores depending on gold accuracy.</description>
+                                                <name>Start with 1 assignment X+0 rule (pay all)</name>
+                                                <params>
+                                                    <param>
+                                                        <code>MAJORITY_HIT_THRESHOLD</code>
+                                                        <defaultValue>100</defaultValue>
+                                                        <description>Percent (from 0 to 100) of correct answers when  majority is found</description>
+                                                        <name>Percent of correct answers</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>SUPER_ACCURACY_LEVEL_LOWER_LIMIT</code>
+                                                        <defaultValue>90</defaultValue>
+                                                        <description>Super accuracy level lower limit in percents inclusive, upper limit is considered as 100</description>
+                                                        <name>Super accuracy level lower limit</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>MAJORITY_VALUE</code>
+                                                        <defaultValue>1</defaultValue>
+                                                        <description>Number of correct answers</description>
+                                                        <name>Majority value</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>WORST_ACCURACY_LEVEL_SCORE</code>
+                                                        <defaultValue>70</defaultValue>
+                                                        <description>Qualification score will be given to a worker who has demonstrated a low accuracy</description>
+                                                        <name>Worst accuracy level score</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>NORMAL_ACCURACY_LEVEL_SCORE</code>
+                                                        <defaultValue>80</defaultValue>
+                                                        <description>Qualification score will be given to a worker who has demonstrated a normal accuracy</description>
+                                                        <name>Normal accuracy level score</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>MAX_ASSIGNMENT_LIMIT</code>
+                                                        <defaultValue>1</defaultValue>
+                                                        <description>Maximum number of assignments</description>
+                                                        <name>Max assignments limit</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>WORST_ACCURACY_LEVEL_UPPER_LIMIT</code>
+                                                        <defaultValue>75</defaultValue>
+                                                        <description>Worst accuracy level upper limit in percents exclusive, lower limit is considered as 0</description>
+                                                        <name>Worst accuracy level upper limit</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>SUPER_ACCURACY_LEVEL_SCORE</code>
+                                                        <defaultValue>95</defaultValue>
+                                                        <description>Qualification score will be given to a worker who has demonstrated a super accuracy</description>
+                                                        <name>Super accuracy level score</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>NORMAL_ACCURACY_LEVEL_UPPER_LIMIT</code>
+                                                        <defaultValue>90</defaultValue>
+                                                        <description>Normal accuracy level upper limit in percents exclusive</description>
+                                                        <name>Normal accuracy level upper limit</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>CHECK_EVERY</code>
+                                                        <defaultValue>5</defaultValue>
+                                                        <description>Check every i-th gold question when evaluating qualification score</description>
+                                                        <name>Check every i-th gold question</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                    <param>
+                                                        <code>NORMAL_ACCURACY_LEVEL_LOWER_LIMIT</code>
+                                                        <defaultValue>75</defaultValue>
+                                                        <description>Normal accuracy level lower limit in percents inclusive</description>
+                                                        <name>Normal accuracy level lower limit</name>
+                                                        <type>INPUT_NUMBER</type>
+                                                    </param>
+                                                </params>
+                                            </template>
+                                            <uuid>05f3812c-584f-11e8-b314-0ae8ba3240ae</uuid>
+                                            <workflowRuleMode>ADVANCED</workflowRuleMode>
+                                        </businessRule>
+                                    </businessRules>
+                                    <isPrivate>false</isPrivate>
+                                    <items>
+                                        <item>
+                                            <type>TITLE</type>
+                                            <value>Miscellaneous Tasks</value>
+                                        </item>
+                                        <item>
+                                            <type>HIT_EXPIRES_IN</type>
+                                            <value>2592000000</value>
+                                        </item>
+                                        <item>
+                                            <type>AUTOMATICALLY_APPROVED</type>
+                                            <value>432000000</value>
+                                        </item>
+                                        <item>
+                                            <type>TIME_PER_ASSIGNMENT</type>
+                                            <value>1800000</value>
+                                        </item>
+                                        <item>
+                                            <type>RECOMMENDATION_TAGS</type>
+                                            <value>["information_extraction"]</value>
+                                        </item>
+                                    </items>
+                                    <template>
+                                        <code></code>
+                                        <content>&lt;#include "extras.ftl" parse=true/&gt;
+&lt;#include "html.ftl" parse=true/&gt;
+&lt;#include "answers.ftl" parse=true/&gt;
+&lt;#assign FEEDBACK_ENABLED = true&gt;
+
+&lt;@hit contentCss="${applicationResourceUrl}/workfusion-resources/saas/ms/ms.bootstrap.min.css"&gt;
+&lt;@script src="${applicationResourceUrl}/workfusion-resources/bootstrap/js/bootstrap-tab.js"/&gt;  
+  
+
+  
+&lt;@instructions title="&lt;h2&gt;BLANK&lt;/h2&gt;"&gt;
+  &lt;!--- editable content --&gt;
+  &lt;@editable id="__INSTRUCTIONS__"&gt;&lt;br&gt;&lt;br&gt;&lt;/@editable&gt;
+&lt;/@instructions&gt;
+&lt;@form&gt;
+&lt;#if questions??&gt;
+    &lt;div class="thumbnail"&gt;
+    &lt;#list questions as question&gt;
+      &lt;@report question=question includeAll=true/&gt;
+      &lt;div style="position:relative;margin:2px 0px" class="block question"&gt;
+           &lt;div style="position:absolute;top:0px;right:0px;background-color:#e0e0e0;padding:1px 4px;border: 1px solid #C0C0C0;border-radius: 0px" class="number"&gt;
+                &lt;b&gt;${question_index + 1}&lt;/b&gt;
+           &lt;/div&gt;
+           &lt;div&gt;
+               &lt;div class="place bg-dark"&gt;
+                 &lt;@editable id="__DATA__"&gt;${question.data.blank} &lt;br&gt;&lt;br&gt;&lt;/@editable&gt;
+               &lt;/div&gt;
+               &lt;div class="place"&gt;
+                 &lt;@answers question=question/&gt;
+               &lt;/div&gt;
+            &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/#list&gt;
+    &lt;/div&gt;
+&lt;/#if&gt;
+&lt;@submit text="Submit" /&gt;
+&lt;/@form&gt;
+&lt;/@hit&gt;</content>
+                                        <name>Blank</name>
+                                        <origination>CREATED_MANUALLY</origination>
+                                        <status>ACTIVE</status>
+                                        <type>BASE</type>
+                                        <uuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc3</uuid>
+                                        <version>
+                                            <componentUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc3</componentUuid>
+                                            <incrementalVersion>1.0</incrementalVersion>
+                                            <lastInChain>true</lastInChain>
+                                            <lastModified>2012-12-27T00:00:00Z</lastModified>
+                                            <versionUuid>8f04bd99-7f51-4796-a528-d1a7c9ccfbc3</versionUuid>
+                                        </version>
+                                    </template>
+                                </workSetting>
+                            </question>
+                            <requiresData>true</requiresData>
+                            <status>ACTIVE</status>
+                            <streamComplexRunThreshold>1</streamComplexRunThreshold>
+                            <streamTimeInterval>Immediately</streamTimeInterval>
+                            <streamTimeIntervalValue>0</streamTimeIntervalValue>
+                            <streamValueType>Tasks</streamValueType>
+                            <title>BP-Raiting</title>
+                            <type>COMPOSITE</type>
+                            <uuid>996b8765-9a25-4dbd-a2e5-840784859ea3</uuid>
+                            <validWorkflow>true</validWorkflow>
+                            <version>
+                                <componentUuid>7d73579b-6c74-480f-872f-9b4e5383aef3</componentUuid>
+                                <incrementalVersion>1.7</incrementalVersion>
+                                <lastInChain>true</lastInChain>
+                                <lastModified>2018-05-27T15:34:28Z</lastModified>
+                                <versionUuid>cb97e28a-16ce-4b01-a616-7a043f58f0a7</versionUuid>
+                            </version>
+                            <workSettingBase>false</workSettingBase>
+                        </campaign>
+                        <description>
+                            <automationType>NONE</automationType>
+                            <dynamicTaskRenderingDisabled>false</dynamicTaskRenderingDisabled>
+                            <goldRun>false</goldRun>
+                            <maximumProcessingCount>0</maximumProcessingCount>
+                            <qualificationTraining>false</qualificationTraining>
+                            <stepDescription>{"27df867c-1546-4a47-cca4-f98a98bf1311":{"campaignUUID":"27df867c-1546-4a47-cca4-f98a98bf1311","scheduleDateType":"DATE","workforceUUID":"09cbccd1-584f-11e8-b314-0ae8ba3240ae","taskPriority":16,"includeOriginalData":false,"automationUseCaseConfigs":[],"automationRecall":0.0,"crowdPrices":[{"crowdId":1,"price":0.0}]}}</stepDescription>
+                            <streamingValue>1</streamingValue>
+                            <streamingValueType>Tasks</streamingValueType>
+                            <taskParams>{"values":{"NAME":"raiting_website_validation"}}</taskParams>
+                            <uploadResults>false</uploadResults>
+                            <uploadResultsType>CREATE</uploadResultsType>
+                        </description>
+                        <executingType>MACHINE</executingType>
+                        <forceComplete>false</forceComplete>
+                        <forceCompleteIdleTime>0</forceCompleteIdleTime>
+                        <forceCompletePercent>100</forceCompletePercent>
+                        <mixStrategy>
+                            <additionalRows>0</additionalRows>
+                            <blockSize>1</blockSize>
+                            <goldItemSize>0</goldItemSize>
+                            <goldPercentage>0</goldPercentage>
+                            <goldRatio>true</goldRatio>
+                            <mainRows>6</mainRows>
+                            <repeated>false</repeated>
+                        </mixStrategy>
+                        <purged>false</purged>
+                        <recordProcessingStatus>COMPLETED</recordProcessingStatus>
+                        <recursiveCount>1</recursiveCount>
+                        <rootRunUUID>d265b45f-9f3c-47c7-809f-51d92c88c4db</rootRunUUID>
+                        <runType>SIMPLE</runType>
+                        <tags></tags>
+                        <title>raiting_website_validation</title>
+                        <uuid>d265b45f-9f3c-47c7-809f-51d92c88c4db</uuid>
+                    </run>
+                </runs>
+                <automationUseCases/>
+                <automationInfo/>
+            </project>
+            <hashCode>1929114705</hashCode>
+        </objectContainer>
+    </objects>
+</objectListWrapper>

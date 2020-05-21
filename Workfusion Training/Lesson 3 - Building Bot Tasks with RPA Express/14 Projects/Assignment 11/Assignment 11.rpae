@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="contents" type="LIST" value="[]"/>
+    <variable name="ename" type="STRING" value=""/>
+    <variable name="start_date" type="STRING" value=""/>
+    <variable name="salary" type="STRING" value=""/>
+    <variable name="job_title" type="STRING" value=""/>
+    <variable name="emp_details" type="LIST" value="[]"/>
+    <variable name="emp_chart" type="TABLE" value="[]"/>
+    <variable name="actual_salary" type="NUMBER" value="0"/>
+    <variable name="temp_salary" type="STRING" value=""/>
+  </variables>
+  <actions xsi:type="recorder:FileListFolderAction" active="true" actionDetails="('C:\Users\sandeep.singh01\De...' to ${contents})" delay="0" targetVariable="contents" path="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Offer Letters\Offer Letters" type="FILES" includeSubFolders="false" filterBySize="false" filterByDates="false" dateFilterType="FIXED" dateFormat="yyyy-MM-dd HH:mm:ss" unit="DAYS" filterByPattern="false" pattern=""/>
+  <actions xsi:type="recorder:ForeachAction" active="true" actionDetails="(element) in (contents)" delay="0" varName="contents" pointerName="element">
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Win+r)" delay="0" modifiers="4" text="r" rawCode="82" keyCode="19" keyChar="114" keyLocation="1" type="HOT_KEY_PRESS"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" type="TEXT_FROM_VAR"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({ENTER})" delay="0" text="{ENTER}" rawCode="10" keyCode="28" keyChar="13" keyLocation="4"/>
+    <actions xsi:type="recorder:OcrAction" active="true" actionDetails="(to 'ename' rectangle 158 x 22)" delay="0" offsetX="45" imageName="1551145423340-anchor-1551145423444.apng" fullImageName="1551145423340.png" type="CONTROL" varName="ename" width="158" height="22"/>
+    <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 'emp_details')" delay="0" varName="emp_details">
+      <bigDecimalExpressionHandler/>
+      <listExpressionHandler operationType="PUSH" targetVarName="ename"/>
+      <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW"/>
+    </actions>
+    <actions xsi:type="recorder:TextReplaceAction" active="true" actionDetails="(, to null in 'ename' to 'ename')" delay="0" targetVariable="ename" sourceVariable="ename" find=","/>
+    <actions xsi:type="recorder:OcrAction" active="true" actionDetails="(to 'start_date' rectangle 159 x 22)" delay="0" offsetX="167" offsetY="-1" imageName="1551192219683-anchor-1551192219723.apng" fullImageName="1551192219683.png" type="CONTROL" varName="start_date" width="159" height="22"/>
+    <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 'emp_details')" delay="0" varName="emp_details">
+      <bigDecimalExpressionHandler/>
+      <listExpressionHandler operationType="PUSH" targetVarName="start_date"/>
+      <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW"/>
+    </actions>
+    <actions xsi:type="recorder:OcrAction" active="true" actionDetails="(to 'salary' rectangle 76 x 21)" delay="0" offsetX="320" offsetY="2" imageName="1551145724986-anchor-1551145725020.apng" fullImageName="1551145724986.png" type="CONTROL" varName="salary" width="76" height="21"/>
+    <actions xsi:type="recorder:NumberFormatAction" active="false" actionDetails="" delay="0" targetVariable="actual_salary" direction="STRING_TO_TYPE" inputMask="" inputLocale="en-CA" outputMask="0.00" outputLocale="en-CA" input="${salary}"/>
+    <actions xsi:type="recorder:NumberFormatAction" active="false" actionDetails="" delay="0" targetVariable="temp_salary" direction="TYPE_TO_STRING" inputLocale="en-CA" outputMask="0.00" outputLocale="en-CA" input="actual_salary"/>
+    <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 'emp_details')" delay="0" varName="emp_details">
+      <bigDecimalExpressionHandler/>
+      <listExpressionHandler operationType="PUSH" targetVarName="salary"/>
+      <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW"/>
+    </actions>
+    <actions xsi:type="recorder:OcrAction" active="true" actionDetails="(to 'job_title' rectangle 210 x 27)" delay="0" offsetX="-253" offsetY="7" imageName="1551192460771-anchor-1551192460815.apng" fullImageName="1551192460771.png" type="CONTROL" varName="job_title" width="210" height="27"/>
+    <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 'emp_details')" delay="0" varName="emp_details">
+      <bigDecimalExpressionHandler/>
+      <listExpressionHandler operationType="PUSH" targetVarName="job_title"/>
+      <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW"/>
+    </actions>
+    <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 'emp_chart')" delay="0" varName="emp_chart">
+      <bigDecimalExpressionHandler/>
+      <listExpressionHandler operationType="PUSH"/>
+      <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW" targetVarName="emp_details"/>
+    </actions>
+    <actions xsi:type="recorder:ConstantValueAction" active="true" actionDetails="(to 'emp_details' = []) - LIST" delay="0" varName="emp_details" stringValue="" numberValue="0" booleanValue="false" useCurrentDate="false" listValue="[]"/>
+    <actions xsi:type="recorder:CloseCurrentWindowAction" active="false" actionDetails="" delay="0"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Alt+{F4})" delay="0" modifiers="8" text="{F4}" rawCode="115" keyCode="62" keyLocation="1"/>
+  </actions>
+  <actions xsi:type="recorder:OpenSpreadsheetAction" active="true" actionDetails="(&quot;C:\Users\sande...p_Details.xlsx&quot;)" delay="0" filePath="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Offer Letters\Emp_Details.xlsx" autoSaveFile="true">
+    <actions xsi:type="recorder:ExcelSetRangeAction" active="true" actionDetails="('emp_chart' to A2:END)" delay="0" sourceVariable="emp_chart" coordinateFrom="A2"/>
+  </actions>
+</recorder:ActionFlow>

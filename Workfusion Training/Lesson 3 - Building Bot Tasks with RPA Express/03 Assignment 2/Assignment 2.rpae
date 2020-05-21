@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="url" type="STRING" value="https://docs.google.com/forms/d/e/1FAIpQLSd8y_5zOZi9AWr3jL7nFFjk8NYkQnpoiPkSGxyXX05sKBfI1A/viewform"/>
+  </variables>
+  <actions xsi:type="recorder:OpenURLAction" active="true" actionDetails="(${url})" delay="0" url="${url}" type="CHROME" waitTimeout="50000000"/>
+  <actions xsi:type="recorder:MaximizeCurrentWindowAction" active="true" actionDetails="" delay="0"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="-116" offsetY="15" selector="[CLASS:Chrome_RenderWidgetHostHWND]" imageName="1550589701310-anchor-1550589701353.apng" fullImageName="1550589701310.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" text="Sandeep" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" text="Singh" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" text="sandeep.singh012@cantire.com" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" text="Canadian Tire Corporation" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" text="Technology Resiliency Analyst Co-op" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Space)" delay="0" text="Space" rawCode="32" keyCode="57" keyChar="32" keyLocation="1" type="HOT_KEY_PRESS"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="244" offsetY="24" selector="[CLASS:Chrome_RenderWidgetHostHWND]" imageName="1550591305484-anchor-1550591305512.apng" fullImageName="1550591305484.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="-180" offsetY="7" selector="[CLASS:Chrome_RenderWidgetHostHWND]" imageName="1550591429874-anchor-1550591429936.apng" fullImageName="1550591429874.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:MouseScrollAction" active="true" actionDetails="(10 lines down)" delay="0" offsetX="180" offsetY="8" imageName="1550592267852-anchor-1550592267890.apng" fullImageName="1550592267852.png" type="IMAGE" notches="10"/>
+  <actions xsi:type="recorder:KeyboardAction" active="false" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="170" offsetY="22" selector="[CLASS:Chrome_RenderWidgetHostHWND]" imageName="1550591621066-anchor-1550591621093.apng" fullImageName="1550591621066.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="-108" offsetY="-11" selector="[CLASS:Chrome_RenderWidgetHostHWND]" imageName="1550591665186-anchor-1550591665228.apng" fullImageName="1550591665186.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" selector="[CLASS:Chrome_RenderWidgetHostHWND]" imageName="1550591716403-anchor-1550591716425.apng" fullImageName="1550591716403.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+</recorder:ActionFlow>

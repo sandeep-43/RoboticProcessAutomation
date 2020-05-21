@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="contents" type="LIST" value="[]"/>
+  </variables>
+  <actions xsi:type="recorder:FileListFolderAction" active="true" actionDetails="('C:\Users\sandeep.singh01\De...' to ${contents})" delay="0" targetVariable="contents" path="C:\Users\sandeep.singh01\Desktop\CTC\RPA\files_for_automation" type="FILES_AND_FOLDERS" includeSubFolders="false" filterBySize="false" filterByDates="false" dateFilterType="FIXED" from="" dateFormat="yyyy-MM-dd HH:mm:ss" unit="DAYS" filterByPattern="false" pattern=""/>
+  <actions xsi:type="recorder:FileWriteAction" active="false" actionDetails="('${contents}' to 'C:\Users\sande...mperature.txt')" delay="0" path="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Temperature.txt" content="${contents}" overwrite="false" encoding="UTF-8"/>
+  <actions xsi:type="recorder:FileCreateAction" active="false" actionDetails="('C:\Users\sandeep.singh01\Desktop\CTC\RPA\Excel Files', fail if present)" delay="0" path="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Excel Files" resolution="FAIL" encoding="UTF-8" createFolder="true"/>
+  <actions xsi:type="recorder:ForeachAction" active="true" actionDetails="(element) in (contents)" delay="0" varName="contents" pointerName="element">
+    <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element contains &quot;.xlsx&quot;)" delay="0" leftOperand="${element}" rightOperand=".xlsx" operator="CONTAINS" leftOperandType="VARIABLE" rightOperandType="STRING">
+      <ifBlock active="true">
+        <actions xsi:type="recorder:FileCopyAction" active="true" actionDetails="(move '${element}' to 'C:\Users\sande...A\Excel Files', overwrite if present)" delay="0" targetVariable="" resourcePath="${element}" targetPath="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Excel Files" move="true" resolution="OVERWRITE"/>
+      </ifBlock>
+      <elseBlock active="true">
+        <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element NOT contains &quot;.txt&quot;)" delay="0" leftOperand="${element}" rightOperand=".txt" operator="NOT_CONTAINS" leftOperandType="VARIABLE" rightOperandType="STRING">
+          <ifBlock active="true">
+            <actions xsi:type="recorder:FileDeleteAction" active="true" actionDetails="('${element}')" delay="0" path="${element}"/>
+          </ifBlock>
+          <elseBlock active="true"/>
+        </actions>
+      </elseBlock>
+    </actions>
+  </actions>
+</recorder:ActionFlow>

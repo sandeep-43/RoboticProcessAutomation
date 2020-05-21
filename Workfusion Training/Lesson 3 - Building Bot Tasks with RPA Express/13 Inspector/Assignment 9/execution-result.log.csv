@@ -1,0 +1,14 @@
+"name","type","value"
+"date","DATE","2019-02-25T09:26:26-05:00[America/New_York]"
+"s3","NUMBER","131.175"
+"total","NUMBER","272.525"
+"subtotal1","NUMBER","70.35"
+"n1","STRING","""29.15
+"""
+"flag","BOOLEAN","true"
+"n2","STRING","""4.5
+"""
+"n3","NUMBER","29.15"
+"n4","NUMBER","4.5"
+"username","STRING","SANDEEP SINGH"
+"s2","NUMBER","71.0"

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3">
+  <actions xsi:type="recorder:OpenURLAction" actionDetails="(${website_url})" url="${website_url}" waitTimeout="20000" type="CHROME">
+    <actions xsi:type="recorder:WebElementAction" actionDetails="(get by //*[@id=&quot;cmp-header-rating&quot;]/span xpath)" varName="overal_raiting" webElementLocator="//*[@id=&quot;cmp-header-rating&quot;]/span"/>
+    <actions xsi:type="recorder:WebElementAction" actionDetails="(get by //div[1][@class='cmp-ReviewCategory-category']/span[1] xpath)" varName="worklife_balance" webElementLocator="//div[1][@class='cmp-ReviewCategory-category']/span[1]"/>
+    <actions xsi:type="recorder:WebElementAction" actionDetails="(get by //div[4][@class='cmp-ReviewCategory-category']/span[1] xpath)" varName="management" webElementLocator="//div[4][@class='cmp-ReviewCategory-category']/span[1]"/>
+    <actions xsi:type="recorder:WebElementAction" actionDetails="(get by //*[@class='cmp-LeadershipStory']//*[@class='cmp-CeoWidgetWithRating-percent'] xpath)" varName="leadership_approvement" webElementLocator="//*[@class='cmp-LeadershipStory']//*[@class='cmp-CeoWidgetWithRating-percent']"/>
+  </actions>
+  <variables>
+    <variable name="website_url" value="https://www.indeed.com/cmp/Ultimate-Software"/>
+    <variable name="overal_raiting" value=""/>
+    <variable name="worklife_balance" value=""/>
+    <variable name="management" value=""/>
+    <variable name="leadership_approvement" value=""/>
+  </variables>
+</recorder:ActionFlow>

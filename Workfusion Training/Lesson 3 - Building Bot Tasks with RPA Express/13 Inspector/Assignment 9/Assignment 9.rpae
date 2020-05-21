@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="subtotal1" type="NUMBER" value="0"/>
+    <variable name="n1" type="STRING" value=""/>
+    <variable name="n2" type="STRING" value=""/>
+    <variable name="s2" type="NUMBER" value="0"/>
+    <variable name="s3" type="NUMBER" value="0"/>
+    <variable name="total" type="NUMBER" value="0"/>
+    <variable name="n3" type="NUMBER" value="0"/>
+    <variable name="n4" type="NUMBER" value="0"/>
+    <variable name="flag" type="BOOLEAN" value="false"/>
+    <variable name="date" type="DATE" value="2019-02-25T08:23:10-05:00[America/New_York]"/>
+    <variable name="username" type="STRING" value=""/>
+  </variables>
+  <actions xsi:type="recorder:LaunchAppAction" active="true" actionDetails="(C:\Program Files (x8...; wait for 0ms; poll every 0ms)" delay="0" command="C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE" autoDetectWindow="true"/>
+  <actions xsi:type="recorder:MaximizeCurrentWindowAction" active="true" delay="0"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Ctrl+o)" delay="500" modifiers="2" text="o" rawCode="79" keyCode="24" keyChar="111" keyLocation="1" type="HOT_KEY_PRESS"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="500" offsetX="-97" offsetY="-6" awaitTimeout="600" imageName="1550992259846-anchor-1550992259872.apng" fullImageName="1550992259846.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:MouseClickAction" active="false" actionDetails="(click left button)" delay="0" offsetX="-99" offsetY="4" selector="[CLASS:NetUISimpleButton; NAME:Browse]" imageName="1550991509267-anchor-1550991509342.apng" fullImageName="1550991509267.png" type="CONTROL" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:MouseClickAction" active="false" actionDetails="(click left button)" delay="0" offsetX="137" offsetY="4" selector="" imageName="1550991543992-anchor-1550991544042.apng" fullImageName="1550991543992.png" type="CONTROL" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:KeyboardAction" active="false" actionDetails="(typed text)" delay="0" text="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Excel Files" rawCode="10" keyCode="28" keyChar="13" keyLocation="4" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:KeyboardAction" active="false" actionDetails="({ENTER})" delay="0" text="{ENTER}" rawCode="10" keyCode="28" keyChar="13" keyLocation="4"/>
+  <actions xsi:type="recorder:RandomValueAction" active="false" actionDetails="(to 'n1') - STRING" delay="0" varName="n1">
+    <stringRandomProvider length="20"/>
+    <numberRandomProvider min="0" max="100"/>
+    <dateRandomProvider timezone="America/New_York"/>
+    <listRandomProvider length="10"/>
+    <tableRandomProvider rowsNum="5" columnsNum="10"/>
+  </actions>
+  <actions xsi:type="recorder:MouseClickAction" active="false" actionDetails="(double-click left button)" delay="0" imageName="1550991706102-anchor-1550991706133.apng" fullImageName="1550991706102.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1" clickType="DOUBLE_CLICK"/>
+  <actions xsi:type="recorder:SwitchWindowAction" active="true" actionDetails="(Goods.xlsx - Excel)" delay="0" clazz="XLMAIN" title="Goods.xlsx - Excel" timeoutMs="0" modeType="SELECTED">
+    <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" selector=".DataItem[name=&quot;B2&quot;]" awaitTimeout="500" type="CONTROL" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Ctrl+c)" delay="0" modifiers="2" text="c" rawCode="67" keyCode="46" keyChar="99" keyLocation="1" type="HOT_KEY_PRESS"/>
+    <actions xsi:type="recorder:ClipboardAction" active="true" actionDetails="(to 'n1')" delay="0" varName="n1" activeConversion="STRING_TO_STRING" type="TO_VARIABLE">
+      <stringToStringConversion targetType="STRING"/>
+      <simpleNumberConversion targetType="NUMBER"/>
+      <delimitedListConversion targetType="LIST" trimValues="false"/>
+      <delimitedTableConversion targetType="TABLE" trimValues="false"/>
+    </actions>
+    <actions xsi:type="recorder:NumberFormatAction" active="true" actionDetails="" delay="0" targetVariable="n3" direction="STRING_TO_TYPE" inputMask="0" inputLocale="en-CA" outputLocale="en-CA" input="${n1}"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({RIGHT})" delay="0" text="{RIGHT}" rawCode="39" keyCode="57421" keyLocation="4"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Ctrl+c)" delay="0" modifiers="2" text="c" rawCode="67" keyCode="46" keyChar="99" keyLocation="1" type="HOT_KEY_PRESS"/>
+    <actions xsi:type="recorder:ClipboardAction" active="true" actionDetails="(to 'n2')" delay="0" varName="n2" activeConversion="STRING_TO_STRING" type="TO_VARIABLE">
+      <stringToStringConversion targetType="STRING"/>
+      <simpleNumberConversion targetType="NUMBER"/>
+      <delimitedListConversion targetType="LIST" trimValues="false"/>
+      <delimitedTableConversion targetType="TABLE" trimValues="false"/>
+    </actions>
+    <actions xsi:type="recorder:NumberFormatAction" active="true" actionDetails="" delay="0" targetVariable="n4" direction="STRING_TO_TYPE" inputMask="0" inputLocale="en-CA" outputLocale="en-CA" input="${n2}"/>
+    <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 'subtotal1')" delay="0" varName="subtotal1">
+      <bigDecimalExpressionHandler expression="${n3}*${n4}"/>
+      <listExpressionHandler operationType="PUSH"/>
+      <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW"/>
+    </actions>
+    <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" selector=".DataItem[name=&quot;B7&quot;]" type="CONTROL" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Ctrl+c)" delay="0" modifiers="2" text="c" rawCode="67" keyCode="46" keyChar="99" keyLocation="1" type="HOT_KEY_PRESS"/>
+    <actions xsi:type="recorder:ClipboardAction" active="true" actionDetails="(to 'n1')" delay="0" varName="n1" activeConversion="STRING_TO_STRING" type="TO_VARIABLE">
+      <stringToStringConversion targetType="STRING"/>
+      <simpleNumberConversion targetType="NUMBER"/>
+      <delimitedListConversion targetType="LIST" trimValues="false"/>
+      <delimitedTableConversion targetType="TABLE" trimValues="false"/>
+    </actions>
+    <actions xsi:type="recorder:NumberFormatAction" active="true" actionDetails="" delay="0" targetVariable="n3" direction="STRING_TO_TYPE" inputMask="0" inputLocale="en-CA" outputLocale="en-CA" input="${n1}"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({RIGHT})" delay="0" text="{RIGHT}" rawCode="39" keyCode="57421" keyLocation="4"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Ctrl+c)" delay="0" modifiers="2" text="c" rawCode="67" keyCode="46" keyChar="99" keyLocation="1" type="HOT_KEY_PRESS"/>
+    <actions xsi:type="recorder:ClipboardAction" active="true" actionDetails="(to 'n2')" delay="0" varName="n2" activeConversion="SIMPLE_NUMBER" type="TO_VARIABLE">
+      <simpleNumberConversion targetType="NUMBER"/>
+      <delimitedListConversion targetType="LIST" trimValues="false"/>
+      <delimitedTableConversion targetType="TABLE" trimValues="false"/>
+    </actions>
+    <actions xsi:type="recorder:NumberFormatAction" active="true" actionDetails="" delay="0" targetVariable="n4" direction="STRING_TO_TYPE" inputMask="0" inputLocale="en-CA" outputLocale="en-CA" input="${n2}"/>
+    <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 's2')" delay="0" varName="s2">
+      <bigDecimalExpressionHandler expression="${n3}*${n4}"/>
+      <listExpressionHandler operationType="PUSH"/>
+      <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW"/>
+    </actions>
+    <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" selector=".DataItem[name=&quot;B12&quot;]" type="CONTROL" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Ctrl+c)" delay="0" modifiers="2" text="c" rawCode="67" keyCode="46" keyChar="99" keyLocation="1" type="HOT_KEY_PRESS"/>
+    <actions xsi:type="recorder:ClipboardAction" active="true" actionDetails="(to 'n1')" delay="0" varName="n1" activeConversion="SIMPLE_NUMBER" type="TO_VARIABLE">
+      <simpleNumberConversion targetType="NUMBER"/>
+      <delimitedListConversion targetType="LIST" trimValues="false"/>
+      <delimitedTableConversion targetType="TABLE" trimValues="false"/>
+    </actions>
+    <actions xsi:type="recorder:NumberFormatAction" active="true" actionDetails="" delay="0" targetVariable="n3" direction="STRING_TO_TYPE" inputMask="0" inputLocale="en-CA" outputLocale="en-CA" input="${n1}"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({RIGHT})" delay="0" text="{RIGHT}" rawCode="39" keyCode="57421" keyLocation="4"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Ctrl+c)" delay="0" modifiers="2" text="c" rawCode="67" keyCode="46" keyChar="99" keyLocation="1" type="HOT_KEY_PRESS"/>
+    <actions xsi:type="recorder:ClipboardAction" active="true" actionDetails="(to 'n2')" delay="0" varName="n2" activeConversion="SIMPLE_NUMBER" type="TO_VARIABLE">
+      <simpleNumberConversion targetType="NUMBER"/>
+      <delimitedListConversion targetType="LIST" trimValues="false"/>
+      <delimitedTableConversion targetType="TABLE" trimValues="false"/>
+    </actions>
+    <actions xsi:type="recorder:NumberFormatAction" active="true" actionDetails="" delay="0" targetVariable="n4" direction="STRING_TO_TYPE" inputMask="0" inputLocale="en-CA" outputLocale="en-CA" input="${n2}"/>
+    <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 's3')" delay="0" varName="s3">
+      <bigDecimalExpressionHandler expression="${n3}*${n4}"/>
+      <listExpressionHandler operationType="PUSH"/>
+      <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW"/>
+    </actions>
+    <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 'total')" delay="0" varName="total">
+      <bigDecimalExpressionHandler expression="${subtotal1}+${s2}+${s3}"/>
+      <listExpressionHandler operationType="PUSH"/>
+      <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW"/>
+    </actions>
+    <actions xsi:type="recorder:ClipboardAction" active="false" actionDetails="(to 'n2')" delay="0" varName="n2" activeConversion="STRING_TO_STRING" type="TO_VARIABLE">
+      <stringToStringConversion targetType="STRING"/>
+      <simpleNumberConversion targetType="NUMBER"/>
+      <delimitedListConversion targetType="LIST" trimValues="false"/>
+      <delimitedTableConversion targetType="TABLE" trimValues="false"/>
+    </actions>
+    <actions xsi:type="recorder:ClipboardAction" active="false" actionDetails="(to 'n2')" delay="0" varName="n2" activeConversion="STRING_TO_STRING" type="TO_VARIABLE">
+      <stringToStringConversion targetType="STRING"/>
+      <simpleNumberConversion targetType="NUMBER"/>
+      <delimitedListConversion targetType="LIST" trimValues="false"/>
+      <delimitedTableConversion targetType="TABLE" trimValues="false"/>
+    </actions>
+  </actions>
+  <actions xsi:type="recorder:FileWriteAction" active="true" actionDetails="('${subtotal1} ${s2} ${s3} ${...' to 'C:\Users\sande...sktop\abc.txt')" delay="0" path="C:\Users\sandeep.singh01\Desktop\abc.txt" content="${subtotal1} ${s2} ${s3} ${total}" overwrite="false" encoding="UTF-8"/>
+  <actions xsi:type="recorder:SwitchWindowAction" active="true" actionDetails="(Sandeep.Singh012@cantire.com - Outlook)" delay="0" clazz="" title="(?i).*\QSandeep.Singh012@cantire.com - Outlook\E.*" useRegexpTitle="true" varName="flag" timeoutMs="0" modeType="BY_TITLE"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Ctrl+n)" delay="0" modifiers="2" text="n" rawCode="78" keyCode="49" keyChar="110" keyLocation="1" type="HOT_KEY_PRESS"/>
+  <actions xsi:type="recorder:SwitchWindowAction" active="true" actionDetails="(Untitled - Message (HTML) )" delay="0" clazz="rctrl_renwnd32" title="Untitled - Message (HTML) " timeoutMs="0" modeType="SELECTED"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" selector=".RichEdit20WPT[name=&quot;Subject&quot;]" type="CONTROL" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" text="Yay! The job is done!" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:ConstantValueAction" active="true" actionDetails="(to 'date' = Now) - DATE" delay="0" varName="date" stringValue="" numberValue="0" booleanValue="false" useCurrentDate="true"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Win+r)" delay="0" modifiers="4" text="r" rawCode="82" keyCode="19" keyChar="114" keyLocation="1" type="HOT_KEY_PRESS"/>
+  <actions xsi:type="recorder:SwitchWindowAction" active="true" actionDetails="(Run)" delay="0" clazz="#32770" title="Run" varName="flag" timeoutMs="0" modeType="SELECTED"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" text="ms-settings" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({ENTER})" delay="0" text="{ENTER}" rawCode="10" keyCode="28" keyChar="13" keyLocation="4"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="3" offsetY="5" imageName="1551102093937-anchor-1551102093984.apng" fullImageName="1551102093937.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:OcrAction" active="true" actionDetails="(to 'username' rectangle 311 x 48)" delay="0" offsetX="-5" offsetY="384" imageName="1551102136861-anchor-1551102137061.apng" fullImageName="1551102136861.png" type="CONTROL" varName="username" width="311" height="48"/>
+  <actions xsi:type="recorder:SwitchWindowAction" active="true" actionDetails="(Untitled - Message (HTML) )" delay="0" clazz="rctrl_renwnd32" title="Untitled - Message (HTML) " varName="flag" timeoutMs="0" modeType="SELECTED"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" selector=".Edit" type="CONTROL" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" text="The assignment is complete. The total is ${total}.&#xD;&#xA;&#xD;&#xA;${date}&#xD;&#xA;&#xD;&#xA;${username}" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" selector=".RichEdit20WPT[name=&quot;To&quot;]" type="CONTROL" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" text="sandeep.singh012@cantire.com" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" selector=".Button[name=&quot;Send&quot;]" type="CONTROL" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+</recorder:ActionFlow>

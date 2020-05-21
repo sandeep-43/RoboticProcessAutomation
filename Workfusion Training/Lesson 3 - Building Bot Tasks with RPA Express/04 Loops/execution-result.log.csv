@@ -1,0 +1,7 @@
+"name","type","value"
+"codes","LIST","""[Currency, USD, CAD, AUD, GBP, EUR]"""
+"filepath","STRING","C:\Users\sandeep.singh01\Desktop\CTC\RPA\CurrencyRates.xlsx"
+"rate","STRING","80.8465"
+"col_name","STRING","Conversion Rate"
+"inr","STRING","INR"
+"url","STRING","https://www.xe.com/"

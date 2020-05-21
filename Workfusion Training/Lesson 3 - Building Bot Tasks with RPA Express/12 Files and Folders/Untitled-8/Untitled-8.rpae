@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables/>
+  <actions xsi:type="recorder:FileCopyAction" active="true" actionDetails="(move 'C:\Users\sande...on\Goods.xlsx' to 'C:\Users\sande...A\Excel Files', overwrite if present)" delay="0" targetVariable="" resourcePath="C:\Users\sandeep.singh01\Desktop\CTC\RPA\files_for_automation\Goods.xlsx" targetPath="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Excel Files" move="true" resolution="OVERWRITE"/>
+</recorder:ActionFlow>

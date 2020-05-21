@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="text" type="STRING" value=""/>
+    <variable name="tempdate" type="STRING" value=""/>
+    <variable name="currentdate" type="DATE" value="2019-02-21T16:01:56-05:00[America/New_York]"/>
+    <variable name="newtext" type="STRING" value=""/>
+    <variable name="newdateformat" type="STRING" value=""/>
+    <variable name="newtext2" type="STRING" value=""/>
+  </variables>
+  <actions xsi:type="recorder:FileReadAction" active="true" actionDetails="('C:\Users\sande...xt-file-1.txt' to ${text})" delay="0" targetVariable="text" path="C:\Users\sandeep.singh01\Desktop\files_for_automation\Text-file-1.txt" encoding="UTF-8"/>
+  <actions xsi:type="recorder:TextSubstringAction" active="true" actionDetails="('text' [-24,-14] to 'tempdate')" delay="0" targetVariable="tempdate" sourceVariable="text" extractFrom="24" extractTo="14" startPositionRelativeToEnd="true" endPositionRelativeToEnd="true"/>
+  <actions xsi:type="recorder:ConstantValueAction" active="true" actionDetails="(to 'currentdate' = Now) - DATE" delay="0" varName="currentdate" stringValue="" numberValue="0" booleanValue="false" useCurrentDate="true"/>
+  <actions xsi:type="recorder:DateFormatAction" active="true" actionDetails="" delay="0" targetVariable="newdateformat" direction="TYPE_TO_STRING" inputMask="MMM dd yyyy" inputLocale="en-CA" outputMask="MMM dd yyyy" outputLocale="en-CA" input="currentdate"/>
+  <actions xsi:type="recorder:TextReplaceAction" active="true" actionDetails="(${tempdate} to ${newdateformat} in 'text' to 'newtext')" delay="0" targetVariable="newtext" sourceVariable="text" find="${tempdate}" replace="${newdateformat}"/>
+  <actions xsi:type="recorder:TextReplaceAction" active="true" actionDetails="(human to BOT in 'newtext' to 'newtext2')" delay="0" targetVariable="newtext2" sourceVariable="newtext" find="human" replace="BOT"/>
+  <actions xsi:type="recorder:FileWriteAction" active="true" actionDetails="('${newtext2}' to 'C:\Users\sande...xt-file-2.txt')" delay="0" path="C:\Users\sandeep.singh01\Desktop\files_for_automation\Text-file-2.txt" content="${newtext2}" overwrite="false" encoding="UTF-8"/>
+</recorder:ActionFlow>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables/>
+  <actions xsi:type="recorder:LaunchAppAction" active="true" actionDetails="(notepad.exe; wait for 0ms; poll every 0ms)" delay="0" command="notepad.exe" autoDetectWindow="true"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" text="Hello World!" type="KEY_TYPE"/>
+</recorder:ActionFlow>

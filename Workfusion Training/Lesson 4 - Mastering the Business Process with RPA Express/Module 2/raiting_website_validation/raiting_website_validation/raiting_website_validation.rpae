@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3">
+  <actions xsi:type="recorder:TryCatchAction" actionDetails="">
+    <tryBlock>
+      <actions xsi:type="recorder:OpenURLAction" actionDetails="(${website_url})" url="${website_url}" waitTimeout="20000" type="CHROME">
+        <actions xsi:type="recorder:WebElementAction" actionDetails="(get by //*[@id=&quot;cmp-header-rating&quot;]/span xpath)" varName="output" webElementLocator="//*[@id=&quot;cmp-header-rating&quot;]/span"/>
+      </actions>
+      <actions xsi:type="recorder:ConstantValueAction" actionDetails="(to 'is_valid' = 'VALID') - STRING" varName="is_valid" stringValue="VALID"/>
+    </tryBlock>
+    <catchBlock>
+      <actions xsi:type="recorder:TryCatchAction" actionDetails="">
+        <tryBlock>
+          <actions xsi:type="recorder:OpenURLAction" actionDetails="(${website_url})" url="${website_url}" waitTimeout="20000" type="CHROME">
+            <actions xsi:type="recorder:WebElementAction" actionDetails="(get by //table[@class='system_msg']//h1 xpath)" varName="output" webElementLocator="//table[@class='system_msg']//h1"/>
+          </actions>
+          <actions xsi:type="recorder:ConstantValueAction" actionDetails="(to 'is_valid' = 'NOT_FOUND...) - STRING" varName="is_valid" stringValue="NOT_FOUND"/>
+        </tryBlock>
+        <catchBlock>
+          <actions xsi:type="recorder:ConstantValueAction" actionDetails="(to 'is_valid' = 'WRONG_DOM...) - STRING" varName="is_valid" stringValue="WRONG_DOMAIN"/>
+        </catchBlock>
+      </actions>
+    </catchBlock>
+  </actions>
+  <variables>
+    <variable name="website_url" value=""/>
+    <variable name="is_valid" value=""/>
+    <variable name="output" value=""/>
+    <variable name="text_404" value="Not found"/>
+  </variables>
+</recorder:ActionFlow>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="details" type="TABLE" value="[]"/>
+  </variables>
+  <actions xsi:type="recorder:OpenSpreadsheetAction" active="true" actionDetails="(&quot;C:\Users\sande...RPA\Forms.xlsx&quot;)" delay="0" filePath="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Forms.xlsx">
+    <actions xsi:type="recorder:ExcelGetRangeAction" active="true" actionDetails="(A1:B8 to 'details')" delay="0" targetVariable="details" coordinateFrom="A1" coordinateTo="B8"/>
+  </actions>
+  <actions xsi:type="recorder:ForeachAction" active="true" actionDetails="(element) in (details)" delay="0" varName="details" pointerName="element" iterateOrder="BY_COLUMNS" filterExpression="2-*">
+    <actions xsi:type="recorder:KeyboardAction" active="true" delay="0"/>
+    <actions xsi:type="recorder:OpenURLAction" active="true" actionDetails="(https://docs.google.com/forms/d/e/1FAIpQLSd8y_5zOZi9AWr3jL7nFFjk8NYkQnpoiPkSGxyXX05sKBfI1A/viewform?usp=sf_link)" delay="0" url="https://docs.google.com/forms/d/e/1FAIpQLSd8y_5zOZi9AWr3jL7nFFjk8NYkQnpoiPkSGxyXX05sKBfI1A/viewform?usp=sf_link" type="CHROME">
+      <actions xsi:type="recorder:MaximizeCurrentWindowAction" active="true" actionDetails="" delay="0"/>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[1]/div/div[1]/input" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="1" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="2" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="3" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="4" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="5" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[6] = &quot;1&quot;)" delay="0" leftOperand="${element[6]}" rightOperand="1" leftOperandType="EXPRESSION" rightOperandType="NUMBER">
+        <ifBlock active="true">
+          <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[6]/div/div[2]/div[1]/div/label/div/div[1]/div[3]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+        </ifBlock>
+        <elseBlock active="true"/>
+      </actions>
+      <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[7] = &quot;2&quot;)" delay="0" leftOperand="${element[7]}" rightOperand="2" leftOperandType="EXPRESSION" rightOperandType="NUMBER">
+        <ifBlock active="true">
+          <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[7]/div/div[2]/div[2]/div[4]/content" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+        </ifBlock>
+        <elseBlock active="true"/>
+      </actions>
+      <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[8] = &quot;1&quot;)" delay="0" leftOperand="${element[8]}" rightOperand="1" leftOperandType="EXPRESSION" rightOperandType="NUMBER">
+        <ifBlock active="true">
+          <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[8]/div/div[2]/div[2]/div[3]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+        </ifBlock>
+        <elseBlock active="true"/>
+      </actions>
+      <actions xsi:type="recorder:WaitAction" active="true" actionDetails="for 50000 ms" delay="50000"/>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[3]/div[1]/div[1]/div/content/span" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+    </actions>
+  </actions>
+</recorder:ActionFlow>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="funding_amount" type="NUMBER" value="50000000"/>
+    <variable name="system_time" type="DATE" value="2018-05-04T11:21:15+03:00[Europe/Minsk]"/>
+    <variable name="funding_amount_converted" type="STRING" value=""/>
+    <variable name="system_time_converted" type="STRING" value=""/>
+  </variables>
+  <actions xsi:type="recorder:LaunchAppAction" active="true" actionDetails="(notepad.exe; wait for 0ms; poll every 0ms)" delay="0" comment="Opening the Notepad application" command="notepad.exe" autoDetectWindow="true"/>
+  <actions xsi:type="recorder:BaseNestedAction" active="true" actionDetails="Notepad Settings" delay="0" comment="Setting a bigger font size in Notepad" groupName="Notepad Settings">
+    <actions xsi:type="recorder:MaximizeCurrentWindowAction" active="true" actionDetails="" delay="0"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Alt+o)" delay="0" modifiers="8" text="o" rawCode="79" keyCode="24" keyChar="111" keyLocation="1" type="HOT_KEY_PRESS"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" modifiers="8" text="f" rawCode="79" keyCode="24" keyChar="111" keyLocation="1" type="KEY_TYPE"/>
+    <actions xsi:type="recorder:SwitchWindowAction" active="true" actionDetails="(Font)" delay="0" clazz="" title="(?i).*\QFont\E.*" useRegexpTitle="true" timeoutMs="0" modeType="BY_TITLE">
+      <actions xsi:type="recorder:RepeatAction" active="true" actionDetails="(2 times)" delay="0" repeatsNumber="2">
+        <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+      </actions>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" text="25" rawCode="9" keyCode="15" keyChar="9" keyLocation="1" type="KEY_TYPE"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({ENTER})" delay="0" text="{ENTER}" rawCode="10" keyCode="28" keyChar="13" keyLocation="4"/>
+    </actions>
+  </actions>
+  <actions xsi:type="recorder:ConstantValueAction" active="true" actionDetails="(to 'system_time' = Now) - DATE" delay="0" comment="Obtaining the current system time and writing it to the system_time variable" varName="system_time" stringValue="" numberValue="0" booleanValue="false" useCurrentDate="true"/>
+  <actions xsi:type="recorder:DateFormatAction" active="true" actionDetails="" delay="0" comment="Formatting the system time to a readable String format" targetVariable="system_time_converted" direction="TYPE_TO_STRING" inputMask="MM/dd/yyyy" inputLocale="en-US" outputMask="EEEE, MMMM dd, yyy, h:mm:ss a" outputLocale="en-US" input="system_time"/>
+  <actions xsi:type="recorder:NumberFormatAction" active="true" actionDetails="" delay="0" comment="Converting Number to String using US format" targetVariable="funding_amount_converted" direction="TYPE_TO_STRING" inputMask="0" inputLocale="en-US" outputMask="#,###" outputLocale="en-US" input="funding_amount"/>
+  <actions xsi:type="recorder:SwitchWindowAction" active="true" actionDetails="(Notepad)" delay="0" clazz="" title="(?i).*\QNotepad\E.*" useRegexpTitle="true" timeoutMs="0" modeType="BY_TITLE"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" comment="Printing text and converted variable values using ${variable_name} syntax" text="This bot opens notepad, converts numbers and dates, and types values from variables.&#xD;&#xA;&#xD;&#xA;The funding amount is: ${funding_amount_converted} USD&#xD;&#xA;&#xD;&#xA;Your system time is: ${system_time_converted}" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:WaitAction" active="true" actionDetails="for 2000 ms" delay="2000" comment="waiting 2 seconds to see the results"/>
+</recorder:ActionFlow>
+

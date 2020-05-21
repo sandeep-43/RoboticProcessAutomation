@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="url" type="STRING" value="https://docs.google.com/forms/d/e/1FAIpQLSd8y_5zOZi9AWr3jL7nFFjk8NYkQnpoiPkSGxyXX05sKBfI1A/viewform"/>
+    <variable name="details" type="LIST" value="['U2FuZGVlcA==', 'U2luZ2g=', 'YWJjQGRlZi5jb20=', 'RkI=', 'Q0VP', 'VHJhaW4=', 'ZG9pbmcgcmVzZWFyY2g=', 'SVQ=']"/>
+    <variable name="xpaths" type="LIST" value="['Ly8qW0BpZD0ibUc2MUhkIl0vZGl2L2RpdlsyXS9kaXZbMl0vZGl2WzFdL2Rpdi9kaXZbMl0vZGl2L2RpdlsxXS9kaXYvZGl2WzFdL2lucHV0', 'Ly8qW0BpZD0ibUc2MUhkIl0vZGl2L2RpdlsyXS9kaXZbMl0vZGl2WzJdL2Rpdi9kaXZbMl0vZGl2L2RpdlsxXS9kaXYvZGl2WzFdL2lucHV0', 'Ly8qW0BpZD0ibUc2MUhkIl0vZGl2L2RpdlsyXS9kaXZbMl0vZGl2WzNdL2Rpdi9kaXZbMl0vZGl2L2RpdlsxXS9kaXYvZGl2WzFdL2lucHV0', 'Ly8qW0BpZD0ibUc2MUhkIl0vZGl2L2RpdlsyXS9kaXZbMl0vZGl2WzRdL2Rpdi9kaXZbMl0vZGl2L2RpdlsxXS9kaXYvZGl2WzFdL2lucHV0', 'Ly8qW0BpZD0ibUc2MUhkIl0vZGl2L2RpdlsyXS9kaXZbMl0vZGl2WzVdL2Rpdi9kaXZbMl0vZGl2L2RpdlsxXS9kaXYvZGl2WzFdL2lucHV0', 'Ly8qW0BpZD0ibUc2MUhkIl0vZGl2L2RpdlsyXS9kaXZbMl0vZGl2WzZdL2Rpdi9pbnB1dA==', 'Ly8qW0BpZD0ibUc2MUhkIl0vZGl2L2RpdlsyXS9kaXZbMl0vZGl2WzddL2Rpdi9kaXZbMl0vZGl2WzJdL2RpdlsxXQ==', 'Ly8qW0BpZD0ibUc2MUhkIl0vZGl2L2RpdlsyXS9kaXZbMl0vZGl2WzhdL2Rpdi9kaXZbMl0vZGl2WzJdL2RpdlsxXQ==']"/>
+    <variable name="value" type="NUMBER" value="1"/>
+    <variable name="xpath" type="STRING" value="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[1]/div/div[1]/input"/>
+  </variables>
+  <actions xsi:type="recorder:OpenURLAction" active="true" actionDetails="(${url})" delay="0" url="${url}" type="CHROME"/>
+  <actions xsi:type="recorder:ForeachAction" active="true" actionDetails="(element) in (details)" delay="0" varName="details" pointerName="element">
+    <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element = xpath)" delay="0" leftOperand="${element}" rightOperand="${xpath}" leftOperandType="VARIABLE" rightOperandType="VARIABLE">
+      <ifBlock active="true">
+        <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(set by //*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[1]/div/div[1]/input xpath)" delay="0" varName="element" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[1]/div/div[1]/input" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" type="SET_VALUE" useElementAttribute="false"/>
+      </ifBlock>
+      <elseBlock active="true">
+        <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+      </elseBlock>
+    </actions>
+    <actions xsi:type="recorder:ConstantValueAction" active="false" actionDetails="(to 'value' = 0) - NUMBER" delay="0" varName="value" stringValue="" numberValue="0" booleanValue="false" useCurrentDate="false"/>
+  </actions>
+</recorder:ActionFlow>

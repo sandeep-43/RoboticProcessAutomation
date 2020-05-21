@@ -1,0 +1,7 @@
+"name","type","value"
+"seller","STRING","Amazon"
+"products_table","TABLE","""[[Bose SoundLink Revolve+ Portable & Long-Lasting Bluetooth 360 Speaker - Triple Black, Bose, $299.00], [All-new Kindle Paperwhite – Now Waterproof with 2x the Storage (International Version), Amazon, $149.99]]"""
+"price","STRING","$149.99"
+"purchase_list","LIST","""[Product List, Bose Revolve +, kindle paperwhite e-reader]"""
+"product_name","STRING","All-new Kindle Paperwhite – Now Waterproof with 2x the Storage (International Version)"
+"products","LIST","[]"

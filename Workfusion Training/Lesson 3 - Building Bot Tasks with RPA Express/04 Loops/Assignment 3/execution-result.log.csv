@@ -1,0 +1,6 @@
+"name","type","value"
+"xpath","STRING","""//*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[1]/div/div[1]/input"""
+"details","LIST","""[Sandeep, Singh, abc@def.com, FB, CEO, Train, doing research, IT]"""
+"xpaths","LIST","""[//*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[1]/div/div[1]/input, //*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[2]/div/div[2]/div/div[1]/div/div[1]/input, //*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[3]/div/div[2]/div/div[1]/div/div[1]/input, //*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[4]/div/div[2]/div/div[1]/div/div[1]/input, //*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[5]/div/div[2]/div/div[1]/div/div[1]/input, //*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[6]/div/input, //*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[7]/div/div[2]/div[2]/div[1], //*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[8]/div/div[2]/div[2]/div[1]]"""
+"value","NUMBER","1"
+"url","STRING","https://docs.google.com/forms/d/e/1FAIpQLSd8y_5zOZi9AWr3jL7nFFjk8NYkQnpoiPkSGxyXX05sKBfI1A/viewform"

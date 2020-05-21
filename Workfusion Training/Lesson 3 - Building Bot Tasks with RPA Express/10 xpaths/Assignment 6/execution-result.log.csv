@@ -1,0 +1,4 @@
+"name","type","value"
+"details","TABLE","""[[Sandeep, Sumit], [Singh, Mittal], [ABC, ABC], [email@abc.com, hisemail@abc.com], [Manager, AVP], [Try, Deploy], [Actively, POC], [IT, Decision Maker]]"""
+"xpaths","LIST","""[//*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[1]/div/div[1]/input, //*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[2]/div/div[2]/div/div[1]/div/div[1]/input, //*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[3]/div/div[2]/div/div[1]/div/div[1]/input, //*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[4]/div/div[2]/div/div[1]/div/div[1]/input, //*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[5]/div/div[2]/div/div[1]/div/div[1]/input, //*[@id=""""mG61Hd""""]/div/div[2]/div[2]/div[6]/div/div[2]/div[1]/div/label/div/div[1]/div[2]]"""
+"url","STRING","https://docs.google.com/forms/d/e/1FAIpQLSd8y_5zOZi9AWr3jL7nFFjk8NYkQnpoiPkSGxyXX05sKBfI1A/viewform"

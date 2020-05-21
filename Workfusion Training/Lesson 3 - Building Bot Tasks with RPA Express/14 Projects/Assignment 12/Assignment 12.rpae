@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="stocks" type="TABLE" value="[]"/>
+    <variable name="flag" type="BOOLEAN" value="false"/>
+    <variable name="column3" type="LIST" value="[]"/>
+    <variable name="finance" type="TABLE" value="[]"/>
+  </variables>
+  <actions xsi:type="recorder:OpenURLAction" active="true" actionDetails="(https://finance.yahoo.com/most-active)" delay="0" url="https://finance.yahoo.com/most-active" type="CHROME"/>
+  <actions xsi:type="recorder:MaximizeCurrentWindowAction" active="true" actionDetails="" delay="3000"/>
+  <actions xsi:type="recorder:MouseScrollAction" active="true" actionDetails="(4 lines down)" delay="0" imageName="1551119660734-anchor-1551119660754.apng" fullImageName="1551119660734.png" type="IMAGE" notches="4"/>
+  <actions xsi:type="recorder:MouseDragAction" active="true" actionDetails="Mouse Drag" delay="500">
+    <startPoint active="true" actionDetails="(Left-button )" delay="0" offsetX="-92" offsetY="21" imageName="1551117261324-anchor-1551117261415.apng" fullImageName="1551117261324.png" type="IMAGE" button="1"/>
+    <intermediatePoints active="false">
+      <move active="false" actionDetails="(position: 70, 100)" delay="0" x="70" y="100" type="COORDINATES"/>
+    </intermediatePoints>
+    <finishPoint active="true" actionDetails="(Left-button )" delay="0" offsetX="-114" offsetY="326" imageName="1551120749070-anchor-1551120749126.apng" fullImageName="1551120749070.png" type="IMAGE" button="1"/>
+  </actions>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Ctrl+c)" delay="0" modifiers="2" text="c" rawCode="67" keyCode="46" keyChar="99" keyLocation="1" type="HOT_KEY_PRESS"/>
+  <actions xsi:type="recorder:ClipboardAction" active="true" actionDetails="(to 'stocks')" delay="0" varName="stocks" activeConversion="DELIMITED_TABLE" type="TO_VARIABLE">
+    <delimitedListConversion targetType="LIST" trimValues="false"/>
+    <delimitedTableConversion targetType="TABLE" rowDelimiter="\n" valueDelimiter="\t" trimValues="false"/>
+  </actions>
+  <actions xsi:type="recorder:FileExistsAction" active="false" actionDetails="('C:\Users\sandeep.singh01\Desktop\CTC\RPA\Projects\Assignment12.xlsx' to ${flag})" delay="0" targetVariable="flag" path="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Projects\Assignment12.xlsx"/>
+  <actions xsi:type="recorder:IfElseAction" active="false" actionDetails="(flag = &quot;false&quot;)" delay="0" leftOperand="${flag}" rightOperand="false" leftOperandType="VARIABLE" rightOperandType="BOOLEAN">
+    <ifBlock active="false">
+      <actions xsi:type="recorder:FileCreateAction" active="false" actionDetails="('C:\Users\sandeep.singh01\Desktop\CTC\RPA\Projects\Assignment12.xlsx', skip if present)" delay="0" path="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Projects\Assignment12.xlsx" resolution="SKIP" encoding="UTF-8" createFolder="false"/>
+    </ifBlock>
+    <elseBlock active="false" actions=""/>
+  </actions>
+  <actions xsi:type="recorder:OpenSpreadsheetAction" active="true" actionDetails="(&quot;C:\Users\sande...ignment12.xlsx&quot;)" delay="0" filePath="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Projects\Assignment12.xlsx" autoSaveFile="true">
+    <actions xsi:type="recorder:ExcelSetRangeAction" active="true" actionDetails="('stocks' to C1:C5)" delay="0" sourceVariable="stocks" coordinateFrom="C1" coordinateTo="C5"/>
+    <actions xsi:type="recorder:ExcelSetRangeAction" active="false" actionDetails="('stocks' to START:END)" delay="0" sourceVariable="stocks"/>
+    <actions xsi:type="recorder:GetColumnAction" varName="column3" active="false" actionDetails="(C)" delay="0" useIdx="true" idx="C"/>
+    <actions xsi:type="recorder:ConstantValueAction" active="false" actionDetails="(to 'column3' = []) - LIST" delay="0" varName="column3" stringValue="" numberValue="0" booleanValue="false" useCurrentDate="false" listValue="[]" tableValue="[('')]"/>
+    <actions xsi:type="recorder:ExpressionValueAction" active="false" actionDetails="(to 'column3')" delay="0" varName="column3">
+      <bigDecimalExpressionHandler/>
+      <listExpressionHandler operationType="PUSH" targetVarName="column3"/>
+      <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW"/>
+    </actions>
+    <actions xsi:type="recorder:Switch2SheetAction" active="false" actionDetails="(2)" delay="0" sheetIdx="2"/>
+    <actions xsi:type="recorder:ForeachAction" active="true" actionDetails="(element) in (stocks)" delay="0" varName="stocks" pointerName="element" iterateOrder="BY_COLUMNS" filterExpression="3">
+      <actions xsi:type="recorder:SetCellValueAction" varName="element" active="false" actionDetails="(Cell below)" delay="0" cellCoordinates="A1" cellPosition="CELL_BELOW"/>
+      <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 'column3')" delay="0" varName="column3">
+        <bigDecimalExpressionHandler/>
+        <listExpressionHandler operationType="PUSH" targetVarName="element"/>
+        <tableExpressionHandler operationType="PUSH" tablePushType="AS_ROW"/>
+      </actions>
+    </actions>
+    <actions xsi:type="recorder:SaveSpreadsheetAction" active="false" actionDetails="" delay="0"/>
+    <actions xsi:type="recorder:ExpressionValueAction" active="true" actionDetails="(to 'finance')" delay="0" varName="finance">
+      <bigDecimalExpressionHandler/>
+      <listExpressionHandler operationType="PUSH"/>
+      <tableExpressionHandler operationType="PUSH" tablePushType="AS_COLUMN" targetVarName="column3"/>
+    </actions>
+    <actions xsi:type="recorder:ExcelSetRangeAction" active="true" actionDetails="('finance' to START:END)" delay="0" sourceVariable="finance"/>
+  </actions>
+  <actions xsi:type="recorder:KeyboardAction" active="false" actionDetails="(Unknown key)" delay="0"/>
+</recorder:ActionFlow>

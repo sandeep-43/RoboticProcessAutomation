@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="details" type="TABLE" value="[('U2FuZGVlcA==', 'U3VtaXQ=');('U2luZ2g=', 'TWl0dGFs');('QUJD', 'QUJD');('ZW1haWxAYWJjLmNvbQ==', 'aGlzZW1haWxAYWJjLmNvbQ==');('TWFuYWdlcg==', 'QVZQ');('VHJ5', 'RGVwbG95');('QWN0aXZlbHk=', 'UE9D');('SVQ=', 'RGVjaXNpb24gTWFrZXI=')]"/>
+    <variable name="url" type="STRING" value="https://docs.google.com/forms/d/e/1FAIpQLSd8y_5zOZi9AWr3jL7nFFjk8NYkQnpoiPkSGxyXX05sKBfI1A/viewform"/>
+    <variable name="xpaths" type="LIST" value="['Ly8qW0BpZD0ibUc2MUhkIl0vZGl2L2RpdlsyXS9kaXZbMl0vZGl2WzFdL2Rpdi9kaXZbMl0vZGl2L2RpdlsxXS9kaXYvZGl2WzFdL2lucHV0', 'Ly8qW0BpZD0ibUc2MUhkIl0vZGl2L2RpdlsyXS9kaXZbMl0vZGl2WzJdL2Rpdi9kaXZbMl0vZGl2L2RpdlsxXS9kaXYvZGl2WzFdL2lucHV0', 'Ly8qW0BpZD0ibUc2MUhkIl0vZGl2L2RpdlsyXS9kaXZbMl0vZGl2WzNdL2Rpdi9kaXZbMl0vZGl2L2RpdlsxXS9kaXYvZGl2WzFdL2lucHV0', 'Ly8qW0BpZD0ibUc2MUhkIl0vZGl2L2RpdlsyXS9kaXZbMl0vZGl2WzRdL2Rpdi9kaXZbMl0vZGl2L2RpdlsxXS9kaXYvZGl2WzFdL2lucHV0', 'Ly8qW0BpZD0ibUc2MUhkIl0vZGl2L2RpdlsyXS9kaXZbMl0vZGl2WzVdL2Rpdi9kaXZbMl0vZGl2L2RpdlsxXS9kaXYvZGl2WzFdL2lucHV0']"/>
+  </variables>
+  <actions xsi:type="recorder:ForeachAction" active="true" actionDetails="(element) in (details)" delay="0" varName="details" pointerName="element" iterateOrder="BY_COLUMNS">
+    <actions xsi:type="recorder:OpenURLAction" active="true" actionDetails="(${url})" delay="0" url="${url}" type="CHROME">
+      <actions xsi:type="recorder:MaximizeCurrentWindowAction" active="true" actionDetails="" delay="0"/>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="${xpaths[1]}" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="1" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="${xpaths[2]}" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="2" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="${xpaths[3]}" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="3" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="${xpaths[4]}" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="4" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="${xpaths[5]}" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(from variable 'element')" delay="0" varName="element" arrayIndex="5" type="TEXT_FROM_VAR"/>
+      <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[6] = &quot;Learn&quot;)" delay="0" leftOperand="${element[6]}" rightOperand="Learn" leftOperandType="EXPRESSION" rightOperandType="STRING">
+        <ifBlock active="true">
+          <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[6]/div/div[2]/div[1]/div/label/div/div[1]/div[3]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+        </ifBlock>
+        <elseBlock active="true">
+          <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[6] = &quot;Try&quot;)" delay="0" leftOperand="${element[6]}" rightOperand="Try" leftOperandType="EXPRESSION" rightOperandType="STRING">
+            <ifBlock active="true">
+              <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[6]/div/div[2]/div[2]/div/label/div/div[1]/div[2]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+            </ifBlock>
+            <elseBlock active="true">
+              <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[6] = &quot;Train&quot;)" delay="0" leftOperand="${element[6]}" rightOperand="Train" leftOperandType="EXPRESSION" rightOperandType="STRING">
+                <ifBlock active="true">
+                  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[6]/div/div[2]/div[3]/div/label/div/div[1]/div[2]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+                </ifBlock>
+                <elseBlock active="true">
+                  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" selector="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[6]/div/div[2]/div[4]/div/label/div/div[1]/div[2]" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[6]/div/div[2]/div[4]/div/label/div/div[1]/div[2]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+                </elseBlock>
+              </actions>
+            </elseBlock>
+          </actions>
+        </elseBlock>
+      </actions>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[7]/div/div[2]/div[1]/div[2]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+      <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[7] = &quot;Actively&quot;)" delay="0" leftOperand="${element[7]}" rightOperand="Actively" leftOperandType="EXPRESSION" rightOperandType="STRING">
+        <ifBlock active="true">
+          <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" selector="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[7]/div/div[2]/div[2]/div[3]" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[7]/div/div[2]/div[2]/div[3]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+        </ifBlock>
+        <elseBlock active="true">
+          <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[7] = &quot;Gearing&quot;)" delay="0" leftOperand="${element[7]}" rightOperand="Gearing" leftOperandType="EXPRESSION" rightOperandType="STRING">
+            <ifBlock active="true">
+              <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" selector="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[7]/div/div[2]/div[2]/div[4]/content" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[7]/div/div[2]/div[2]/div[4]/content" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+            </ifBlock>
+            <elseBlock active="true">
+              <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[7] = &quot;POC&quot;)" delay="0" leftOperand="${element[7]}" rightOperand="POC" leftOperandType="EXPRESSION" rightOperandType="STRING">
+                <ifBlock active="true">
+                  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[7]/div/div[2]/div[2]/div[5]/content" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+                </ifBlock>
+                <elseBlock active="true">
+                  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[7]/div/div[2]/div[2]/div[6]/content" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+                </elseBlock>
+              </actions>
+            </elseBlock>
+          </actions>
+        </elseBlock>
+      </actions>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[8]/div/div[2]/div[1]/div[2]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+      <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[8] = &quot;IT&quot;)" delay="0" leftOperand="${element[8]}" rightOperand="IT" leftOperandType="EXPRESSION" rightOperandType="STRING">
+        <ifBlock active="true">
+          <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[8]/div/div[2]/div[2]/div[3]/content" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+        </ifBlock>
+        <elseBlock active="true">
+          <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[8] = &quot;Operations&quot;)" delay="0" leftOperand="${element[8]}" rightOperand="Operations" leftOperandType="EXPRESSION" rightOperandType="STRING">
+            <ifBlock active="true">
+              <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[8]/div/div[2]/div[2]/div[4]/content" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+            </ifBlock>
+            <elseBlock active="true">
+              <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[8] = &quot;Process&quot;)" delay="0" leftOperand="${element[8]}" rightOperand="Process" leftOperandType="EXPRESSION" rightOperandType="STRING">
+                <ifBlock active="true">
+                  <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[8]/div/div[2]/div[2]/div[5]/content" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+                </ifBlock>
+                <elseBlock active="true">
+                  <actions xsi:type="recorder:IfElseAction" active="true" actionDetails="(element[8] = &quot;Decision Maker&quot;)" delay="0" leftOperand="${element[8]}" rightOperand="Decision Maker" leftOperandType="EXPRESSION" rightOperandType="STRING">
+                    <ifBlock active="true">
+                      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[8]/div/div[2]/div[2]/div[6]/content" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+                    </ifBlock>
+                    <elseBlock active="true">
+                      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[2]/div[8]/div/div[2]/div[2]/div[7]/content" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+                    </elseBlock>
+                  </actions>
+                </elseBlock>
+              </actions>
+            </elseBlock>
+          </actions>
+        </elseBlock>
+      </actions>
+      <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" type="WEB_ELEMENT" webElementLocator="//*[@id=&quot;mG61Hd&quot;]/div/div[2]/div[3]/div[1]/div[1]/div/content/span" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+    </actions>
+  </actions>
+</recorder:ActionFlow>

@@ -1,0 +1,5 @@
+"name","type","value"
+"system_time_converted","STRING","""Thursday, February 14, 2019, 3:25:07 PM"""
+"system_time","DATE","2019-02-14T15:25:07-05:00[America/New_York]"
+"funding_amount_converted","STRING","""50,000,000"""
+"funding_amount","NUMBER","50000000"

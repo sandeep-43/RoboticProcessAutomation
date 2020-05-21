@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="location" type="STRING" value="New Delhi, India"/>
+    <variable name="temp" type="STRING" value=""/>
+  </variables>
+  <actions xsi:type="recorder:OpenURLAction" active="true" actionDetails="(https://www.bbc.com/weather)" delay="0" url="https://www.bbc.com/weather" type="CHROME">
+    <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(set by //*[@id=&quot;ls-c-search__input-label&quot;] xpath)" delay="0" varName="location" webElementLocator="//*[@id=&quot;ls-c-search__input-label&quot;]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" type="SET_VALUE" useElementAttribute="false"/>
+    <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({ENTER})" delay="0" text="{ENTER}" rawCode="10" keyCode="28" keyChar="13" keyLocation="4"/>
+    <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(get by //*[@id=&quot;daylink-0&quot;]/div[4]/div[1]/div/div[4]/div/div/span[2]/span/span[1] xpath)" delay="0" varName="temp" webElementLocator="//*[@id=&quot;daylink-0&quot;]/div[4]/div[1]/div/div[4]/div/div/span[2]/span/span[1]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" useElementAttribute="false"/>
+    <actions xsi:type="recorder:FileWriteAction" active="true" actionDetails="('${location} -> ${temp}C' to 'C:\Users\sande...mperature.txt')" delay="0" path="C:\Users\sandeep.singh01\Desktop\CTC\RPA\Temperature.txt" content="${location} -> ${temp}C" overwrite="false" encoding="UTF-8"/>
+  </actions>
+</recorder:ActionFlow>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.0" ignoreDelays="false">
+  <variables>
+    <variable name="website_url" type="STRING" value=""/>
+    <variable name="is_valid" type="STRING" value=""/>
+    <variable name="output" type="STRING" value=""/>
+    <variable name="text_404" type="STRING" value="Not found"/>
+  </variables>
+  <actions xsi:type="recorder:TryCatchAction" active="true" actionDetails="" delay="0">
+    <tryBlock active="true">
+      <actions xsi:type="recorder:OpenURLAction" active="true" actionDetails="(${website_url})" delay="0" url="${website_url}" type="CHROME" waitTimeout="20000">
+        <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(get by //*[@id=&quot;cmp-header-rating&quot;]/span xpath)" delay="0" varName="output" webElementLocator="//*[@id=&quot;cmp-header-rating&quot;]/span" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" useElementAttribute="false"/>
+      </actions>
+      <actions xsi:type="recorder:ConstantValueAction" active="true" actionDetails="(to 'is_valid' = 'VALID') - STRING" delay="0" varName="is_valid" stringValue="VALID" numberValue="0" booleanValue="false" useCurrentDate="false"/>
+    </tryBlock>
+    <catchBlock active="true">
+      <actions xsi:type="recorder:TryCatchAction" active="true" actionDetails="" delay="0">
+        <tryBlock active="true">
+          <actions xsi:type="recorder:OpenURLAction" active="true" actionDetails="(${website_url})" delay="0" url="${website_url}" type="CHROME" waitTimeout="20000">
+            <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(get by //table[@class='system_msg']//h1 xpath)" delay="0" varName="output" webElementLocator="//table[@class='system_msg']//h1" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" useElementAttribute="false"/>
+          </actions>
+          <actions xsi:type="recorder:ConstantValueAction" active="true" actionDetails="(to 'is_valid' = 'NOT_FOUND...) - STRING" delay="0" varName="is_valid" stringValue="NOT_FOUND" numberValue="0" booleanValue="false" useCurrentDate="false"/>
+        </tryBlock>
+        <catchBlock active="true">
+          <actions xsi:type="recorder:ConstantValueAction" active="true" actionDetails="(to 'is_valid' = 'WRONG_DOM...) - STRING" delay="0" varName="is_valid" stringValue="WRONG_DOMAIN" numberValue="0" booleanValue="false" useCurrentDate="false"/>
+        </catchBlock>
+      </actions>
+    </catchBlock>
+  </actions>
+</recorder:ActionFlow>

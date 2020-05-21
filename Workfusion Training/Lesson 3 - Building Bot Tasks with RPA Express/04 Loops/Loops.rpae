@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="url" type="STRING" value="https://www.xe.com/"/>
+    <variable name="filepath" type="STRING" value="C:\Users\sandeep.singh01\Desktop\CTC\RPA\CurrencyRates.xlsx"/>
+    <variable name="codes" type="LIST" value="[]"/>
+    <variable name="col_name" type="STRING" value="Conversion Rate"/>
+    <variable name="inr" type="STRING" value="INR"/>
+    <variable name="rate" type="STRING" value=""/>
+  </variables>
+  <actions xsi:type="recorder:OpenSpreadsheetAction" active="true" actionDetails="(&quot;${filepath}&quot;)" delay="0" filePath="${filepath}">
+    <actions xsi:type="recorder:GetColumnAction" varName="codes" active="true" actionDetails="(First)" delay="0"/>
+    <actions xsi:type="recorder:SetCellValueAction" varName="col_name" active="true" actionDetails="(B1)" delay="0" useCellCoordinates="true" cellCoordinates="B1"/>
+  </actions>
+  <actions xsi:type="recorder:ForeachAction" active="true" actionDetails="(element) in (codes)" delay="0" varName="codes" pointerName="element" filterExpression="2-*">
+    <actions xsi:type="recorder:OpenURLAction" active="true" actionDetails="(${url})" delay="0" url="${url}" type="CHROME" waitTimeout="100000000">
+      <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(set by //*[@id=&quot;from&quot;] xpath)" delay="0" varName="element" webElementLocator="//*[@id=&quot;from&quot;]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" type="SET_VALUE" useElementAttribute="false"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" comment="&#x9;" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+      <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(set by //*[@id=&quot;to&quot;] xpath)" delay="0" varName="inr" webElementLocator="//*[@id=&quot;to&quot;]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" type="SET_VALUE" useElementAttribute="false"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({TAB})" delay="0" text="{TAB}" rawCode="9" keyCode="15" keyChar="9" keyLocation="1"/>
+      <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({ENTER})" delay="0" text="{ENTER}" rawCode="10" keyCode="28" keyChar="13" keyLocation="4"/>
+      <actions xsi:type="recorder:WebElementAction" active="true" actionDetails="(get by //*[@id=&quot;converterResult&quot;]/div/div/div[2]/span[1] xpath)" delay="0" varName="rate" webElementLocator="//*[@id=&quot;converterResult&quot;]/div/div/div[2]/span[1]" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" useElementAttribute="false"/>
+    </actions>
+    <actions xsi:type="recorder:OpenSpreadsheetAction" active="true" actionDetails="(&quot;${filepath}&quot;)" delay="0" filePath="${filepath}" autoSaveFile="true">
+      <actions xsi:type="recorder:SetCellValueAction" varName="rate" active="true" actionDetails="(Cell below)" delay="0" cellPosition="CELL_BELOW"/>
+    </actions>
+  </actions>
+</recorder:ActionFlow>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorder:ActionFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:recorder="http://www.workfusion.com/recorder/v2.0.3" ignoreDelays="false">
+  <variables>
+    <variable name="imagefound" type="BOOLEAN" value="false"/>
+    <variable name="tweet" type="STRING" value=""/>
+  </variables>
+  <actions xsi:type="recorder:OpenURLAction" active="true" actionDetails="(https://twitter.com/workfusion )" delay="0" url="https://twitter.com/workfusion " type="CHROME">
+    <actions xsi:type="recorder:MaximizeCurrentWindowAction" active="true" actionDetails="" delay="0"/>
+  </actions>
+  <actions xsi:type="recorder:WhileAction" active="true" actionDetails="(imagefound = &quot;false&quot;)" delay="0" leftOperand="${imagefound}" rightOperand="false" leftOperandType="VARIABLE" rightOperandType="BOOLEAN">
+    <actions xsi:type="recorder:MouseScrollAction" active="true" actionDetails="(5 lines down)" delay="0" offsetX="21" offsetY="8" selector="" imageName="1550688817374-anchor-1550688817396.apng" fullImageName="1550688817374.png" type="IMAGE" notches="5"/>
+    <actions xsi:type="recorder:WaitForImageAction" active="true" actionDetails="(500 ms)" delay="0" imageName="1550687312661-anchor.apng" fullImageName="1550687079654.png" varName="imagefound" waitTimeout="500"/>
+    <actions xsi:type="recorder:TryCatchAction" active="true" actionDetails="(imagefound = &quot;false&quot;)" delay="0" comment="to ensure the tweet is from Workfusion and ignore tweets &#xD;&#xA;from other twitter users.">
+      <tryBlock active="true">
+        <actions xsi:type="recorder:MouseClickAction" active="true" actionDetails="(click left button)" delay="0" offsetX="25" offsetY="-4" imageName="1552486574455-anchor-1552486574490.apng" fullImageName="1552486574455.png" type="IMAGE" searchInFrames="false" webElementLocatorType="XPATH" exactMatch="true" button="1"/>
+        <actions xsi:type="recorder:OcrAction" active="true" actionDetails="(to 'tweet' rectangle 945 x 300)" delay="0" offsetX="-4" offsetY="132" imageName="1550689196917-anchor-1550689197066.apng" fullImageName="1550689196917.png" type="CONTROL" varName="tweet" width="945" height="300"/>
+      </tryBlock>
+      <catchBlock active="true">
+        <actions xsi:type="recorder:ConstantValueAction" active="true" actionDetails="(to 'imagefound' = false) - BOOLEAN" delay="0" varName="imagefound" stringValue="" numberValue="0" booleanValue="false" useCurrentDate="false"/>
+      </catchBlock>
+    </actions>
+  </actions>
+  <actions xsi:type="recorder:LaunchAppAction" active="true" actionDetails="(notepad.exe; wait for 0ms; poll every 0ms)" delay="0" command="notepad.exe" autoDetectWindow="true"/>
+  <actions xsi:type="recorder:ClipboardAction" active="true" actionDetails="(from 'tweet')" delay="0" varName="tweet" activeConversion="STRING_TO_STRING" type="FROM_VARIABLE">
+    <stringToStringConversion targetType="STRING"/>
+    <delimitedListConversion targetType="LIST" trimValues="false"/>
+    <delimitedTableConversion targetType="TABLE" trimValues="false"/>
+  </actions>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Ctrl+v)" delay="0" modifiers="2" text="v" rawCode="86" keyCode="47" keyChar="118" keyLocation="1" type="HOT_KEY_PRESS"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Ctrl+s)" delay="0" modifiers="2" text="s" rawCode="83" keyCode="31" keyChar="115" keyLocation="1" type="HOT_KEY_PRESS"/>
+  <actions xsi:type="recorder:WaitAction" active="true" actionDetails="for 1000 ms" delay="1000"/>
+  <actions xsi:type="recorder:SwitchWindowAction" active="true" actionDetails="(Save as)" delay="0" clazz="" title="(?i).*\QSave as\E.*" useRegexpTitle="true" timeoutMs="0" modeType="BY_TITLE"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Alt+n)" delay="0" modifiers="8" text="n" rawCode="78" keyCode="49" keyChar="110" keyLocation="1" type="HOT_KEY_PRESS"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(Ctrl+a)" delay="0" modifiers="2" text="a" rawCode="65" keyCode="30" keyChar="97" keyLocation="1" type="HOT_KEY_PRESS"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="(typed text)" delay="0" text="OCR" type="KEY_TYPE"/>
+  <actions xsi:type="recorder:KeyboardAction" active="true" actionDetails="({ENTER})" delay="0" text="{ENTER}" rawCode="10" keyCode="28" keyChar="13" keyLocation="4"/>
+</recorder:ActionFlow>
